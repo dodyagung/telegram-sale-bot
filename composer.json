@@ -10,6 +10,7 @@
     "require": {
         "php": "^7.2.5|^8.0",
         "botman/botman": "^2.6",
+        "botman/driver-telegram": "^1.6",
         "botman/driver-web": "^1.5",
         "botman/studio-addons": "^1.6",
         "botman/tinker": "^1.2",

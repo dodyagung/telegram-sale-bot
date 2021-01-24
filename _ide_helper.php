@@ -3213,30 +3213,19 @@
          */ 
         public static function flush()
         {
-                        /** @var \Illuminate\Cache\FileStore $instance */
+                        /** @var \Illuminate\Cache\DatabaseStore $instance */
                         return $instance->flush();
         }
                     /**
-         * Get the Filesystem instance.
+         * Get the underlying database connection.
          *
-         * @return \Illuminate\Filesystem\Filesystem 
+         * @return \Illuminate\Database\MySqlConnection 
          * @static 
          */ 
-        public static function getFilesystem()
+        public static function getConnection()
         {
-                        /** @var \Illuminate\Cache\FileStore $instance */
-                        return $instance->getFilesystem();
-        }
-                    /**
-         * Get the working directory of the cache.
-         *
-         * @return string 
-         * @static 
-         */ 
-        public static function getDirectory()
-        {
-                        /** @var \Illuminate\Cache\FileStore $instance */
-                        return $instance->getDirectory();
+                        /** @var \Illuminate\Cache\DatabaseStore $instance */
+                        return $instance->getConnection();
         }
                     /**
          * Get the cache key prefix.
@@ -3246,7 +3235,7 @@
          */ 
         public static function getPrefix()
         {
-                        /** @var \Illuminate\Cache\FileStore $instance */
+                        /** @var \Illuminate\Cache\DatabaseStore $instance */
                         return $instance->getPrefix();
         }
          
