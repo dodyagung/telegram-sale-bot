@@ -40,6 +40,6 @@ class BotManController extends Controller
      */
     public function fallback(BotMan $bot)
     {
-        $bot->reply("Sorry, I did not understand these commands.");
+        $bot->reply(env("BOT_COMMAND_FALLBACK"));
     }
 }
