@@ -34,4 +34,13 @@ class BotManController extends Controller
     {
         $bot->startConversation(new ExampleConversation());
     }
+
+    /**
+     * Loaded through routes/botman.php
+     * @param  BotMan $bot
+     */
+    public function fallback(BotMan $bot)
+    {
+        $bot->reply("Sorry, I did not understand these commands.");
+    }
 }
