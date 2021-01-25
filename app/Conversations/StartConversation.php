@@ -13,8 +13,8 @@ class StartConversation extends Conversation
      */
     public function askConversation()
     {
-        $message =
-            "Huh, you woke me up. I'm your telegram-sale-bot. What do you need?";
+        $message = "*🏠 Welcome*" . PHP_EOL . PHP_EOL;
+        $message .= "I'm a telegram-sale-bot. What can I help you today?";
 
         $question = Question::create($message)->addButtons([
             Button::create("💰 Sale")->value("sale"),

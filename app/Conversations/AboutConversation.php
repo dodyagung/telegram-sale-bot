@@ -13,7 +13,9 @@ class AboutConversation extends Conversation
      */
     public function askConversation()
     {
-        $message = "*telegram-sale-bot*" . PHP_EOL . PHP_EOL;
+        $message = "*🤖 About*" . PHP_EOL . PHP_EOL;
+
+        $message .= "*telegram-sale-bot*" . PHP_EOL;
         $message .=
             "I'm a bot to automate your scheduled-sale in Telegram group." .
             PHP_EOL;
