@@ -17,8 +17,8 @@ class StartConversation extends Conversation
         $message .= "I'm a telegram-sale-bot. What can I help you today?";
 
         $question = Question::create($message)->addButtons([
-            Button::create("💰 Sale")->value("sale"),
-            Button::create("👤 Profile")->value("profile"),
+            Button::create("💰 Manage Sale")->value("sale"),
+            Button::create("👤 My Profile")->value("profile"),
             Button::create("❓ Tutorial")->value("tutorial"),
             Button::create("🤖 About")->value("about"),
         ]);
