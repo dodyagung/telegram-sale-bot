@@ -63,4 +63,29 @@ class StartConversation extends Conversation
             ]
         );
     }
+
+    private function is_user_joined_group()
+    {
+        $user = $this->getBot()->getUser();
+
+        $request = $this->getBot()->sendRequest("getChatMember", [
+            "chat_id" => env("TELEGRAM_GROUP_ID"),
+            "user_id" => $user->getId(),
+        ]);
+
+        $is_user_joined_group = false;
+        if ($request->getStatusCode() == 200) {
+            if (
+                in_array(json_decode($request->getContent())->result->status, [
+                    "creator",
+                    "administrator",
+                    "member",
+                ])
+            ) {
+                $user_joined_group = true;
+            }
+        }
+
+        return $is_user_joined_group;
+    }
 }
