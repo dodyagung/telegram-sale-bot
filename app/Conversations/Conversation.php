@@ -21,7 +21,7 @@ class Conversation extends BaseConversation
     public function fallback(Answer $answer)
     {
         if ($answer->getText() == env("BOT_COMMAND_START")) {
-            $this->bot->startConversation(new StartConversation());
+            $this->getBot()->startConversation(new StartConversation());
         } else {
             $this->say(env("BOT_COMMAND_FALLBACK"));
         }

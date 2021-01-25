@@ -13,6 +13,8 @@ class StartConversation extends Conversation
      */
     public function askConversation()
     {
+        $user = $this->getBot()->getUser();
+
         $message = "*🏠 Welcome*" . PHP_EOL . PHP_EOL;
         $message .= "I'm a telegram-sale-bot. What can I help you today?";
 
@@ -29,22 +31,22 @@ class StartConversation extends Conversation
                 if ($answer->isInteractiveMessageReply()) {
                     switch ($answer->getValue()) {
                         case "sale":
-                            $this->bot->startConversation(
+                            $this->getBot()->startConversation(
                                 new AboutConversation()
                             );
                             break;
                         case "profile":
-                            $this->bot->startConversation(
+                            $this->getBot()->startConversation(
                                 new ProfileConversation()
                             );
                             break;
                         case "tutorial":
-                            $this->bot->startConversation(
+                            $this->getBot()->startConversation(
                                 new TutorialConversation()
                             );
                             break;
                         case "about":
-                            $this->bot->startConversation(
+                            $this->getBot()->startConversation(
                                 new AboutConversation()
                             );
                             break;

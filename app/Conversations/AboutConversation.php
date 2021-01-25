@@ -54,7 +54,7 @@ class AboutConversation extends Conversation
                 if ($answer->isInteractiveMessageReply()) {
                     switch ($answer->getValue()) {
                         case "start":
-                            $this->bot->startConversation(
+                            $this->getBot()->startConversation(
                                 new StartConversation()
                             );
                             break;
