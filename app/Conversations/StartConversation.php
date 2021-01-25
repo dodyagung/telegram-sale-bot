@@ -2,59 +2,63 @@
 
 namespace App\Conversations;
 
-use Illuminate\Foundation\Inspiring;
 use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\BotMan\Messages\Outgoing\Question;
 use BotMan\BotMan\Messages\Outgoing\Actions\Button;
-use BotMan\BotMan\Messages\Conversations\Conversation;
 
 class StartConversation extends Conversation
 {
     /**
-     * Start the conversation
-     */
-    public function run()
-    {
-        $this->askStart();
-    }
-
-    public function fallback(Answer $answer)
-    {
-        if ($answer->getText() == env("BOT_COMMAND_START")) {
-            $this->bot->startConversation(new StartConversation());
-        } else {
-            $this->say(env("BOT_COMMAND_FALLBACK"));
-        }
-    }
-
-    /**
      * Place your conversation logic here.
      */
-    public function askStart()
+    public function askConversation()
     {
-        $question = Question::create(
-            "Huh, you woke me up. I'm your telegram-sale-bot. What do you need?"
-        )
-            ->fallback("Unable to ask start")
-            ->callbackId("ask_start")
-            ->addButtons([
-                Button::create("Joke")->value("joke"),
-                Button::create("Quote")->value("quote"),
-            ]);
+        $message =
+            "Huh, you woke me up. I'm your telegram-sale-bot. What do you need?";
 
-        return $this->ask($question, function (Answer $answer) {
-            if ($answer->isInteractiveMessageReply()) {
-                if ($answer->getValue() === "joke") {
-                    $joke = json_decode(
-                        file_get_contents("http://api.icndb.com/jokes/random")
-                    );
-                    $this->say($joke->value->joke);
+        $question = Question::create($message)->addButtons([
+            Button::create("💰 Sale")->value("sale"),
+            Button::create("👤 Profile")->value("profile"),
+            Button::create("❓ Tutorial")->value("tutorial"),
+            Button::create("🤖 About")->value("about"),
+        ]);
+
+        return $this->ask(
+            $question,
+            function (Answer $answer) {
+                if ($answer->isInteractiveMessageReply()) {
+                    switch ($answer->getValue()) {
+                        case "sale":
+                            $this->bot->startConversation(
+                                new AboutConversation()
+                            );
+                            break;
+                        case "profile":
+                            $this->bot->startConversation(
+                                new ProfileConversation()
+                            );
+                            break;
+                        case "tutorial":
+                            $this->bot->startConversation(
+                                new TutorialConversation()
+                            );
+                            break;
+                        case "about":
+                            $this->bot->startConversation(
+                                new AboutConversation()
+                            );
+                            break;
+                        default:
+                            $this->fallback($answer);
+                            break;
+                    }
                 } else {
-                    $this->say(Inspiring::quote());
+                    $this->fallback($answer);
                 }
-            } else {
-                $this->fallback($answer);
-            }
-        });
+            },
+            [
+                "parse_mode" => "Markdown",
+            ]
+        );
     }
 }
