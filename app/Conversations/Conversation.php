@@ -32,23 +32,25 @@ class Conversation extends BaseConversation
      */
     protected function is_user_joined_group()
     {
-        $user = $this->getBot()->getUser();
-
-        $request = $this->getBot()->sendRequest("getChatMember", [
-            "chat_id" => env("TELEGRAM_GROUP_ID"),
-            "user_id" => $user->getId(),
-        ]);
-
         $is_user_joined_group = false;
-        if ($request->getStatusCode() == 200) {
-            if (
-                in_array(json_decode($request->getContent())->result->status, [
-                    "creator",
-                    "administrator",
-                    "member",
-                ])
-            ) {
-                $is_user_joined_group = true;
+
+        if ($this->getBot()->getDriver() == "telegram") {
+            $user = $this->getBot()->getUser();
+
+            $request = $this->getBot()->sendRequest("getChatMember", [
+                "chat_id" => env("TELEGRAM_GROUP_ID"),
+                "user_id" => $user->getId(),
+            ]);
+
+            if ($request->getStatusCode() == 200) {
+                if (
+                    in_array(
+                        json_decode($request->getContent())->result->status,
+                        ["creator", "administrator", "member"]
+                    )
+                ) {
+                    $is_user_joined_group = true;
+                }
             }
         }
 
