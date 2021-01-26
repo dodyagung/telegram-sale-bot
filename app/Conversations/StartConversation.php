@@ -5,6 +5,7 @@ namespace App\Conversations;
 use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\BotMan\Messages\Outgoing\Question;
 use BotMan\BotMan\Messages\Outgoing\Actions\Button;
+use Carbon\Carbon;
 
 class StartConversation extends Conversation
 {
@@ -13,6 +14,11 @@ class StartConversation extends Conversation
      */
     public function askConversation()
     {
+        $now = Carbon::now();
+
+        $bot_day_sale = Carbon::parse(env("BOT_DAY_SALE"));
+        $bot_day_reset = Carbon::parse(env("BOT_DAY_RESET"));
+
         $telegram_group_name = env("TELEGRAM_GROUP_NAME");
         $telegram_group_link = env("TELEGRAM_GROUP_LINK");
 
@@ -30,17 +36,28 @@ class StartConversation extends Conversation
             $message .= " ├ Joined : No" . PHP_EOL;
         }
         $message .=
-            " └ Link : [Click here](" . $telegram_group_link . ")" . PHP_EOL;
+            " └ Link : [Click here](" .
+            $telegram_group_link .
+            ")" .
+            PHP_EOL .
+            PHP_EOL;
 
-        $message .= "👥 *SALE DATE*" . PHP_EOL;
-        $message .= " ├ Next sale : " . $telegram_group_name . PHP_EOL;
-        if ($this->is_user_joined_group()) {
-            $message .= " ├ Joined : Yes" . PHP_EOL;
-        } else {
-            $message .= " ├ Joined : No" . PHP_EOL;
-        }
+        $message .= "⏰ *SALE TIME*" . PHP_EOL;
         $message .=
-            " └ Link : [Click here](" . $telegram_group_link . ")" . PHP_EOL;
+            " ├ Today : " .
+            $now->isoFormat("dddd, DD MMMM YYYY - HH:mm z") .
+            PHP_EOL;
+        $message .=
+            " ├ Sale Day : " .
+            $bot_day_sale->isoFormat("dddd, DD MMMM YYYY") .
+            PHP_EOL;
+        $message .=
+            " ├ Reset Day : " .
+            $bot_day_reset->isoFormat("dddd, DD MMMM YYYY") .
+            PHP_EOL;
+
+        $message .=
+            " └ Timezone : " . $now->isoFormat("zz (Z)") . PHP_EOL . PHP_EOL;
 
         $question = Question::create($message)->addButtons([
             Button::create("💰 Manage Sale")->value("sale"),
