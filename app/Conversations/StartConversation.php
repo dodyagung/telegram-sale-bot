@@ -2,6 +2,7 @@
 
 namespace App\Conversations;
 
+use App\TelegramUser;
 use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\BotMan\Messages\Outgoing\Question;
 use BotMan\BotMan\Messages\Outgoing\Actions\Button;
@@ -37,11 +38,10 @@ class StartConversation extends Conversation
 
         $message .= "👥 *SALE GROUP*" . PHP_EOL;
         $message .= " ├ Name : " . $telegram_group_name . PHP_EOL;
-        if ($this->isUserJoinedGroup()) {
-            $message .= " ├ Joined : Yes" . PHP_EOL;
-        } else {
-            $message .= " ├ Joined : No" . PHP_EOL;
-        }
+        $message .=
+            " ├ Joined : " .
+            ($this->isUserJoinedGroup($user) ? "Yes" : "No") .
+            PHP_EOL;
         $message .=
             " └ Link : [Click here](" .
             $telegram_group_link .

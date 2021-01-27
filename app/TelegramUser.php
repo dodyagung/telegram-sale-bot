@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class TelegramUser extends Model
@@ -30,5 +31,18 @@ class TelegramUser extends Model
     public function telegramPosts()
     {
         return $this->hasMany("App\TelegramPost");
+    }
+
+    public static function saveUserToDB($user)
+    {
+        TelegramUser::updateOrCreate(
+            ["id" => $user->getId()],
+            [
+                "username" => $user->getUsername(),
+                "first_name" => $user->getFirstName(),
+                "last_name" => $user->getLastName(),
+                "updated_at" => Carbon::now(),
+            ]
+        );
     }
 }
