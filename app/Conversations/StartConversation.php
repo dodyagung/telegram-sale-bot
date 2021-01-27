@@ -2,6 +2,8 @@
 
 namespace App\Conversations;
 
+use App\Conversations\Conversation;
+use App\Conversations\Sale\SaleConversation;
 use App\TelegramUser;
 use App\TelegramPost;
 use BotMan\BotMan\Messages\Incoming\Answer;
@@ -98,7 +100,7 @@ class StartConversation extends Conversation
                     switch ($answer->getValue()) {
                         case "sale":
                             $this->getBot()->startConversation(
-                                new AboutConversation()
+                                new SaleConversation()
                             );
                             break;
                         case "profile":

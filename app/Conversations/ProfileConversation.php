@@ -2,6 +2,8 @@
 
 namespace App\Conversations;
 
+use App\Conversations\Conversation;
+
 class ProfileConversation extends Conversation
 {
     /**
