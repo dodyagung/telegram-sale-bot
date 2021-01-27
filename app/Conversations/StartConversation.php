@@ -33,9 +33,25 @@ class StartConversation extends Conversation
 
         $message = "*🏠 Welcome*" . PHP_EOL . PHP_EOL;
         $message .=
-            "I'm a telegram-sale-bot. What can I help you today?" .
+            "Hello, I'm [telegram-sale-bot](https://github.com/dodyagung/telegram-sale-bot). It's *" .
+            $now->isoFormat("dddd, DD MMMM YYYY - HH:mm z") .
+            "*, what can I help you today?" .
             PHP_EOL .
             PHP_EOL;
+
+        // SALE TIME
+
+        $message .= "⏰ *SALE TIME*" . PHP_EOL;
+        $message .=
+            " ├ Sale Day : " .
+            $bot_day_sale->isoFormat("dddd, DD MMMM YYYY") .
+            PHP_EOL;
+        $message .=
+            " ├ Reset Day : " .
+            $bot_day_reset->isoFormat("dddd, DD MMMM YYYY") .
+            PHP_EOL;
+        $message .=
+            " └ Timezone : " . $now->isoFormat("zz (Z)") . PHP_EOL . PHP_EOL;
 
         // SALE GROUP
 
@@ -52,23 +68,21 @@ class StartConversation extends Conversation
             PHP_EOL .
             PHP_EOL;
 
-        // SALE TIME
+        // SALE POST
 
-        $message .= "⏰ *SALE TIME*" . PHP_EOL;
+        $message .= "📝 *SALE POST*" . PHP_EOL;
+        $message .= " ├ Active : " . $post_active_count . " post(s)" . PHP_EOL;
         $message .=
-            " ├ Today : " .
-            $now->isoFormat("dddd, DD MMMM YYYY - HH:mm z") .
+            " ├ Inactive : " . $post_inactive_count . " post(s)" . PHP_EOL;
+        $message .=
+            " └ Total : " .
+            ($post_active_count + $post_inactive_count) .
+            " post(s)" .
+            PHP_EOL .
             PHP_EOL;
+
         $message .=
-            " ├ Sale Day : " .
-            $bot_day_sale->isoFormat("dddd, DD MMMM YYYY") .
-            PHP_EOL;
-        $message .=
-            " ├ Reset Day : " .
-            $bot_day_reset->isoFormat("dddd, DD MMMM YYYY") .
-            PHP_EOL;
-        $message .=
-            " └ Timezone : " . $now->isoFormat("zz (Z)") . PHP_EOL . PHP_EOL;
+            "Preview your active Sale Post at *Manage Sale > Preview in Group* menu.";
 
         $question = Question::create($message)->addButtons([
             Button::create("💰 Manage Sale")->value("sale"),
