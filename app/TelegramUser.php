@@ -28,14 +28,14 @@ class TelegramUser extends Model
         "updated_at",
     ];
 
-    public function telegramPosts()
+    public function telegram_posts()
     {
         return $this->hasMany("App\TelegramPost");
     }
 
-    public static function saveUserToDB($user)
+    public static function saveUser($user)
     {
-        TelegramUser::updateOrCreate(
+        self::updateOrCreate(
             ["id" => $user->getId()],
             [
                 "username" => $user->getUsername(),

@@ -3,6 +3,7 @@
 namespace App\Conversations;
 
 use App\TelegramUser;
+use App\TelegramPost;
 use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\BotMan\Messages\Outgoing\Question;
 use BotMan\BotMan\Messages\Outgoing\Actions\Button;
@@ -24,7 +25,9 @@ class StartConversation extends Conversation
         $telegram_group_name = env("TELEGRAM_GROUP_NAME");
         $telegram_group_link = env("TELEGRAM_GROUP_LINK");
 
-        TelegramUser::saveUserToDB($user);
+        TelegramUser::saveUser($user);
+        $post_active_count = TelegramPost::countPost($user, 1);
+        $post_inactive_count = TelegramPost::countPost($user, 0);
 
         // WELCOME
 
