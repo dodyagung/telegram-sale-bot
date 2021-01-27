@@ -22,15 +22,21 @@ class StartConversation extends Conversation
         $telegram_group_name = env("TELEGRAM_GROUP_NAME");
         $telegram_group_link = env("TELEGRAM_GROUP_LINK");
 
+        $this->saveUserToDB();
+
+        // WELCOME
+
         $message = "*🏠 Welcome*" . PHP_EOL . PHP_EOL;
         $message .=
             "I'm a telegram-sale-bot. What can I help you today?" .
             PHP_EOL .
             PHP_EOL;
 
+        // SALE GROUP
+
         $message .= "👥 *SALE GROUP*" . PHP_EOL;
         $message .= " ├ Name : " . $telegram_group_name . PHP_EOL;
-        if ($this->is_user_joined_group()) {
+        if ($this->isUserJoinedGroup()) {
             $message .= " ├ Joined : Yes" . PHP_EOL;
         } else {
             $message .= " ├ Joined : No" . PHP_EOL;
@@ -41,6 +47,8 @@ class StartConversation extends Conversation
             ")" .
             PHP_EOL .
             PHP_EOL;
+
+        // SALE TIME
 
         $message .= "⏰ *SALE TIME*" . PHP_EOL;
         $message .=
@@ -55,7 +63,6 @@ class StartConversation extends Conversation
             " ├ Reset Day : " .
             $bot_day_reset->isoFormat("dddd, DD MMMM YYYY") .
             PHP_EOL;
-
         $message .=
             " └ Timezone : " . $now->isoFormat("zz (Z)") . PHP_EOL . PHP_EOL;
 
