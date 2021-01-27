@@ -14,6 +14,7 @@ class StartConversation extends Conversation
      */
     public function askConversation()
     {
+        $user = $this->getBot()->getUser();
         $now = Carbon::now();
 
         $bot_day_sale = Carbon::parse(env("BOT_DAY_SALE"));
@@ -22,7 +23,7 @@ class StartConversation extends Conversation
         $telegram_group_name = env("TELEGRAM_GROUP_NAME");
         $telegram_group_link = env("TELEGRAM_GROUP_LINK");
 
-        $this->saveUserToDB();
+        TelegramUser::saveUserToDB($user);
 
         // WELCOME
 
