@@ -28,4 +28,15 @@ class TelegramPost extends Model
 
         return $post_count->count();
     }
+
+    public static function getPosts($user, $active = null)
+    {
+        $posts = self::where("telegram_user_id", $user->getId());
+
+        if (!is_null($active)) {
+            $posts->where("active", $active);
+        }
+
+        return $posts->get();
+    }
 }
