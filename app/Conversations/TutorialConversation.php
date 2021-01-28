@@ -17,17 +17,17 @@ class TutorialConversation extends Conversation
         $message = "*❓ Tutorial*" . PHP_EOL . PHP_EOL;
 
         $message .=
-            "1. If you've never used this bot before, add a new Sale Post in *Manage Sale > Create New Post*." .
+            "1. If you've never used this bot before, add a new Sale Post in *Manage Sale > Create New*." .
             PHP_EOL;
         $message .=
-            "2. If you've used this bot before, re-activate your old Sale Post in *Manage Sale > Re-active Old Post*. You can also Edit and Delete your Sale Post in *Manage Sale > Edit/Delete Post*." .
+            "2. If you've used this bot before, re-activate your old Sale Post in *Manage Sale > Active/Deactive*. You can also Edit and Delete your Sale Post in *Manage Sale > Edit/Delete*." .
             PHP_EOL;
         $message .=
             "3. Sale Post that has passed the Sell Day will become inactive automatically." .
             PHP_EOL;
         $message .= "4. Only active Sale Post is sent to the group." . PHP_EOL;
         $message .=
-            "5. The actual view that will be sent to the group can be seen in *Manage Sale > Preview in Group*." .
+            "5. The actual view that will be sent to the group can be seen in *Manage Sale*." .
             PHP_EOL;
         $message .=
             "6. If there are problems or errors, contact us on the About menu.";
