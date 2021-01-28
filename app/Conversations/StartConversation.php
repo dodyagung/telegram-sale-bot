@@ -35,7 +35,9 @@ class StartConversation extends Conversation
 
         $message = "*🏠 Welcome*" . PHP_EOL . PHP_EOL;
         $message .=
-            "Hello, I'm [telegram-sale-bot](https://github.com/dodyagung/telegram-sale-bot). It's *" .
+            "Hello " .
+            $user->getFirstName() .
+            ", I'm [telegram-sale-bot](https://github.com/dodyagung/telegram-sale-bot). It's *" .
             $now->isoFormat("dddd, DD MMMM YYYY - HH:mm z") .
             "*, what can I help you today?" .
             PHP_EOL .
