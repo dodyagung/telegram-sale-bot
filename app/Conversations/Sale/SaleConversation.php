@@ -32,14 +32,14 @@ class SaleConversation extends Conversation
 
         // SALE POST
 
-        $message .= "📝 *SALE POST*" . PHP_EOL;
-        $message .= " ├ Active : " . $post_active_count . " post(s)" . PHP_EOL;
+        $message .= "*Sale Post*" . PHP_EOL;
+        $message .= "├ Active : `" . $post_active_count . " post(s)`" . PHP_EOL;
         $message .=
-            " ├ Inactive : " . $post_inactive_count . " post(s)" . PHP_EOL;
+            "├ Inactive : `" . $post_inactive_count . " post(s)`" . PHP_EOL;
         $message .=
-            " └ Total : " .
+            "└ Total : `" .
             ($post_active_count + $post_inactive_count) .
-            " post(s)" .
+            " post(s)`" .
             PHP_EOL .
             PHP_EOL;
 
@@ -60,7 +60,7 @@ class SaleConversation extends Conversation
             ($user->phone ? " (`" . $user->phone . "`)" : "") .
             PHP_EOL;
         if ($posts->isEmpty()) {
-            $message .= "  └ _(No data)_";
+            $message .= " └ _(No data)_";
         } else {
             for ($i = 0; $i < $posts->count(); $i++) {
                 if ($i + 1 == $posts->count()) {

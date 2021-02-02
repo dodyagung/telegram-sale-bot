@@ -4,6 +4,7 @@ namespace App\Conversations;
 
 use App\Conversations\Conversation;
 use App\Conversations\Sale\SaleConversation;
+use App\Conversations\Profile\ProfileConversation;
 use App\TelegramUser;
 use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\BotMan\Messages\Outgoing\Question;
@@ -41,28 +42,35 @@ class StartConversation extends Conversation
 
         // SALE TIME
 
-        $message .= "⏰ *SALE TIME*" . PHP_EOL;
+        $message .= "*Sale Time*" . PHP_EOL;
         $message .=
-            " ├ Sale Day : " .
+            "├ Sale Day : `" .
             $bot_day_sale->isoFormat("dddd, DD MMMM YYYY") .
+            "`" .
             PHP_EOL;
         $message .=
-            " ├ Reset Day : " .
+            "├ Reset Day : `" .
             $bot_day_reset->isoFormat("dddd, DD MMMM YYYY") .
+            "`" .
             PHP_EOL;
         $message .=
-            " └ Timezone : " . $now->isoFormat("zz (Z)") . PHP_EOL . PHP_EOL;
+            "└ Timezone : `" .
+            $now->isoFormat("zz (Z)") .
+            "`" .
+            PHP_EOL .
+            PHP_EOL;
 
         // SALE GROUP
 
-        $message .= "👥 *SALE GROUP*" . PHP_EOL;
-        $message .= " ├ Name : " . $telegram_group_name . PHP_EOL;
+        $message .= "*Sale Group*" . PHP_EOL;
+        $message .= "├ Name : `" . $telegram_group_name . "`" . PHP_EOL;
         $message .=
-            " ├ Joined : " .
+            "├ Joined : `" .
             ($this->isUserJoinedGroup($user) ? "Yes" : "No") .
+            "`" .
             PHP_EOL;
         $message .=
-            " └ Link : [Click here](" .
+            "└ Link : [Click here](" .
             $telegram_group_link .
             ")" .
             PHP_EOL .
