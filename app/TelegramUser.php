@@ -35,7 +35,7 @@ class TelegramUser extends Model
 
     public static function saveUser($user)
     {
-        self::updateOrCreate(
+        $user = self::updateOrCreate(
             ["id" => $user->getId()],
             [
                 "username" => $user->getUsername(),
@@ -44,5 +44,9 @@ class TelegramUser extends Model
                 "updated_at" => Carbon::now(),
             ]
         );
+
+        return $user;
+    }
+
     }
 }

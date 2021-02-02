@@ -37,7 +37,7 @@ class Conversation extends BaseConversation
 
         $request = $this->getBot()->sendRequest("getChatMember", [
             "chat_id" => env("TELEGRAM_GROUP_ID"),
-            "user_id" => $user->getId(),
+            "user_id" => $user->id,
         ]);
 
         if ($request->getStatusCode() == 200) {

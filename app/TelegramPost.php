@@ -18,9 +18,9 @@ class TelegramPost extends Model
         return $this->belongsTo("App\User");
     }
 
-    public static function countPost($user, $active = null)
+    public static function countPost($user_id, $active = null)
     {
-        $post_count = self::where("telegram_user_id", $user->getId());
+        $post_count = self::where("telegram_user_id", $user_id);
 
         if (!is_null($active)) {
             $post_count->where("active", $active);
@@ -29,9 +29,9 @@ class TelegramPost extends Model
         return $post_count->count();
     }
 
-    public static function getPosts($user, $active = null)
+    public static function getPosts($user_id, $active = null)
     {
-        $posts = self::where("telegram_user_id", $user->getId());
+        $posts = self::where("telegram_user_id", $user_id);
 
         if (!is_null($active)) {
             $posts->where("active", $active);

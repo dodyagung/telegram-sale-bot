@@ -5,7 +5,6 @@ namespace App\Conversations;
 use App\Conversations\Conversation;
 use App\Conversations\Sale\SaleConversation;
 use App\TelegramUser;
-use App\TelegramPost;
 use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\BotMan\Messages\Outgoing\Question;
 use BotMan\BotMan\Messages\Outgoing\Actions\Button;
@@ -18,7 +17,7 @@ class StartConversation extends Conversation
      */
     public function askConversation()
     {
-        $user = $this->getBot()->getUser();
+        $user = TelegramUser::saveUser($this->getBot()->getUser());
         $now = Carbon::now();
 
         $bot_day_sale = Carbon::parse(env("BOT_DAY_SALE"));
