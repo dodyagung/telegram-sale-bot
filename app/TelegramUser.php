@@ -48,5 +48,10 @@ class TelegramUser extends Model
         return $user;
     }
 
+    public static function getUser($user_id)
+    {
+        $user = self::find($user_id);
+
+        return $user;
     }
 }
