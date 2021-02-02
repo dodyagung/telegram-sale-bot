@@ -2,7 +2,6 @@
 
 namespace App\Conversations;
 
-use App\TelegramUser;
 use BotMan\BotMan\Messages\Conversations\Conversation as BaseConversation;
 use BotMan\BotMan\Messages\Incoming\Answer;
 
