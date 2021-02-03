@@ -8,6 +8,14 @@ use App\Conversations\StartConversation;
 class BotManController extends Controller
 {
     /**
+     * Default landing page.
+     */
+    public function index()
+    {
+        return view("welcome");
+    }
+
+    /**
      * Place your BotMan logic here.
      */
     public function handle()

@@ -11,8 +11,5 @@
 |
 */
 
-Route::get("/", function () {
-    return view("welcome");
-});
-
+Route::get("/", "BotManController@index");
 Route::get("tinker", "BotManController@tinker");
