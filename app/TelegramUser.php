@@ -54,4 +54,22 @@ class TelegramUser extends Model
 
         return $user;
     }
+
+    public static function deletePhone($user_id)
+    {
+        $user = self::getUser($user_id);
+
+        $user->phone = null;
+
+        $user->save();
+    }
+
+    public static function updatePhone($user_id, $phone)
+    {
+        $user = self::getUser($user_id);
+
+        $user->phone = $phone;
+
+        $user->save();
+    }
 }
