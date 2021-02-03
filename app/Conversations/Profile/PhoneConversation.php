@@ -16,20 +16,24 @@ class PhoneConversation extends Conversation
      */
     public function askConversation()
     {
+        $user = TelegramUser::getUser(
+            $this->getBot()
+                ->getUser()
+                ->getId()
+        );
+
         $message = "*📱 Edit Phone*" . PHP_EOL . PHP_EOL;
 
         $message .=
-            "If you want to delete your phone number, click *Delete*." .
-            PHP_EOL .
-            PHP_EOL;
+            "Your phone number is *" . $user->phone . "*." . PHP_EOL . PHP_EOL;
 
         $message .=
-            "Otherwise, if you want to change it, type directly below :" .
+            "If you want to delete your phone number, click *Delete*. Otherwise, if you want to change it, *type directly below* :" .
             PHP_EOL .
             PHP_EOL;
 
         $question = Question::create($message)->addButtons([
-            Button::create("📱 Delete")->value("profile_phone_delete"),
+            Button::create("❌ Delete")->value("profile_phone_delete"),
             Button::create("👈 Back")->value("back"),
         ]);
 
