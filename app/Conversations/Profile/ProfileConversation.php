@@ -46,8 +46,8 @@ class ProfileConversation extends Conversation
             "└ Phone : `" . ($user->phone ?? "<not set>") . "`" . PHP_EOL;
 
         $question = Question::create($message)->addButtons([
-            Button::create("📱 Edit Phone")->value("profile_phhone"),
-            Button::create("👈 Back")->value("start"),
+            Button::create("📱 Edit Phone")->value("profile_phone"),
+            Button::create("👈 Back")->value("back"),
         ]);
 
         return $this->ask(
@@ -55,7 +55,7 @@ class ProfileConversation extends Conversation
             function (Answer $answer) {
                 if ($answer->isInteractiveMessageReply()) {
                     switch ($answer->getValue()) {
-                        case "start":
+                        case "back":
                             $this->getBot()->startConversation(
                                 new StartConversation()
                             );

@@ -76,7 +76,7 @@ class SaleConversation extends Conversation
             Button::create("💰 Create New")->value("sale"),
             Button::create("👤 Active/Deactive")->value("profile"),
             Button::create("❓ Edit/Delete")->value("tutorial"),
-            Button::create("👈 Back")->value("start"),
+            Button::create("👈 Back")->value("back"),
         ]);
 
         return $this->ask(
@@ -84,7 +84,7 @@ class SaleConversation extends Conversation
             function (Answer $answer) {
                 if ($answer->isInteractiveMessageReply()) {
                     switch ($answer->getValue()) {
-                        case "start":
+                        case "back":
                             $this->getBot()->startConversation(
                                 new StartConversation()
                             );

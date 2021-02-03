@@ -46,7 +46,7 @@ class AboutConversation extends Conversation
             "This open-source project is licensed under [MIT license](https://github.com/dodyagung/telegram-sale-bot/blob/master/LICENSE.md).";
 
         $question = Question::create($message)->addButtons([
-            Button::create("👈 Back")->value("start"),
+            Button::create("👈 Back")->value("back"),
         ]);
 
         return $this->ask(
@@ -54,7 +54,7 @@ class AboutConversation extends Conversation
             function (Answer $answer) {
                 if ($answer->isInteractiveMessageReply()) {
                     switch ($answer->getValue()) {
-                        case "start":
+                        case "back":
                             $this->getBot()->startConversation(
                                 new StartConversation()
                             );

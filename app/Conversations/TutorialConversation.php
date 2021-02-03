@@ -33,7 +33,7 @@ class TutorialConversation extends Conversation
             "6. If there are problems or errors, contact us on the About menu.";
 
         $question = Question::create($message)->addButtons([
-            Button::create("👈 Back")->value("start"),
+            Button::create("👈 Back")->value("back"),
         ]);
 
         return $this->ask(
@@ -41,7 +41,7 @@ class TutorialConversation extends Conversation
             function (Answer $answer) {
                 if ($answer->isInteractiveMessageReply()) {
                     switch ($answer->getValue()) {
-                        case "start":
+                        case "back":
                             $this->getBot()->startConversation(
                                 new StartConversation()
                             );
