@@ -23,9 +23,9 @@ class TutorialConversation extends Conversation
             "2. If you've used this bot before, re-activate your old Sale Post in *Manage Sale > Active/Deactive*. You can also Edit and Delete your Sale Post in *Manage Sale > Edit/Delete*." .
             PHP_EOL;
         $message .=
-            "3. Sale Post that has passed the Sell Day will become inactive automatically." .
+            "3. Sale Post that has passed the Sell Day will become disabled automatically." .
             PHP_EOL;
-        $message .= "4. Only active Sale Post is sent to the group." . PHP_EOL;
+        $message .= "4. Only enabled Sale Post is sent to the group." . PHP_EOL;
         $message .=
             "5. The actual view that will be sent to the group can be seen in *Manage Sale*." .
             PHP_EOL;

@@ -17,7 +17,7 @@ class CreateConversation extends Conversation
      */
     public function askConversation()
     {
-        $message = "*💰 Create New*" . PHP_EOL . PHP_EOL;
+        $message = "*➕ Create New*" . PHP_EOL . PHP_EOL;
 
         $message .= "Type your new sale post directly below :";
 

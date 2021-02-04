@@ -11,30 +11,30 @@ class TelegramPost extends Model
      *
      * @var array
      */
-    protected $fillable = ["id", "telegram_user_id", "active", "post"];
+    protected $fillable = ["id", "telegram_user_id", "status", "post"];
 
     public function telegram_users()
     {
         return $this->belongsTo("App\User");
     }
 
-    public static function countPost($user_id, $active = null)
+    public static function countPost($user_id, $status = null)
     {
         $post_count = self::where("telegram_user_id", $user_id);
 
-        if (!is_null($active)) {
-            $post_count->where("active", $active);
+        if (!is_null($status)) {
+            $post_count->where("status", $status);
         }
 
         return $post_count->count();
     }
 
-    public static function getPosts($user_id, $active = null)
+    public static function getPosts($user_id, $status = null)
     {
         $posts = self::where("telegram_user_id", $user_id);
 
-        if (!is_null($active)) {
-            $posts->where("active", $active);
+        if (!is_null($status)) {
+            $posts->where("status", $status);
         }
 
         return $posts->get();
@@ -44,7 +44,7 @@ class TelegramPost extends Model
     {
         $post = self::create([
             "telegram_user_id" => $user_id,
-            "active" => 1,
+            "status" => 1,
             "post" => $post,
         ]);
     }
