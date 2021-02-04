@@ -22,9 +22,9 @@ class SaleConversation extends Conversation
                 ->getUser()
                 ->getId()
         );
-        $posts = TelegramPost::getPosts($user, 1);
-        $post_active_count = TelegramPost::countPost($user, 1);
-        $post_inactive_count = TelegramPost::countPost($user, 0);
+        $posts = TelegramPost::getPosts($user->id, 1);
+        $post_active_count = TelegramPost::countPost($user->id, 1);
+        $post_inactive_count = TelegramPost::countPost($user->id, 0);
 
         $message = "*💰 Manage Sale*" . PHP_EOL . PHP_EOL;
 
@@ -33,13 +33,12 @@ class SaleConversation extends Conversation
         // SALE POST
 
         $message .= "*Sale Post*" . PHP_EOL;
-        $message .= "├ Active : `" . $post_active_count . " post(s)`" . PHP_EOL;
-        $message .=
-            "├ Inactive : `" . $post_inactive_count . " post(s)`" . PHP_EOL;
+        $message .= "├ Active : `" . $post_active_count . "`" . PHP_EOL;
+        $message .= "├ Inactive : `" . $post_inactive_count . "`" . PHP_EOL;
         $message .=
             "└ Total : `" .
             ($post_active_count + $post_inactive_count) .
-            " post(s)`" .
+            "`" .
             PHP_EOL .
             PHP_EOL;
 
@@ -73,9 +72,9 @@ class SaleConversation extends Conversation
         }
 
         $question = Question::create($message)->addButtons([
-            Button::create("💰 Create New")->value("sale"),
-            Button::create("👤 Active/Deactive")->value("profile"),
-            Button::create("❓ Edit/Delete")->value("tutorial"),
+            Button::create("💰 Create New")->value("create"),
+            Button::create("👤 Active/Deactive")->value("active_deactive"),
+            Button::create("❓ Edit/Delete")->value("edit_delete"),
             Button::create("👈 Back")->value("back"),
         ]);
 
@@ -84,6 +83,11 @@ class SaleConversation extends Conversation
             function (Answer $answer) {
                 if ($answer->isInteractiveMessageReply()) {
                     switch ($answer->getValue()) {
+                        case "create":
+                            $this->getBot()->startConversation(
+                                new CreateConversation()
+                            );
+                            break;
                         case "back":
                             $this->getBot()->startConversation(
                                 new StartConversation()

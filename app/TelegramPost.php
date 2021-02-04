@@ -39,4 +39,13 @@ class TelegramPost extends Model
 
         return $posts->get();
     }
+
+    public static function createPost($user_id, $post)
+    {
+        $post = self::create([
+            "telegram_user_id" => $user_id,
+            "active" => 1,
+            "post" => $post,
+        ]);
+    }
 }
