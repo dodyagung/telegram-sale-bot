@@ -22,9 +22,24 @@ class SaleConversation extends Conversation
                 ->getUser()
                 ->getId()
         );
-        $posts = TelegramPost::getPosts($user->id, 1);
-        $post_active_count = TelegramPost::countPost($user->id, 1);
-        $post_inactive_count = TelegramPost::countPost($user->id, 0);
+        $posts = TelegramPost::getPosts(
+            $this->getBot()
+                ->getUser()
+                ->getId(),
+            1
+        );
+        $post_active_count = TelegramPost::countPost(
+            $this->getBot()
+                ->getUser()
+                ->getId(),
+            1
+        );
+        $post_inactive_count = TelegramPost::countPost(
+            $this->getBot()
+                ->getUser()
+                ->getId(),
+            0
+        );
 
         $message = "*💰 Manage Sale*" . PHP_EOL . PHP_EOL;
 
@@ -72,9 +87,9 @@ class SaleConversation extends Conversation
         }
 
         $question = Question::create($message)->addButtons([
-            Button::create("💰 Create New")->value("create"),
-            Button::create("👤 Active/Deactive")->value("active_deactive"),
-            Button::create("❓ Edit/Delete")->value("edit_delete"),
+            Button::create("➕ Create New")->value("create"),
+            Button::create("⚙️ Enable/Disable")->value("enable_disable"),
+            Button::create("✏️ Edit/Delete")->value("edit_delete"),
             Button::create("👈 Back")->value("back"),
         ]);
 
@@ -86,6 +101,11 @@ class SaleConversation extends Conversation
                         case "create":
                             $this->getBot()->startConversation(
                                 new CreateConversation()
+                            );
+                            break;
+                        case "enable_disable":
+                            $this->getBot()->startConversation(
+                                new EnableDisableConversation()
                             );
                             break;
                         case "back":

@@ -48,4 +48,13 @@ class TelegramPost extends Model
             "post" => $post,
         ]);
     }
+
+    public static function toggleStatusPost($post_id)
+    {
+        $post = self::find($post_id);
+
+        $post->status = !$post->status;
+
+        $post->save();
+    }
 }
