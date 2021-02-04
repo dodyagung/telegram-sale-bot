@@ -40,13 +40,20 @@ class TelegramPost extends Model
         return $posts->get();
     }
 
-    public static function createPost($user_id, $post)
+    public static function createPost($user_id, $value)
     {
         $post = self::create([
             "telegram_user_id" => $user_id,
             "status" => 1,
-            "post" => $post,
+            "post" => $value,
         ]);
+    }
+
+    public static function getPost($post_id)
+    {
+        $post = self::find($post_id);
+
+        return $post;
     }
 
     public static function toggleStatusPost($post_id)
@@ -56,5 +63,19 @@ class TelegramPost extends Model
         $post->status = !$post->status;
 
         $post->save();
+    }
+
+    public static function editPost($post_id, $value)
+    {
+        $post = self::find($post_id);
+
+        $post->post = $value;
+
+        $post->save();
+    }
+
+    public static function deletePost($post_id)
+    {
+        self::destroy($post_id);
     }
 }

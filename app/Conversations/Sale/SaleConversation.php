@@ -108,6 +108,11 @@ class SaleConversation extends Conversation
                                 new EnableDisableConversation()
                             );
                             break;
+                        case "edit_delete":
+                            $this->getBot()->startConversation(
+                                new EditDeleteConversation()
+                            );
+                            break;
                         case "back":
                             $this->getBot()->startConversation(
                                 new StartConversation()

@@ -28,12 +28,12 @@ class PhoneConversation extends Conversation
             "Your phone number is *" . $user->phone . "*." . PHP_EOL . PHP_EOL;
 
         $message .=
-            "If you want to delete your phone number, click *Delete*. Otherwise, if you want to change it, *type directly below* :" .
+            "If you want to delete your phone number, click *Delete*. Otherwise, if you want to edit it, *type directly below* :" .
             PHP_EOL .
             PHP_EOL;
 
         $question = Question::create($message)->addButtons([
-            Button::create("❌ Delete")->value("profile_phone_delete"),
+            Button::create("❌ Delete")->value("delete"),
             Button::create("👈 Back")->value("back"),
         ]);
 
@@ -42,17 +42,17 @@ class PhoneConversation extends Conversation
             function (Answer $answer) {
                 if ($answer->isInteractiveMessageReply()) {
                     switch ($answer->getValue()) {
-                        case "back":
-                            $this->getBot()->startConversation(
-                                new ProfileConversation()
-                            );
-                            break;
-                        case "profile_phone_delete":
+                        case "delete":
                             TelegramUser::deletePhone(
                                 $this->getBot()
                                     ->getUser()
                                     ->getId()
                             );
+                            $this->getBot()->startConversation(
+                                new ProfileConversation()
+                            );
+                            break;
+                        case "back":
                             $this->getBot()->startConversation(
                                 new ProfileConversation()
                             );
