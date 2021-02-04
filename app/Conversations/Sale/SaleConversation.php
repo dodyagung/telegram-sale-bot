@@ -28,13 +28,13 @@ class SaleConversation extends Conversation
                 ->getId(),
             1
         );
-        $post_active_count = TelegramPost::countPost(
+        $post_enabled_count = TelegramPost::countPost(
             $this->getBot()
                 ->getUser()
                 ->getId(),
             1
         );
-        $post_inactive_count = TelegramPost::countPost(
+        $post_disabled_count = TelegramPost::countPost(
             $this->getBot()
                 ->getUser()
                 ->getId(),
@@ -48,11 +48,11 @@ class SaleConversation extends Conversation
         // SALE POST
 
         $message .= "*Sale Post*" . PHP_EOL;
-        $message .= "├ Active : `" . $post_active_count . "`" . PHP_EOL;
-        $message .= "├ Inactive : `" . $post_inactive_count . "`" . PHP_EOL;
+        $message .= "├ Enabled : `" . $post_enabled_count . "`" . PHP_EOL;
+        $message .= "├ Disabled : `" . $post_disabled_count . "`" . PHP_EOL;
         $message .=
             "└ Total : `" .
-            ($post_active_count + $post_inactive_count) .
+            ($post_enabled_count + $post_disabled_count) .
             "`" .
             PHP_EOL .
             PHP_EOL;
