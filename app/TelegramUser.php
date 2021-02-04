@@ -55,6 +55,19 @@ class TelegramUser extends Model
         return $user;
     }
 
+    public static function getUsersWithEnabledPosts()
+    {
+        $user = self::with([
+            "telegram_posts" => function ($query) {
+                $query->where("status", 1)->orderBy("post", "asc");
+            },
+        ])
+            ->orderBy("updated_at", "asc")
+            ->get();
+
+        return $user;
+    }
+
     public static function deletePhone($user_id)
     {
         $user = self::find($user_id);
