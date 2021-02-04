@@ -80,4 +80,11 @@ class TelegramPost extends Model
     {
         self::destroy($post_id);
     }
+
+    public static function disablePosts()
+    {
+        self::where("status", 1)->update([
+            "status" => 0,
+        ]);
+    }
 }
