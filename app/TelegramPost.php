@@ -37,6 +37,8 @@ class TelegramPost extends Model
             $posts->where("status", $status);
         }
 
+        $posts->orderBy("post", "asc");
+
         return $posts->get();
     }
 
