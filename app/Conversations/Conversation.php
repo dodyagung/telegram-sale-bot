@@ -20,10 +20,10 @@ class Conversation extends BaseConversation
      */
     public function fallback(Answer $answer)
     {
-        if ($answer->getText() == config("command_start")) {
+        if ($answer->getText() == config("botman.config.command_start")) {
             $this->getBot()->startConversation(new StartConversation());
         } else {
-            $this->say(config("command_fallback"));
+            $this->say(config("botman.config.command_fallback"));
         }
     }
 
@@ -35,7 +35,7 @@ class Conversation extends BaseConversation
         $is_user_joined_group = false;
 
         $request = $this->getBot()->sendRequest("getChatMember", [
-            "chat_id" => config("group_id"),
+            "chat_id" => config("botman.telegram.group_id"),
             "user_id" => $user->id,
         ]);
 

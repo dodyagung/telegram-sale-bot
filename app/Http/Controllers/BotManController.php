@@ -48,7 +48,7 @@ class BotManController extends Controller
      */
     public function fallback(BotMan $bot)
     {
-        $bot->reply(config("command_fallback"));
+        $bot->reply(config("botman.config.command_fallback"));
     }
     }
 }

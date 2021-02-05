@@ -21,11 +21,11 @@ class StartConversation extends Conversation
         $user = TelegramUser::saveUser($this->getBot()->getUser());
         $now = Carbon::now();
 
-        $bot_day_sale = Carbon::parse(config("day_sale"));
-        $bot_day_reset = Carbon::parse(config("day_reset"));
+        $bot_day_sale = Carbon::parse(config("botman.config.day_sale"));
+        $bot_day_reset = Carbon::parse(config("botman.config.day_reset"));
 
-        $telegram_group_name = config("group_name");
-        $telegram_group_link = config("group_link");
+        $telegram_group_name = config("botman.telegram.group_name");
+        $telegram_group_link = config("botman.telegram.group_link");
 
         // WELCOME
 
