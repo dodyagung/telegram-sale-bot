@@ -24,4 +24,17 @@ return [
     |
     */
     "user_cache_time" => 30,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Custom
+    |--------------------------------------------------------------------------
+    |
+    | Custom by telegram-sale-bot
+    |
+    */
+    "command_start" => env("BOT_COMMAND_START"),
+    "command_fallback" => env("BOT_COMMAND_FALLBACK"),
+    "day_sale" => env("BOT_DAY_SALE"),
+    "day_reset" => env("BOT_DAY_RESET"),
 ];

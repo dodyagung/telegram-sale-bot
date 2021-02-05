@@ -20,10 +20,10 @@ class Conversation extends BaseConversation
      */
     public function fallback(Answer $answer)
     {
-        if ($answer->getText() == env("BOT_COMMAND_START")) {
+        if ($answer->getText() == config("command_start")) {
             $this->getBot()->startConversation(new StartConversation());
         } else {
-            $this->say(env("BOT_COMMAND_FALLBACK"));
+            $this->say(config("command_fallback"));
         }
     }
 
@@ -35,7 +35,7 @@ class Conversation extends BaseConversation
         $is_user_joined_group = false;
 
         $request = $this->getBot()->sendRequest("getChatMember", [
-            "chat_id" => env("TELEGRAM_GROUP_ID"),
+            "chat_id" => config("group_id"),
             "user_id" => $user->id,
         ]);
 
