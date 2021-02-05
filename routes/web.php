@@ -12,4 +12,5 @@
 */
 
 Route::get("/", "BotManController@index");
+Route::get("cron", "BotManController@cron");
 Route::get("tinker", "BotManController@tinker");
