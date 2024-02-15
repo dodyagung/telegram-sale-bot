@@ -1,4 +1,4 @@
-import { Hears, Start, Update, Ctx, On, Help } from 'nestjs-telegraf';
+import { Hears, Start, Update, Ctx, On, Help, Sender } from 'nestjs-telegraf';
 import { Context } from 'telegraf';
 
 @Update()
@@ -18,8 +18,8 @@ export class SaleUpdate {
     await ctx.reply('👍');
   }
 
-  @Hears('hi')
-  async hears(@Ctx() ctx: Context) {
-    await ctx.reply('Hey there');
+  @Hears(['hi', 'hello', 'hey', 'qq'])
+  async onGreetings(@Sender('first_name') firstName: string): Promise<string> {
+    return `Hey ${firstName}`;
   }
 }
