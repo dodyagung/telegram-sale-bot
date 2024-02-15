@@ -1,10 +1,22 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { TelegrafModule, TelegrafModuleOptions } from 'nestjs-telegraf'; 
+import { SaleModule } from './sale/sale.module';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    TelegrafModule.forRootAsync({
+      botName: 'sale',
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (
+        configService: ConfigService,
+      ): Promise<TelegrafModuleOptions> => ({
+        token: configService.get<string>('TELEGRAM_SALE_BOT_TOKEN')!,
+        include: [SaleModule],
+      }),
+    }),
+    ConfigModule.forRoot(),
+  ],
 })
 export class AppModule {}
