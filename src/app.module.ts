@@ -14,6 +14,12 @@ import { SaleModule } from './sale/sale.module';
       ): Promise<TelegrafModuleOptions> => ({
         token: configService.get<string>('TELEGRAM_SALE_BOT_TOKEN')!,
         include: [SaleModule],
+        launchOptions: {
+          webhook: {
+            domain: configService.get<string>('TELEGRAM_SALE_BOT_WEBHOOK')!,
+            hookPath: '/',
+          },
+        },
       }),
     }),
     SaleModule,
