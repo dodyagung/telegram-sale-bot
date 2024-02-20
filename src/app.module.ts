@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TelegrafModule, TelegrafModuleOptions } from 'nestjs-telegraf';
 import { SaleModule } from './sale/sale.module';
+import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { SaleModule } from './sale/sale.module';
     }),
     SaleModule,
     ConfigModule.forRoot(),
+    PrismaModule,
   ],
 })
 export class AppModule {}
