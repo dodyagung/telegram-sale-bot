@@ -1,9 +1,10 @@
 import { Hears, Start, Update, Ctx, Sender } from 'nestjs-telegraf';
 import { Context, Markup } from 'telegraf';
-import { format } from 'date-fns';
+import { format, nextFriday } from 'date-fns';
 import { id } from 'date-fns/locale';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { ConfigService } from '@nestjs/config';
+import { posts } from '@prisma/client';
 
 @Update()
 export class SaleUpdate {
@@ -37,9 +38,18 @@ export class SaleUpdate {
     let message = `*🏠 Welcome*\n\n`;
     message += `Hello *${firstName}${lastName ? ' ' + lastName : ''}*, I'm [telegram\\-sale\\-bot](https://github.com/dodyagung/telegram-sale-bot)\\. Now is *${today}*, what can I help you today?\n\n`;
     // message += this.configService.get<string>('TELEGRAM_SALE_BOT_DAY_SALE');
-    message += format('this friday', "EEEE, dd MMMM yyyy '\\-' HH:mm 'WIB'", {
-      locale: id,
-    });
+    message += format(
+      nextFriday(new Date()),
+      "EEEE, dd MMMM yyyy '\\-' HH:mm 'WIB'",
+      {
+        locale: id,
+      },
+    );
+
+    // const a: posts | null = await this.prismaService.posts.findFirst({
+    //   where: { id: Number(711) },
+    // });
+    // console.log(a?.post);
 
     await ctx.replyWithMarkdownV2(message, {
       disable_web_page_preview: true,
