@@ -3,7 +3,7 @@ import { Context, Markup } from 'telegraf';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { ConfigService } from '@nestjs/config';
 // import { posts } from '@prisma/client';
-import { format, utcToZonedTime } from 'date-fns-tz';
+import { format } from 'date-fns-tz';
 import { nextFriday, nextSaturday } from 'date-fns';
 import { id } from 'date-fns/locale';
 
@@ -21,17 +21,19 @@ export class SaleUpdate {
     @Sender('first_name') firstName: string,
     @Sender('last_name') lastName: string,
   ): Promise<void> {
-    const zonedDate = utcToZonedTime(new Date(), 'Asia/Jakarta');
-    const now = format(zonedDate, 'EEEE, dd MMMM yyyy \\- HH:mm z', {
+    const now = format(new Date(), 'EEEE, dd MMMM yyyy \\- HH:mm z', {
       locale: id,
+      timeZone: 'Asia/Jakarta',
     });
-    const sale_day = format(nextFriday(zonedDate), 'EEEE, dd MMMM yyyy', {
+    const sale_day = format(nextFriday(new Date()), 'EEEE, dd MMMM yyyy', {
       locale: id,
+      timeZone: 'Asia/Jakarta',
     });
-    const reset_day = format(nextSaturday(zonedDate), 'EEEE, dd MMMM yyyy', {
+    const reset_day = format(nextSaturday(new Date()), 'EEEE, dd MMMM yyyy', {
       locale: id,
+      timeZone: 'Asia/Jakarta',
     });
-    const timezone = format(zonedDate, 'zzzz (O)', {
+    const timezone = format(new Date(), 'zzzz (O)', {
       locale: id,
       timeZone: 'Asia/Jakarta',
     });
