@@ -21,8 +21,10 @@ export class SaleUpdate {
     @Sender('first_name') firstName: string,
     @Sender('last_name') lastName: string,
   ): Promise<void> {
-    const zonedDate = utcToZonedTime(new Date(), 'Asia/Jakarta');
-    const now = format(zonedDate, "EEEE, dd MMMM yyyy '\\-' HH:mm 'WIB'", {
+    const zonedDate = utcToZonedTime(new Date(), 'Asia/Jakarta', {
+      timeZone: 'Asia/Jakarta',
+    });
+    const now = format(zonedDate, 'EEEE, dd MMMM yyyy \\- HH:mm z', {
       locale: id,
     });
     const sale_day = format(nextFriday(zonedDate), 'EEEE, dd MMMM yyyy', {
@@ -33,7 +35,6 @@ export class SaleUpdate {
     });
     const timezone = format(zonedDate, 'zzzz (O)', {
       locale: id,
-      timeZone: 'Asia/Jakarta',
     });
 
     const keyboard = Markup.inlineKeyboard([
