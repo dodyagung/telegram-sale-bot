@@ -31,8 +31,9 @@ export class SaleUpdate {
     const reset_day = format(nextSaturday(zonedDate), 'EEEE, dd MMMM yyyy', {
       locale: id,
     });
-    const timezone = format(zonedDate, 'zzzz (0)', {
+    const timezone = format(zonedDate, 'zzzz (O)', {
       locale: id,
+      timeZone: 'Asia/Jakarta',
     });
 
     const keyboard = Markup.inlineKeyboard([
