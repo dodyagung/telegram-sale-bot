@@ -21,9 +21,7 @@ export class SaleUpdate {
     @Sender('first_name') firstName: string,
     @Sender('last_name') lastName: string,
   ): Promise<void> {
-    const zonedDate = utcToZonedTime(new Date(), 'Asia/Jakarta', {
-      timeZone: 'Asia/Jakarta',
-    });
+    const zonedDate = utcToZonedTime(new Date(), 'Asia/Jakarta');
     const now = format(zonedDate, 'EEEE, dd MMMM yyyy \\- HH:mm z', {
       locale: id,
     });
@@ -35,6 +33,7 @@ export class SaleUpdate {
     });
     const timezone = format(zonedDate, 'zzzz (O)', {
       locale: id,
+      timeZone: 'Asia/Jakarta',
     });
 
     const keyboard = Markup.inlineKeyboard([
