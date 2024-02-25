@@ -1,17 +1,10 @@
 import { Hears, Start, Update, Ctx, Sender } from 'nestjs-telegraf';
 import { Context, Markup } from 'telegraf';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { ConfigService } from '@nestjs/config';
-// import { posts } from '@prisma/client';
 import { SaleService } from './sale.service';
 
 @Update()
 export class SaleUpdate {
-  constructor(
-    private prismaService: PrismaService,
-    private configService: ConfigService,
-    private saleService: SaleService,
-  ) {}
+  constructor(private saleService: SaleService) {}
 
   @Start()
   @Hears(['hi', 'hello', 'hey', 'qq', 'a'])
@@ -38,11 +31,6 @@ export class SaleUpdate {
     message += `├ Sale Day : \`${this.saleService.saleDate()}\`\n`;
     message += `├ Reset Day : \`${this.saleService.resetDate()}\`\n`;
     message += `└ Timezone : \`${this.saleService.timezone()}\`\n\n`;
-
-    // const a: posts | null = await this.prismaService.posts.findFirst({
-    //   where: { id: Number(711) },
-    // });
-    // console.log(a?.post);
 
     await ctx.replyWithMarkdownV2(message, {
       disable_web_page_preview: true,

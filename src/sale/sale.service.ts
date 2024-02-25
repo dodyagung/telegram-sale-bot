@@ -8,9 +8,13 @@ import {
   TIME_ZONED,
   TIMEZONE_OPTION,
 } from './sale.constant';
+import { posts } from '@prisma/client';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class SaleService {
+  constructor(private prismaService: PrismaService) {}
+
   today() {
     return format(TIME_ZONED, FORMAT_LONG, TIMEZONE_OPTION);
   }
@@ -25,5 +29,12 @@ export class SaleService {
 
   timezone() {
     return format(TIME_ZONED, FORMAT_TIMEZONE, TIMEZONE_OPTION);
+  }
+
+  async mySale() {
+    const a: posts | null = await this.prismaService.posts.findFirst({
+      where: { id: Number(711) },
+    });
+    console.log(a?.post);
   }
 }
