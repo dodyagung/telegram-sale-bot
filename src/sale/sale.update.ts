@@ -33,7 +33,9 @@ export class SaleUpdate {
     message += `└ Timezone : \`${this.saleService.timezone()}\`\n\n`;
 
     await ctx.replyWithMarkdownV2(message, {
-      disable_web_page_preview: true,
+      link_preview_options: {
+        is_disabled: true,
+      },
       reply_markup: keyboard.reply_markup,
     });
   }
