@@ -1,13 +1,7 @@
 import { Hears, Start, Update, Ctx, Sender } from 'nestjs-telegraf';
 import { Context, Markup } from 'telegraf';
 import { SaleService } from './sale.service';
-import {
-  GROUP_NAME,
-  RESET_DAY,
-  SALE_DAY,
-  TIMEZONE,
-  TODAY,
-} from './sale.constant';
+import { RESET_DAY, SALE_DAY, TIMEZONE, TODAY } from './sale.constant';
 
 @Update()
 export class SaleUpdate {
