@@ -1,6 +1,13 @@
 import { Hears, Start, Update, Ctx, Sender } from 'nestjs-telegraf';
 import { Context, Markup } from 'telegraf';
 import { SaleService } from './sale.service';
+import {
+  GROUP_NAME,
+  RESET_DAY,
+  SALE_DAY,
+  TIMEZONE,
+  TODAY,
+} from './sale.constant';
 
 @Update()
 export class SaleUpdate {
@@ -25,12 +32,17 @@ export class SaleUpdate {
     ]);
 
     let message = `*🏠 Welcome*\n\n`;
-    message += `Hello *${firstName}${lastName ? ' ' + lastName : ''}*, I'm [telegram\\-sale\\-bot](https://github.com/dodyagung/telegram-sale-bot)\\. Now is *${this.saleService.today()}*, what can I help you today?\n\n`;
+    message += `Hello *${firstName}${lastName ? ' ' + lastName : ''}*, I'm [telegram\\-sale\\-bot](https://github.com/dodyagung/telegram-sale-bot)\\. Now is *${TODAY}}*, what can I help you today?\n\n`;
 
     message += `*Sale Time*\n`;
-    message += `├ Sale Day : \`${this.saleService.saleDate()}\`\n`;
-    message += `├ Reset Day : \`${this.saleService.resetDate()}\`\n`;
-    message += `└ Timezone : \`${this.saleService.timezone()}\`\n\n`;
+    message += `├ Sale Day : \`${SALE_DAY}\`\n`;
+    message += `├ Reset Day : \`${RESET_DAY}\`\n`;
+    message += `└ Timezone : \`${TIMEZONE}\`\n\n`;
+
+    message += `*Sale Group*\n`;
+    message += `├ Name : \`${GROUP_NAME}\`\n`;
+    // message += `├ Joined : \`${this.saleService.resetDate()}\`\n`;
+    // message += `└ Link : \`${this.saleService.timezone()}\`\n\n`;
 
     await ctx.replyWithMarkdownV2(message, {
       link_preview_options: {
