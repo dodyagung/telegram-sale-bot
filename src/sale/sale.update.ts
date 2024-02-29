@@ -31,8 +31,19 @@ export class SaleUpdate {
       ],
     ]);
 
+    const user_joined = ['creator', 'administrator', 'member'].includes(
+      (
+        await ctx.telegram.getChatMember(
+          '-1001202921615',
+          ctx.message?.from.id ?? 0,
+        )
+      ).status,
+    );
+
+    const group_title: any = await ctx.telegram.getChat('-1001202921615');
+
     let message = `*🏠 Welcome*\n\n`;
-    message += `Hello *${firstName}${lastName ? ' ' + lastName : ''}*, I'm [telegram\\-sale\\-bot](https://github.com/dodyagung/telegram-sale-bot)\\. Now is *${TODAY}}*, what can I help you today?\n\n`;
+    message += `Hello *${firstName}${lastName ? ' ' + lastName : ''}*, I'm [telegram\\-sale\\-bot](https://github.com/dodyagung/telegram-sale-bot)\\. Now is *${TODAY}*, what can I help you today?\n\n`;
 
     message += `*Sale Time*\n`;
     message += `├ Sale Day : \`${SALE_DAY}\`\n`;
@@ -40,9 +51,9 @@ export class SaleUpdate {
     message += `└ Timezone : \`${TIMEZONE}\`\n\n`;
 
     message += `*Sale Group*\n`;
-    message += `├ Name : \`${GROUP_NAME}\`\n`;
-    // message += `├ Joined : \`${this.saleService.resetDate()}\`\n`;
-    // message += `└ Link : \`${this.saleService.timezone()}\`\n\n`;
+    message += `├ Name : \`${group_title.title}\`\n`;
+    message += `├ Joined : \`${user_joined ? 'Yes' : 'No'}\`\n`;
+    message += `└ Link : [Click Here](https://google.com)`;
 
     await ctx.replyWithMarkdownV2(message, {
       link_preview_options: {
