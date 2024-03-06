@@ -25,4 +25,3 @@ export const RESET_DAY = format(
   CONF_TZ_OPTION,
 );
 export const TIMEZONE = format(CONF_TIME, CONF_TZ_FORMAT, CONF_TZ_OPTION);
-export const GROUP_NAME = 'Fujiguys Indonesia';

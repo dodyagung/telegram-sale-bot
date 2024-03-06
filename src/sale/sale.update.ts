@@ -2,10 +2,14 @@ import { Hears, Start, Update, Ctx, Sender } from 'nestjs-telegraf';
 import { Context, Markup } from 'telegraf';
 import { SaleService } from './sale.service';
 import { RESET_DAY, SALE_DAY, TIMEZONE, TODAY } from './sale.constant';
+import { ConfigService } from '@nestjs/config';
 
 @Update()
 export class SaleUpdate {
-  constructor(private saleService: SaleService) {}
+  constructor(
+    private saleService: SaleService,
+    private configService: ConfigService,
+  ) {}
 
   @Start()
   @Hears(['hi', 'hello', 'hey', 'qq', 'a'])
@@ -47,7 +51,7 @@ export class SaleUpdate {
     message += `*Sale Group*\n`;
     message += `├ Name : \`${group_title.title}\`\n`;
     message += `├ Joined : \`${user_joined ? 'Yes' : 'No'}\`\n`;
-    message += `└ Link : [Click Here](https://google.com)`;
+    message += `└ Link : [Click Here](${this.configService.get<string>('TELEGRAM_GROUP_LINK')})`;
 
     await ctx.replyWithMarkdownV2(message, {
       link_preview_options: {
