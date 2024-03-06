@@ -32,7 +32,7 @@ export class SaleUpdate {
     const user_joined = ['creator', 'administrator', 'member'].includes(
       (
         await ctx.telegram.getChatMember(
-          '-1001202921615',
+          this.configService.get<string>('TELEGRAM_GROUP_ID')!,
           ctx.message?.from.id ?? 0,
         )
       ).status,
