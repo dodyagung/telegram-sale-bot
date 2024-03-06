@@ -10,6 +10,7 @@ export class SaleService {
   @Cron('0 */4 * * * *') // every 4 minutes
   async ping() {
     this.prismaService.$queryRaw`select 1`;
+    console.log('ping!');
   }
 
   async mySale() {
