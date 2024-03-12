@@ -1,0 +1,83 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - 'master'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: |
+            ${{ github.repository }}
+            # ghcr.io/${{ github.repository }}
+          tags: |
+            type=schedule,pattern=nightly,enable=true,priority=1000
+            type=ref,event=branch,enable=false,priority=600
+            type=ref,event=tag,enable=true,priority=600
+            type=ref,event=pr,prefix=pr-,enable=true,priority=600
+            type=raw,enable=true,priority=200,prefix=,suffix=,value={{date 'YYYYMMDD-HHmmss' tz='Asia/Jakarta'}}
+          flavor: |
+            latest=true
+        
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+  deploy_vm1:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Remote SSH and update container with latest docker image
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ vars.SSH_VM1_HOST }}
+          username: ${{ vars.SSH_VM1_USER }}
+          key: ${{ secrets.SSH_VM1_KEY }}
+          script: |
+            docker rm -f ${{ github.event.repository.name }}
+            docker rmi ${{ github.repository }}
+            docker run --name ${{ github.event.repository.name }} \
+              -e TELEGRAM_SALE_BOT_TOKEN=${{ secrets.TELEGRAM_SALE_BOT_TOKEN }} \
+              -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
+              -e TELEGRAM_GROUP_ID=${{ vars.TELEGRAM_GROUP_ID }} \
+              -e TELEGRAM_GROUP_LINK=${{ vars.TELEGRAM_GROUP_LINK }} \
+              -d ${{ github.repository }}
+
+  deploy_vm2:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Remote SSH and update container with latest docker image
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ vars.SSH_VM2_HOST }}
+          username: ${{ vars.SSH_VM2_USER }}
+          key: ${{ secrets.SSH_VM2_KEY }}
+          script: |
+            docker rm -f ${{ github.event.repository.name }}
+            docker rmi ${{ github.repository }}
+            docker run --name ${{ github.event.repository.name }} \
+              -e TELEGRAM_SALE_BOT_TOKEN=${{ secrets.TELEGRAM_SALE_BOT_TOKEN }} \
+              -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
+              -e TELEGRAM_GROUP_ID=${{ vars.TELEGRAM_GROUP_ID }} \
+              -e TELEGRAM_GROUP_LINK=${{ vars.TELEGRAM_GROUP_LINK }} \
+              -d ${{ github.repository }}
