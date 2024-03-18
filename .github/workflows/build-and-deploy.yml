@@ -33,7 +33,7 @@ jobs:
             type=raw,enable=true,priority=200,prefix=,suffix=,value={{date 'YYYYMMDD-HHmmss' tz='Asia/Jakarta'}}
           flavor: |
             latest=true
-        
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
@@ -56,7 +56,7 @@ jobs:
             docker rm -f ${{ github.event.repository.name }}
             docker rmi ${{ github.repository }}
             docker run --name ${{ github.event.repository.name }} \
-              -p 88:3000 \
+              -p ${{ vars.PORT }}:3000 \
               -e TELEGRAM_SALE_BOT_TOKEN=${{ secrets.TELEGRAM_SALE_BOT_TOKEN }} \
               -e TELEGRAM_SALE_BOT_WEBHOOK=${{ vars.TELEGRAM_SALE_BOT_WEBHOOK }} \
               -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
@@ -78,7 +78,7 @@ jobs:
             docker rm -f ${{ github.event.repository.name }}
             docker rmi ${{ github.repository }}
             docker run --name ${{ github.event.repository.name }} \
-              -p 88:3000 \
+              -p ${{ vars.PORT }}:3000 \
               -e TELEGRAM_SALE_BOT_TOKEN=${{ secrets.TELEGRAM_SALE_BOT_TOKEN }} \
               -e TELEGRAM_SALE_BOT_WEBHOOK=${{ vars.TELEGRAM_SALE_BOT_WEBHOOK }} \
               -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
