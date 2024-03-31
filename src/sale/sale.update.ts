@@ -1,9 +1,16 @@
 import { Hears, Start, Update, Ctx, Sender, Command } from 'nestjs-telegraf';
-import { Context, Markup } from 'telegraf';
+import { Markup, type Context as TContext } from 'telegraf';
 import { SaleService } from './sale.service';
 import { RESET_DAY, SALE_DAY, TIMEZONE, TODAY } from './sale.constant';
 import { ConfigService } from '@nestjs/config';
 import { SceneContext, WizardContext } from 'telegraf/scenes';
+import type { Update as TUpdate } from 'telegraf/types';
+
+interface Context<U extends TUpdate = TUpdate> extends TContext<U> {
+  session: {
+    last_message_id: number;
+  };
+}
 
 @Update()
 export class SaleUpdate {
@@ -70,11 +77,28 @@ export class SaleUpdate {
     message += `├ Joined : \`${user_joined ? 'Yes' : 'No'}\`\n`;
     message += `└ Link : [Click Here](${this.configService.get<string>('TELEGRAM_GROUP_LINK')})`;
 
-    await ctx.replyWithMarkdownV2(message, {
-      link_preview_options: {
-        is_disabled: true,
-      },
-      reply_markup: keyboard.reply_markup,
-    });
+    const last_message_id = ctx.session.last_message_id;
+
+    if (last_message_id) {
+      console.log(ctx);
+
+      const edit = await ctx.telegram.editMessageText(
+        ctx.chat?.id,
+        last_message_id,
+        undefined,
+        new Date().toString(),
+      );
+
+      console.log(edit);
+    } else {
+      const { message_id } = await ctx.replyWithMarkdownV2(message, {
+        link_preview_options: {
+          is_disabled: true,
+        },
+        reply_markup: keyboard.reply_markup,
+      });
+
+      ctx.session.last_message_id = message_id;
+    }
   }
 }

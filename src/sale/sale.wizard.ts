@@ -1,7 +1,7 @@
 import { Ctx, Message, On, Wizard, WizardStep } from 'nestjs-telegraf';
 import { WizardContext } from 'telegraf/scenes';
 
-interface SaleScene {
+interface State {
   name: string;
 }
 
@@ -21,7 +21,7 @@ export class SaleWizard {
     @Message() msg: { text: string },
   ): Promise<string> {
     console.log('Enter to step 1');
-    (ctx.wizard.state as SaleScene).name = msg.text;
+    (ctx.wizard.state as State).name = msg.text;
     await ctx.wizard.next();
     return 'Send me where are you from';
   }
@@ -34,6 +34,6 @@ export class SaleWizard {
   ): Promise<string> {
     console.log('Enter to step 3');
     await ctx.scene.leave();
-    return `Hello ${(ctx.wizard.state as SaleScene).name} from ${msg.text}. I'm Greater bot from 127.0.0.1 👋`;
+    return `Hello ${(ctx.wizard.state as State).name} from ${msg.text}. I'm Greater bot from 127.0.0.1 👋`;
   }
 }
