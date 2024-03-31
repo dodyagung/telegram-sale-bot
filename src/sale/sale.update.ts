@@ -1,8 +1,9 @@
-import { Hears, Start, Update, Ctx, Sender } from 'nestjs-telegraf';
+import { Hears, Start, Update, Ctx, Sender, Command } from 'nestjs-telegraf';
 import { Context, Markup } from 'telegraf';
 import { SaleService } from './sale.service';
 import { RESET_DAY, SALE_DAY, TIMEZONE, TODAY } from './sale.constant';
 import { ConfigService } from '@nestjs/config';
+import { SceneContext, WizardContext } from 'telegraf/scenes';
 
 @Update()
 export class SaleUpdate {
@@ -12,6 +13,20 @@ export class SaleUpdate {
   ) {}
 
   @Start()
+  onStart(): string {
+    return 'Say hello to me';
+  }
+
+  @Command('scene')
+  async onSceneCommand(@Ctx() ctx: SceneContext): Promise<void> {
+    await ctx.scene.enter('SALE_SCENE');
+  }
+
+  @Command('wizard')
+  async onWizardCommand(@Ctx() ctx: WizardContext): Promise<void> {
+    await ctx.scene.enter('SALE_WIZARD');
+  }
+
   @Hears(['hi', 'hello', 'hey', 'qq', 'a'])
   async onGreetings(
     @Ctx() ctx: Context,

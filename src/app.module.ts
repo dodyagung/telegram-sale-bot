@@ -4,6 +4,9 @@ import { TelegrafModule, TelegrafModuleOptions } from 'nestjs-telegraf';
 import { SaleModule } from './sale/sale.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { ScheduleModule } from '@nestjs/schedule';
+import { session } from 'telegraf';
+import { Postgres } from '@telegraf/session/pg';
+import { Pool } from 'pg';
 
 @Module({
   imports: [
@@ -21,6 +24,16 @@ import { ScheduleModule } from '@nestjs/schedule';
             hookPath: '/',
           },
         },
+        middlewares: [
+          session({
+            store: Postgres({
+              pool: new Pool({
+                connectionString: configService.get<string>('DATABASE_URL'),
+              }),
+              table: 'sessions',
+            }),
+          }),
+        ],
       }),
       inject: [ConfigService],
     }),
