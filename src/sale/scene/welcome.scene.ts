@@ -1,24 +1,21 @@
 import { Scene, SceneEnter, Ctx, Action, Sender } from 'nestjs-telegraf';
 import { SceneContext } from 'telegraf/scenes';
-import { Context, Markup } from 'telegraf';
-import { SaleUpdate } from '../sale.update';
+import { Markup } from 'telegraf';
 import { ConfigService } from '@nestjs/config';
 import { RESET_DAY, SALE_DAY, TIMEZONE, TODAY } from '../sale.constant';
+import { editMessage, sendMessage } from '../sale.common';
 
 @Scene('WELCOME_SCENE')
 export class WelcomeScene {
-  constructor(
-    private saleUpdate: SaleUpdate,
-    private configService: ConfigService,
-  ) {}
+  constructor(private configService: ConfigService) {}
 
   @SceneEnter()
   async onSceneEnter(
-    @Ctx() ctx: Context,
+    @Ctx() ctx: SceneContext,
     @Sender('first_name') firstName: string,
     @Sender('last_name') lastName: string,
   ): Promise<void> {
-    const keyboard = Markup.inlineKeyboard([
+    const keyboard = [
       [
         Markup.button.callback('💰 My Sale', 'sale'),
         Markup.button.callback('👤 My Profile', 'profile'),
@@ -27,13 +24,13 @@ export class WelcomeScene {
         Markup.button.callback('❓ Tutorial', 'tutorial'),
         Markup.button.callback('🤖 About', 'about'),
       ],
-    ]);
+    ];
 
     const user_joined = ['creator', 'administrator', 'member'].includes(
       (
         await ctx.telegram.getChatMember(
           this.configService.get<string>('TELEGRAM_GROUP_ID')!,
-          ctx.message?.from.id ?? 0,
+          ctx.from?.id ?? 0,
         )
       ).status,
     );
@@ -55,12 +52,11 @@ export class WelcomeScene {
     message += `├ Joined : \`${user_joined ? 'Yes' : 'No'}\`\n`;
     message += `└ Link : [Click Here](${this.configService.get<string>('TELEGRAM_GROUP_LINK')})`;
 
-    await ctx.replyWithMarkdownV2(message, {
-      link_preview_options: {
-        is_disabled: true,
-      },
-      reply_markup: keyboard.reply_markup,
-    });
+    if (ctx.callbackQuery) {
+      await editMessage(ctx, message, keyboard);
+    } else {
+      await sendMessage(ctx, message, keyboard);
+    }
   }
 
   @Action('sale')

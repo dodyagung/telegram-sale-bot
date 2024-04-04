@@ -10,6 +10,6 @@ export class SaleUpdate {
 
   @Hears(/.+/)
   async onFallback(): Promise<string> {
-    return 'Wrong command or input, please restart by clicking /start.';
+    return 'Wrong input, invalid command or something error.\n\nPlease restart by clicking /start.';
   }
 }
