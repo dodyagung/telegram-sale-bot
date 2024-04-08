@@ -7,7 +7,7 @@ import { sendMessage } from '../sale.common';
 export class AboutScene {
   @SceneEnter()
   async onSceneEnter(@Ctx() ctx: SceneContext): Promise<void> {
-    const keyboard = [[Markup.button.callback('🔙 Back', 'back')]];
+    const keyboard = [[Markup.button.callback('👈 Back', 'back')]];
 
     let message = `*🤖 About*\n\n`;
     message += `*telegram\\-sale\\-bot*\n`;

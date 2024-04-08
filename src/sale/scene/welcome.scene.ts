@@ -60,6 +60,11 @@ export class WelcomeScene {
     await ctx.scene.enter('SALE_SCENE');
   }
 
+  @Action('tutorial')
+  async onTutorialAction(@Ctx() ctx: SceneContext): Promise<void> {
+    await ctx.scene.enter('TUTORIAL_SCENE');
+  }
+
   @Action('about')
   async onAboutAction(@Ctx() ctx: SceneContext): Promise<void> {
     await ctx.scene.enter('ABOUT_SCENE');

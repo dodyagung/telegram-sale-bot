@@ -22,7 +22,7 @@ export const sendMessage = async (
   keyboard: HideableIKBtn[][],
   new_message: boolean = false,
 ): Promise<void> => {
-  (await new_message)
+  await (new_message
     ? ctx.reply(message, extra(keyboard))
-    : ctx.editMessageText(message, extra(keyboard));
+    : ctx.editMessageText(message, extra(keyboard)));
 };

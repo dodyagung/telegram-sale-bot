@@ -7,7 +7,7 @@ import { sendMessage } from '../sale.common';
 export class SaleScene {
   @SceneEnter()
   async onSceneEnter(@Ctx() ctx: SceneContext): Promise<void> {
-    const keyboard = [[Markup.button.callback('🔙 Back', 'back')]];
+    const keyboard = [[Markup.button.callback('👈 Back', 'back')]];
     const message = ' sale scene';
 
     await sendMessage(ctx, message, keyboard);
