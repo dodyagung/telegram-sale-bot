@@ -3,7 +3,7 @@ import { SceneContext } from 'telegraf/scenes';
 import { Markup } from 'telegraf';
 import { ConfigService } from '@nestjs/config';
 import { RESET_DAY, SALE_DAY, TIMEZONE, TODAY } from '../sale.constant';
-import { editMessage, sendMessage } from '../sale.common';
+import { sendMessage } from '../sale.common';
 
 @Scene('WELCOME_SCENE')
 export class WelcomeScene {
@@ -52,15 +52,16 @@ export class WelcomeScene {
     message += `├ Joined : \`${user_joined ? 'Yes' : 'No'}\`\n`;
     message += `└ Link : [Click Here](${this.configService.get<string>('TELEGRAM_GROUP_LINK')})`;
 
-    if (ctx.callbackQuery) {
-      await editMessage(ctx, message, keyboard);
-    } else {
-      await sendMessage(ctx, message, keyboard);
-    }
+    await sendMessage(ctx, message, keyboard, !ctx.callbackQuery);
   }
 
   @Action('sale')
   async onSaleAction(@Ctx() ctx: SceneContext): Promise<void> {
     await ctx.scene.enter('SALE_SCENE');
+  }
+
+  @Action('about')
+  async onAboutAction(@Ctx() ctx: SceneContext): Promise<void> {
+    await ctx.scene.enter('ABOUT_SCENE');
   }
 }

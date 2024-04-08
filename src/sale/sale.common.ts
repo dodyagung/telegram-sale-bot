@@ -16,18 +16,13 @@ const extra = (keyboard: HideableIKBtn[][]): ExtraEditMessageText => {
   };
 };
 
-export const editMessage = async (
-  ctx: SceneContext,
-  message: string,
-  keyboard: HideableIKBtn[][],
-): Promise<void> => {
-  await ctx.editMessageText(message, extra(keyboard));
-};
-
 export const sendMessage = async (
   ctx: SceneContext,
   message: string,
   keyboard: HideableIKBtn[][],
+  new_message: boolean = false,
 ): Promise<void> => {
-  await ctx.reply(message, extra(keyboard));
+  (await new_message)
+    ? ctx.reply(message, extra(keyboard))
+    : ctx.editMessageText(message, extra(keyboard));
 };

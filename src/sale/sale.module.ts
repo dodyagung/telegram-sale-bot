@@ -5,9 +5,10 @@ import { ConfigModule } from '@nestjs/config';
 import { SaleService } from './sale.service';
 import { SaleScene } from './scene/sale.scene';
 import { WelcomeScene } from './scene/welcome.scene';
+import { AboutScene } from './scene/about.scene';
 
 @Module({
-  providers: [SaleUpdate, SaleService, SaleScene, WelcomeScene],
+  providers: [SaleUpdate, SaleService, SaleScene, WelcomeScene, AboutScene],
   imports: [ConfigModule, PrismaModule],
 })
 export class SaleModule {}
