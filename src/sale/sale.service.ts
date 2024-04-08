@@ -1,12 +1,10 @@
-import { Logger, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
-import { posts } from '@prisma/client';
+import { posts, users } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class SaleService {
-  private readonly logger = new Logger(SaleService.name);
-
   constructor(private prismaService: PrismaService) {}
 
   // @Cron('0 */4 * * * *') // every 4 minutes
@@ -15,10 +13,12 @@ export class SaleService {
   //   this.logger.log(`Database ping: ${JSON.stringify(ping)}`);
   // }
 
-  // async mySale() {
-  //   const a: posts | null = await this.prismaService.posts.findFirst({
-  //     where: { id: Number(711) },
-  //   });
-  //   console.log(a?.post);
-  // }
+  async getUserPhone(id: string): Promise<{ phone: string | null } | null> {
+    return await this.prismaService.users.findFirst({
+      select: { phone: true },
+      where: {
+        id,
+      },
+    });
+  }
 }

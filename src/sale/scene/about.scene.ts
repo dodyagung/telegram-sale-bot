@@ -22,7 +22,7 @@ export class AboutScene {
     message += `If you are developer, open a [GitHub Pull Request](https://github.com/dodyagung/telegram-sale-bot/pulls)\\.\n\n`;
 
     message += `*Creator*\n`;
-    message += `Hi, I am Dody\\. A backend enthusiast\\. Loves Golang and Typescript\\.\n`;
+    message += `Hi, I\\'m Dody\\. A backend enthusiast\\. Loves Golang and Typescript\\.\n`;
     message += `Visit my website at [dodyagung\\.com](https://dodyagung.com)\\.\n\n`;
 
     message += `*License*\n`;

@@ -30,7 +30,7 @@ export class WelcomeScene {
       (
         await ctx.telegram.getChatMember(
           this.configService.get<string>('TELEGRAM_GROUP_ID')!,
-          ctx.from?.id ?? 0,
+          ctx.from!.id,
         )
       ).status,
     );
@@ -58,6 +58,11 @@ export class WelcomeScene {
   @Action('sale')
   async onSaleAction(@Ctx() ctx: SceneContext): Promise<void> {
     await ctx.scene.enter('SALE_SCENE');
+  }
+
+  @Action('profile')
+  async onProfileAction(@Ctx() ctx: SceneContext): Promise<void> {
+    await ctx.scene.enter('PROFILE_SCENE');
   }
 
   @Action('tutorial')

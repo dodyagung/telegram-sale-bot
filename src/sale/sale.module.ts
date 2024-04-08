@@ -7,6 +7,7 @@ import { SaleScene } from './scene/sale.scene';
 import { WelcomeScene } from './scene/welcome.scene';
 import { AboutScene } from './scene/about.scene';
 import { TutorialScene } from './scene/tutorial.scene';
+import { ProfileScene } from './scene/profile.scene';
 
 @Module({
   providers: [
@@ -14,6 +15,7 @@ import { TutorialScene } from './scene/tutorial.scene';
     SaleService,
     SaleScene,
     WelcomeScene,
+    ProfileScene,
     AboutScene,
     TutorialScene,
   ],
