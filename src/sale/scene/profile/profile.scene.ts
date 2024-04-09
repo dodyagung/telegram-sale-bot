@@ -1,7 +1,7 @@
-import { Scene, SceneEnter, Ctx, Action } from 'nestjs-telegraf';
+import { Scene, SceneEnter, Ctx, Action, Hears } from 'nestjs-telegraf';
 import { SceneContext } from 'telegraf/scenes';
 import { Markup } from 'telegraf';
-import { sendMessage } from '../../sale.common';
+import { leaveScene, sendMessageWithKeyboard } from '../../sale.common';
 import { SaleService } from '../../sale.service';
 
 @Scene('PROFILE_SCENE')
@@ -47,7 +47,7 @@ export class ProfileScene {
     message += `*Additional Info*\n`;
     message += `└ Phone : \`${(await this.getPhone(ctx)) ?? '<not set>'}\`\n\n`;
 
-    sendMessage(ctx, message, keyboard);
+    sendMessageWithKeyboard(ctx, message, keyboard);
   }
 
   @Action('phone_edit')
@@ -63,5 +63,10 @@ export class ProfileScene {
   @Action('back')
   onBack(@Ctx() ctx: SceneContext): void {
     ctx.scene.enter('WELCOME_SCENE');
+  }
+
+  @Hears(/.+/)
+  onFallback(@Ctx() ctx: SceneContext): void {
+    leaveScene(ctx);
   }
 }

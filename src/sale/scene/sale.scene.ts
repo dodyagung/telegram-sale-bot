@@ -1,7 +1,7 @@
-import { Scene, SceneEnter, Ctx, Action } from 'nestjs-telegraf';
+import { Scene, SceneEnter, Ctx, Action, Hears } from 'nestjs-telegraf';
 import { SceneContext } from 'telegraf/scenes';
 import { Markup } from 'telegraf';
-import { sendMessage } from '../sale.common';
+import { leaveScene, sendMessageWithKeyboard } from '../sale.common';
 
 @Scene('SALE_SCENE')
 export class SaleScene {
@@ -10,11 +10,16 @@ export class SaleScene {
     const keyboard = [[Markup.button.callback('👈 Back', 'back')]];
     const message = ' sale scene';
 
-    sendMessage(ctx, message, keyboard);
+    sendMessageWithKeyboard(ctx, message, keyboard);
   }
 
   @Action('back')
   onBack(@Ctx() ctx: SceneContext): void {
     ctx.scene.enter('WELCOME_SCENE');
+  }
+
+  @Hears(/.+/)
+  onFallback(@Ctx() ctx: SceneContext): void {
+    leaveScene(ctx);
   }
 }

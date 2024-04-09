@@ -1,14 +1,23 @@
-import { Scene, SceneEnter, Ctx, Action, Sender } from 'nestjs-telegraf';
+import {
+  Scene,
+  SceneEnter,
+  Ctx,
+  Action,
+  Sender,
+  Hears,
+  Start,
+} from 'nestjs-telegraf';
 import { SceneContext } from 'telegraf/scenes';
 import { Markup } from 'telegraf';
 import { ConfigService } from '@nestjs/config';
 import { RESET_DAY, SALE_DAY, TIMEZONE, TODAY } from '../sale.constant';
-import { sendMessage } from '../sale.common';
+import { leaveScene, sendMessageWithKeyboard } from '../sale.common';
 
 @Scene('WELCOME_SCENE')
 export class WelcomeScene {
   constructor(private configService: ConfigService) {}
 
+  @Start()
   @SceneEnter()
   async onSceneEnter(
     @Ctx() ctx: SceneContext,
@@ -56,7 +65,7 @@ export class WelcomeScene {
     message += `├ Joined : \`${user_joined ? 'Yes' : 'No'}\`\n`;
     message += `└ Link : [Click Here](${this.configService.get<string>('TELEGRAM_GROUP_LINK')})`;
 
-    sendMessage(ctx, message, keyboard, !ctx.callbackQuery);
+    sendMessageWithKeyboard(ctx, message, keyboard);
   }
 
   @Action('sale')
@@ -77,5 +86,10 @@ export class WelcomeScene {
   @Action('about')
   onAboutAction(@Ctx() ctx: SceneContext): void {
     ctx.scene.enter('ABOUT_SCENE');
+  }
+
+  @Hears(/.+/)
+  onFallback(@Ctx() ctx: SceneContext): void {
+    leaveScene(ctx);
   }
 }

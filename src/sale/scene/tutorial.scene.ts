@@ -1,7 +1,7 @@
-import { Scene, SceneEnter, Ctx, Action } from 'nestjs-telegraf';
+import { Scene, SceneEnter, Ctx, Action, Hears } from 'nestjs-telegraf';
 import { SceneContext } from 'telegraf/scenes';
 import { Markup } from 'telegraf';
-import { sendMessage } from '../sale.common';
+import { leaveScene, sendMessageWithKeyboard } from '../sale.common';
 
 @Scene('TUTORIAL_SCENE')
 export class TutorialScene {
@@ -17,11 +17,16 @@ export class TutorialScene {
     message += `5\\. The actual view that will be sent to the group can be seen in *Manage Sale*\\.\n\n`;
     message += `6\\. If there are problems or errors, contact us on the About menu\\.`;
 
-    sendMessage(ctx, message, keyboard);
+    sendMessageWithKeyboard(ctx, message, keyboard);
   }
 
   @Action('back')
   onBack(@Ctx() ctx: SceneContext): void {
     ctx.scene.enter('WELCOME_SCENE');
+  }
+
+  @Hears(/.+/)
+  onFallback(@Ctx() ctx: SceneContext): void {
+    leaveScene(ctx);
   }
 }

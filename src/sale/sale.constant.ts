@@ -25,3 +25,5 @@ export const RESET_DAY = format(
   CONF_TZ_OPTION,
 );
 export const TIMEZONE = format(CONF_TIME, CONF_TZ_FORMAT, CONF_TZ_OPTION);
+export const FALLBACK_MESSAGE =
+  'Wrong input, invalid command or something error.\n\nPlease restart by clicking /start.';

@@ -1,7 +1,7 @@
-import { Scene, SceneEnter, Ctx, Action } from 'nestjs-telegraf';
+import { Scene, SceneEnter, Ctx, Action, Hears } from 'nestjs-telegraf';
 import { SceneContext } from 'telegraf/scenes';
 import { Markup } from 'telegraf';
-import { sendMessage } from '../sale.common';
+import { leaveScene, sendMessageWithKeyboard } from '../sale.common';
 
 @Scene('ABOUT_SCENE')
 export class AboutScene {
@@ -28,11 +28,16 @@ export class AboutScene {
     message += `*License*\n`;
     message += `This open\\-source project is licensed under [MIT license](https://github.com/dodyagung/telegram-sale-bot/blob/master/LICENSE.md)\\.`;
 
-    sendMessage(ctx, message, keyboard);
+    sendMessageWithKeyboard(ctx, message, keyboard);
   }
 
   @Action('back')
   onBack(@Ctx() ctx: SceneContext): void {
     ctx.scene.enter('WELCOME_SCENE');
+  }
+
+  @Hears(/.+/)
+  onFallback(@Ctx() ctx: SceneContext): void {
+    leaveScene(ctx);
   }
 }

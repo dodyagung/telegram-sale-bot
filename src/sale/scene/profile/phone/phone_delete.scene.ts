@@ -1,7 +1,7 @@
-import { Scene, SceneEnter, Ctx, Action } from 'nestjs-telegraf';
+import { Scene, SceneEnter, Ctx, Action, Hears } from 'nestjs-telegraf';
 import { SceneContext } from 'telegraf/scenes';
 import { Markup } from 'telegraf';
-import { sendMessage } from 'src/sale/sale.common';
+import { leaveScene, sendMessageWithKeyboard } from 'src/sale/sale.common';
 import { SaleService } from 'src/sale/sale.service';
 
 @Scene('PHONE_DELETE_SCENE')
@@ -21,17 +21,22 @@ export class PhoneDeleteScene {
 
     message += `_You can always enable it again from Edit Phone menu\\._`;
 
-    sendMessage(ctx, message, keyboard);
+    sendMessageWithKeyboard(ctx, message, keyboard);
   }
 
   @Action('phone_delete_confirm')
   onPhoneDeleteConfirm(@Ctx() ctx: SceneContext): void {
-    this.saleService.deletePhone(ctx.from!.id.toString());
+    this.saleService.editPhone(ctx.from!.id.toString(), null);
     ctx.scene.enter('PROFILE_SCENE');
   }
 
   @Action('back')
   onBack(@Ctx() ctx: SceneContext): void {
     ctx.scene.enter('PROFILE_SCENE');
+  }
+
+  @Hears(/.+/)
+  onFallback(@Ctx() ctx: SceneContext): void {
+    leaveScene(ctx);
   }
 }
