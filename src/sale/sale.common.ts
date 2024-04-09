@@ -7,14 +7,21 @@ import { FALLBACK_MESSAGE } from './sale.constant';
 type Hideable<B> = B & { hide?: boolean };
 type HideableIKBtn = Hideable<InlineKeyboardButton>;
 
-const extra = (keyboard: HideableIKBtn[][]): ExtraEditMessageText => {
+const extraWithoutKeyboard = (): ExtraEditMessageText => {
   return {
     parse_mode: 'MarkdownV2',
     link_preview_options: {
       is_disabled: true,
     },
-    reply_markup: Markup.inlineKeyboard(keyboard).reply_markup,
   };
+};
+
+const extraWithKeyboard = (
+  keyboard: HideableIKBtn[][],
+): ExtraEditMessageText => {
+  return Object.assign(extraWithoutKeyboard(), {
+    reply_markup: Markup.inlineKeyboard(keyboard).reply_markup,
+  });
 };
 
 export const leaveScene = (ctx: SceneContext): void => {
@@ -28,13 +35,13 @@ export const sendMessageWithKeyboard = async (
   keyboard: HideableIKBtn[][],
 ): Promise<void> => {
   await (ctx.callbackQuery
-    ? ctx.editMessageText(message, extra(keyboard))
-    : ctx.reply(message, extra(keyboard)));
+    ? ctx.editMessageText(message, extraWithKeyboard(keyboard))
+    : ctx.reply(message, extraWithKeyboard(keyboard)));
 };
 
 export const sendMessageWithoutKeyboard = (
   ctx: SceneContext,
   message: string,
 ): void => {
-  ctx.reply(message);
+  ctx.reply(message, extraWithoutKeyboard());
 };

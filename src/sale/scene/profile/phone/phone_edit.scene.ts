@@ -7,7 +7,7 @@ import {
   Message,
 } from 'nestjs-telegraf';
 import { SceneContext } from 'telegraf/scenes';
-import { Markup, Scenes } from 'telegraf';
+import { Markup } from 'telegraf';
 import {
   sendMessageWithKeyboard,
   sendMessageWithoutKeyboard,
@@ -37,10 +37,11 @@ export class PhoneEditScene {
   @Hears(/.+/)
   onFallback(@Ctx() ctx: SceneContext, @Message() msg: { text: string }): void {
     this.saleService.editPhone(ctx.from!.id.toString(), msg.text);
-    sendMessageWithoutKeyboard(
-      ctx,
-      `Successfuly edited the phone with ${msg.text}!`,
-    );
+
+    let message = `✅ Success\n\n`;
+    message += `Your phone number has been successfully edited to \`${msg.text}\`\\.`;
+    sendMessageWithoutKeyboard(ctx, message);
+
     ctx.scene.enter('PROFILE_SCENE');
   }
 }
