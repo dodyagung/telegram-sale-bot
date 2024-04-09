@@ -6,7 +6,7 @@ import { sendMessage } from '../sale.common';
 @Scene('ABOUT_SCENE')
 export class AboutScene {
   @SceneEnter()
-  async onSceneEnter(@Ctx() ctx: SceneContext): Promise<void> {
+  onSceneEnter(@Ctx() ctx: SceneContext): void {
     const keyboard = [[Markup.button.callback('👈 Back', 'back')]];
 
     let message: string = `*🤖 About*\n\n`;
@@ -28,11 +28,11 @@ export class AboutScene {
     message += `*License*\n`;
     message += `This open\\-source project is licensed under [MIT license](https://github.com/dodyagung/telegram-sale-bot/blob/master/LICENSE.md)\\.`;
 
-    await sendMessage(ctx, message, keyboard);
+    sendMessage(ctx, message, keyboard);
   }
 
   @Action('back')
-  async onBack(@Ctx() ctx: SceneContext): Promise<void> {
-    await ctx.scene.enter('WELCOME_SCENE');
+  onBack(@Ctx() ctx: SceneContext): void {
+    ctx.scene.enter('WELCOME_SCENE');
   }
 }

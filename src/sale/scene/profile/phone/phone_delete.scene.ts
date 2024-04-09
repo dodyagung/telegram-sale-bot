@@ -21,17 +21,17 @@ export class PhoneDeleteScene {
 
     message += `_You can always enable it again from Edit Phone menu\\._`;
 
-    await sendMessage(ctx, message, keyboard);
+    sendMessage(ctx, message, keyboard);
   }
 
   @Action('phone_delete_confirm')
-  async onPhoneDeleteConfirm(@Ctx() ctx: SceneContext): Promise<void> {
-    await this.saleService.deletePhone(ctx.from!.id.toString());
-    await ctx.scene.enter('PROFILE_SCENE');
+  onPhoneDeleteConfirm(@Ctx() ctx: SceneContext): void {
+    this.saleService.deletePhone(ctx.from!.id.toString());
+    ctx.scene.enter('PROFILE_SCENE');
   }
 
   @Action('back')
-  async onBack(@Ctx() ctx: SceneContext): Promise<void> {
-    await ctx.scene.enter('PROFILE_SCENE');
+  onBack(@Ctx() ctx: SceneContext): void {
+    ctx.scene.enter('PROFILE_SCENE');
   }
 }

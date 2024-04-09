@@ -4,12 +4,12 @@ import { SceneContext } from 'telegraf/scenes';
 @Update()
 export class SaleUpdate {
   @Start()
-  async onStart(@Ctx() ctx: SceneContext): Promise<void> {
-    await ctx.scene.enter('WELCOME_SCENE');
+  onStart(@Ctx() ctx: SceneContext): void {
+    ctx.scene.enter('WELCOME_SCENE');
   }
 
   @Hears(/.+/)
-  async onFallback(): Promise<string> {
+  onFallback(): string {
     return 'Wrong input, invalid command or something error.\n\nPlease restart by clicking /start.';
   }
 }

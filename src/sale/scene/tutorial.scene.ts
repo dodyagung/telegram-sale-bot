@@ -6,7 +6,7 @@ import { sendMessage } from '../sale.common';
 @Scene('TUTORIAL_SCENE')
 export class TutorialScene {
   @SceneEnter()
-  async onSceneEnter(@Ctx() ctx: SceneContext): Promise<void> {
+  onSceneEnter(@Ctx() ctx: SceneContext): void {
     const keyboard = [[Markup.button.callback('👈 Back', 'back')]];
 
     let message: string = `*❓ Tutorial*\n\n`;
@@ -17,11 +17,11 @@ export class TutorialScene {
     message += `5\\. The actual view that will be sent to the group can be seen in *Manage Sale*\\.\n\n`;
     message += `6\\. If there are problems or errors, contact us on the About menu\\.`;
 
-    await sendMessage(ctx, message, keyboard);
+    sendMessage(ctx, message, keyboard);
   }
 
   @Action('back')
-  async onBack(@Ctx() ctx: SceneContext): Promise<void> {
-    await ctx.scene.enter('WELCOME_SCENE');
+  onBack(@Ctx() ctx: SceneContext): void {
+    ctx.scene.enter('WELCOME_SCENE');
   }
 }

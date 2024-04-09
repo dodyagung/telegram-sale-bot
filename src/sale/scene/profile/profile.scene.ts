@@ -8,7 +8,7 @@ import { SaleService } from '../../sale.service';
 export class ProfileScene {
   constructor(private saleService: SaleService) {}
 
-  async getPhone(@Ctx() ctx: SceneContext) {
+  async getPhone(@Ctx() ctx: SceneContext): Promise<string | null | undefined> {
     return (await this.saleService.getPhone(ctx.from!.id.toString()))?.phone;
   }
 
@@ -47,21 +47,21 @@ export class ProfileScene {
     message += `*Additional Info*\n`;
     message += `└ Phone : \`${(await this.getPhone(ctx)) ?? '<not set>'}\`\n\n`;
 
-    await sendMessage(ctx, message, keyboard);
+    sendMessage(ctx, message, keyboard);
   }
 
   @Action('phone_edit')
-  async onPhoneEdit(@Ctx() ctx: SceneContext): Promise<void> {
-    await ctx.scene.enter('PHONE_EDIT_SCENE');
+  onPhoneEdit(@Ctx() ctx: SceneContext): void {
+    ctx.scene.enter('PHONE_EDIT_SCENE');
   }
 
   @Action('phone_delete')
-  async onPhoneDelete(@Ctx() ctx: SceneContext): Promise<void> {
-    await ctx.scene.enter('PHONE_DELETE_SCENE');
+  onPhoneDelete(@Ctx() ctx: SceneContext): void {
+    ctx.scene.enter('PHONE_DELETE_SCENE');
   }
 
   @Action('back')
-  async onBack(@Ctx() ctx: SceneContext): Promise<void> {
-    await ctx.scene.enter('WELCOME_SCENE');
+  onBack(@Ctx() ctx: SceneContext): void {
+    ctx.scene.enter('WELCOME_SCENE');
   }
 }

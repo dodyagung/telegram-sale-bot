@@ -6,15 +6,15 @@ import { sendMessage } from '../sale.common';
 @Scene('SALE_SCENE')
 export class SaleScene {
   @SceneEnter()
-  async onSceneEnter(@Ctx() ctx: SceneContext): Promise<void> {
+  onSceneEnter(@Ctx() ctx: SceneContext): void {
     const keyboard = [[Markup.button.callback('👈 Back', 'back')]];
     const message = ' sale scene';
 
-    await sendMessage(ctx, message, keyboard);
+    sendMessage(ctx, message, keyboard);
   }
 
   @Action('back')
-  async onBack(@Ctx() ctx: SceneContext): Promise<void> {
-    await ctx.scene.enter('WELCOME_SCENE');
+  onBack(@Ctx() ctx: SceneContext): void {
+    ctx.scene.enter('WELCOME_SCENE');
   }
 }

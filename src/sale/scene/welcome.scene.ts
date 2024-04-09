@@ -26,7 +26,11 @@ export class WelcomeScene {
       ],
     ];
 
-    const user_joined = ['creator', 'administrator', 'member'].includes(
+    const user_joined: boolean = [
+      'creator',
+      'administrator',
+      'member',
+    ].includes(
       (
         await ctx.telegram.getChatMember(
           this.configService.get<string>('TELEGRAM_GROUP_ID')!,
@@ -52,26 +56,26 @@ export class WelcomeScene {
     message += `├ Joined : \`${user_joined ? 'Yes' : 'No'}\`\n`;
     message += `└ Link : [Click Here](${this.configService.get<string>('TELEGRAM_GROUP_LINK')})`;
 
-    await sendMessage(ctx, message, keyboard, !ctx.callbackQuery);
+    sendMessage(ctx, message, keyboard, !ctx.callbackQuery);
   }
 
   @Action('sale')
-  async onSaleAction(@Ctx() ctx: SceneContext): Promise<void> {
-    await ctx.scene.enter('SALE_SCENE');
+  onSaleAction(@Ctx() ctx: SceneContext): void {
+    ctx.scene.enter('SALE_SCENE');
   }
 
   @Action('profile')
-  async onProfileAction(@Ctx() ctx: SceneContext): Promise<void> {
-    await ctx.scene.enter('PROFILE_SCENE');
+  onProfileAction(@Ctx() ctx: SceneContext): void {
+    ctx.scene.enter('PROFILE_SCENE');
   }
 
   @Action('tutorial')
-  async onTutorialAction(@Ctx() ctx: SceneContext): Promise<void> {
-    await ctx.scene.enter('TUTORIAL_SCENE');
+  onTutorialAction(@Ctx() ctx: SceneContext): void {
+    ctx.scene.enter('TUTORIAL_SCENE');
   }
 
   @Action('about')
-  async onAboutAction(@Ctx() ctx: SceneContext): Promise<void> {
-    await ctx.scene.enter('ABOUT_SCENE');
+  onAboutAction(@Ctx() ctx: SceneContext): void {
+    ctx.scene.enter('ABOUT_SCENE');
   }
 }
