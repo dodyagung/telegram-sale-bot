@@ -7,7 +7,9 @@ import { SaleScene } from './scene/sale.scene';
 import { WelcomeScene } from './scene/welcome.scene';
 import { AboutScene } from './scene/about.scene';
 import { TutorialScene } from './scene/tutorial.scene';
-import { ProfileScene } from './scene/profile.scene';
+import { ProfileScene } from './scene/profile/profile.scene';
+import { PhoneEditScene } from './scene/profile/phone/phone_edit.scene';
+import { PhoneDeleteScene } from './scene/profile/phone/phone_delete.scene';
 
 @Module({
   providers: [
@@ -16,6 +18,8 @@ import { ProfileScene } from './scene/profile.scene';
     SaleScene,
     WelcomeScene,
     ProfileScene,
+    PhoneEditScene,
+    PhoneDeleteScene,
     AboutScene,
     TutorialScene,
   ],

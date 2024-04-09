@@ -1,20 +1,26 @@
 import { Scene, SceneEnter, Ctx, Action } from 'nestjs-telegraf';
 import { SceneContext } from 'telegraf/scenes';
 import { Markup } from 'telegraf';
-import { sendMessage } from '../sale.common';
-import { SaleService } from '../sale.service';
+import { sendMessage } from 'src/sale/sale.common';
+import { SaleService } from 'src/sale/sale.service';
 
-@Scene('PROFILE_SCENE')
-export class ProfileScene {
+@Scene('PHONE_EDIT_SCENE')
+export class PhoneEditScene {
   constructor(private saleService: SaleService) {}
 
   @SceneEnter()
   async onSceneEnter(@Ctx() ctx: SceneContext): Promise<void> {
-    const keyboard = [[Markup.button.callback('👈 Back', 'back')]];
+    const keyboard = [
+      [
+        Markup.button.callback('✏️ Edit Phone', 'phone_edit'),
+        Markup.button.callback('❌ Delete Phone', 'phone_delete'),
+      ],
+      [Markup.button.callback('👈 Back', 'back')],
+    ];
 
-    let message = `*👤 My Profile*\n\n`;
+    let message: string = `*👤 My Profile*\n\n`;
 
-    message += `This is your account information\\. You can also edit, enable or disable your phone below\\.\n\n`;
+    message += `This is your account information\\. You can also edit or delete your phone below\\.\n\n`;
 
     message += `*Telegram Info*\n`;
     message += `├ ID : \`${ctx.from!.id}\`\n`;
@@ -26,6 +32,16 @@ export class ProfileScene {
     message += `└ Phone : \`${(await this.saleService.getUserPhone(ctx.from!.id.toString()))?.phone ?? '<not set>'}\`\n\n`;
 
     await sendMessage(ctx, message, keyboard);
+  }
+
+  @Action('phone_edit')
+  async onPhoneEdit(@Ctx() ctx: SceneContext): Promise<void> {
+    await ctx.scene.enter('PHONE_EDIT_SCENE');
+  }
+
+  @Action('phone_delete')
+  async onPhoneDelete(@Ctx() ctx: SceneContext): Promise<void> {
+    await ctx.scene.enter('PHONE_DELETE_SCENE');
   }
 
   @Action('back')

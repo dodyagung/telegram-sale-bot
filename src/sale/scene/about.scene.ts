@@ -9,7 +9,7 @@ export class AboutScene {
   async onSceneEnter(@Ctx() ctx: SceneContext): Promise<void> {
     const keyboard = [[Markup.button.callback('👈 Back', 'back')]];
 
-    let message = `*🤖 About*\n\n`;
+    let message: string = `*🤖 About*\n\n`;
     message += `*telegram\\-sale\\-bot*\n`;
     message += `I\\'m a bot to automate your scheduled\\-sale in Telegram group\\.\n`;
     message += `Open\\-sourced at [GitHub](https://github.com/dodyagung/telegram-sale-bot)\\. Built with [NestJS](https://nestjs.com) and [Telegraf](https://telegraf.js.org)\\.\n`;

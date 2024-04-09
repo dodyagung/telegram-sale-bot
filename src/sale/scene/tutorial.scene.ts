@@ -9,7 +9,7 @@ export class TutorialScene {
   async onSceneEnter(@Ctx() ctx: SceneContext): Promise<void> {
     const keyboard = [[Markup.button.callback('👈 Back', 'back')]];
 
-    let message = `*❓ Tutorial*\n\n`;
+    let message: string = `*❓ Tutorial*\n\n`;
     message += `1\\. If you've *never* used this bot before, add a new Sale Post in *Manage Sale \\> Create New*\\.\n\n`;
     message += `2\\. If you've *already* used this bot before, re\\-activate your old Sale Post in *Manage Sale \\> Enable/Disable*\\. You can also Edit and Delete your Sale Post in *Manage Sale \\> Edit/Delete*\\.\n\n`;
     message += `3\\. Only enabled Sale Post is sent to the group \\(*hourly* at *Sale Day*\\)\\.\n\n`;

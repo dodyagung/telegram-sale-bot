@@ -13,12 +13,17 @@ export class SaleService {
   //   this.logger.log(`Database ping: ${JSON.stringify(ping)}`);
   // }
 
-  async getUserPhone(id: string): Promise<{ phone: string | null } | null> {
+  async getPhone(id: string): Promise<{ phone: string | null } | null> {
     return await this.prismaService.users.findFirst({
       select: { phone: true },
-      where: {
-        id,
-      },
+      where: { id },
+    });
+  }
+
+  async deletePhone(id: string): Promise<void> {
+    await this.prismaService.users.update({
+      data: { phone: null },
+      where: { id },
     });
   }
 }

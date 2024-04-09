@@ -39,7 +39,7 @@ export class WelcomeScene {
       this.configService.get<string>('TELEGRAM_GROUP_ID')!,
     );
 
-    let message = `*🏠 Welcome*\n\n`;
+    let message: string = `*🏠 Welcome*\n\n`;
     message += `Hello *${firstName}${lastName ? ' ' + lastName : ''}*, I'm [telegram\\-sale\\-bot](https://github.com/dodyagung/telegram-sale-bot)\\. Now is *${TODAY}*, what can I help you today?\n\n`;
 
     message += `*Sale Time*\n`;
