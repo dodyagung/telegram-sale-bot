@@ -7,8 +7,28 @@ import { leaveScene, sendMessageWithKeyboard } from '../sale.common';
 export class SaleScene {
   @SceneEnter()
   onSceneEnter(@Ctx() ctx: SceneContext): void {
-    const keyboard = [[Markup.button.callback('👈 Back', 'back')]];
-    const message = ' sale scene';
+    const keyboard = [
+      [
+        Markup.button.callback('👈 Back', 'back'),
+        Markup.button.callback('➕ Add', 'add'),
+        Markup.button.callback('✏️ Edit', 'edit'),
+        Markup.button.callback('❌ Delete', 'delete'),
+      ],
+    ];
+
+    let message = `💰 Manage Sale\n\n`;
+
+    message += `Here you can manage your Sale Post\\.\n\n`;
+
+    message += `*Sale Post*\n`;
+    message += `├ Enabled : \n`;
+    message += `├ Disabled : \n`;
+    message += `└ Total : \n\n`;
+
+    message += `Below is the actual view that will be sent to the group\\.\n\n`;
+
+    message += `💰 Dody\n`;
+    message += `└ \\(No data\\)`;
 
     sendMessageWithKeyboard(ctx, message, keyboard);
   }
