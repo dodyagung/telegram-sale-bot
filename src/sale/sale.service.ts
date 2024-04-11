@@ -13,6 +13,17 @@ export class SaleService {
   //   this.logger.log(`Database ping: ${JSON.stringify(ping)}`);
   // }
 
+  async countPost(id: string): Promise<{ enabled: number; disabled: number }> {
+    return {
+      enabled: await this.prismaService.posts.count({
+        where: { user_id: id, is_enabled: true },
+      }),
+      disabled: await this.prismaService.posts.count({
+        where: { user_id: id, is_enabled: false },
+      }),
+    };
+  }
+
   async createOrUpdateUser(user: users): Promise<void> {
     await this.prismaService.users.upsert({
       where: { id: user.id },

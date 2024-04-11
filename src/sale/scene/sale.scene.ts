@@ -2,11 +2,14 @@ import { Scene, SceneEnter, Ctx, Action, Hears } from 'nestjs-telegraf';
 import { SceneContext } from 'telegraf/scenes';
 import { Markup } from 'telegraf';
 import { leaveScene, sendMessageWithKeyboard } from '../sale.common';
+import { SaleService } from '../sale.service';
 
 @Scene('SALE_SCENE')
 export class SaleScene {
+  constructor(private saleService: SaleService) {}
+
   @SceneEnter()
-  onSceneEnter(@Ctx() ctx: SceneContext): void {
+  async onSceneEnter(@Ctx() ctx: SceneContext): Promise<void> {
     const keyboard = [
       [
         Markup.button.callback('👈 Back', 'back'),
@@ -20,10 +23,17 @@ export class SaleScene {
 
     message += `Here you can manage your Sale Post\\.\n\n`;
 
+    console.log(ctx.from?.id.toString());
+    console.log(await this.saleService.countPost(ctx.from!.id.toString()));
+
+    const { ...post_count } = await this.saleService.countPost(
+      ctx.from!.id.toString(),
+    );
+
     message += `*Sale Post*\n`;
-    message += `├ Enabled : \n`;
-    message += `├ Disabled : \n`;
-    message += `└ Total : \n\n`;
+    message += `├ Enabled : \`${post_count.enabled}\`\n`;
+    message += `├ Disabled : \`${post_count.disabled}\`\n`;
+    message += `└ Total : \`${post_count.enabled + post_count.disabled}\`\n\n`;
 
     message += `Below is the actual view that will be sent to the group\\.\n\n`;
 
