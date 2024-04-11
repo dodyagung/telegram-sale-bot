@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { users } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 // import { Cron } from '@nestjs/schedule';
 import { PrismaService } from 'src/prisma/prisma.service';
 
@@ -13,18 +13,36 @@ export class SaleService {
   //   this.logger.log(`Database ping: ${JSON.stringify(ping)}`);
   // }
 
-  async countPost(id: string): Promise<{ enabled: number; disabled: number }> {
+  async addPost(post: Prisma.postsUncheckedCreateInput): Promise<void> {
+    await this.prismaService.posts.create({
+      data: post,
+    });
+  }
+
+  async getPosts(
+    user_id: string,
+  ): Promise<{ is_enabled: boolean; post: string }[]> {
+    return await this.prismaService.posts.findMany({
+      select: { post: true, is_enabled: true },
+      where: { user_id, is_deleted: false },
+      orderBy: { updated_at: 'asc' },
+    });
+  }
+
+  async countPosts(
+    user_id: string,
+  ): Promise<{ enabled: number; disabled: number }> {
     return {
       enabled: await this.prismaService.posts.count({
-        where: { user_id: id, is_enabled: true },
+        where: { user_id, is_enabled: true, is_deleted: false },
       }),
       disabled: await this.prismaService.posts.count({
-        where: { user_id: id, is_enabled: false },
+        where: { user_id, is_enabled: false, is_deleted: false },
       }),
     };
   }
 
-  async createOrUpdateUser(user: users): Promise<void> {
+  async createOrUpdateUser(user: Prisma.usersCreateInput): Promise<void> {
     await this.prismaService.users.upsert({
       where: { id: user.id },
       update: {

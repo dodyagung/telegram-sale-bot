@@ -18,8 +18,8 @@ import {
   TODAY_ISO,
 } from '../sale.constant';
 import { leaveScene, sendMessageWithKeyboard } from '../sale.common';
-import { users } from '@prisma/client';
 import { SaleService } from '../sale.service';
+import { Prisma } from '@prisma/client';
 
 @Scene('WELCOME_SCENE')
 export class WelcomeScene {
@@ -76,7 +76,7 @@ export class WelcomeScene {
     message += `├ Joined : \`${user_joined ? 'Yes' : 'No'}\`\n`;
     message += `└ Link : [Click Here](${this.configService.get<string>('TELEGRAM_GROUP_LINK')})`;
 
-    const user: users = {
+    const user: Prisma.usersWhereInput = {
       id: ctx.from!.id.toString(),
       username: ctx.from?.username ?? null,
       first_name: ctx.from!.first_name,
