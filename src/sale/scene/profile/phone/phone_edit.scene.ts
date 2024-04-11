@@ -18,13 +18,25 @@ import { SaleService } from 'src/sale/sale.service';
 export class PhoneEditScene {
   constructor(private saleService: SaleService) {}
 
+  async getPhone(@Ctx() ctx: SceneContext): Promise<string | null | undefined> {
+    return (await this.saleService.getPhone(ctx.from!.id.toString()))?.phone;
+  }
+
   @SceneEnter()
   async onSceneEnter(@Ctx() ctx: SceneContext): Promise<void> {
     const keyboard = [[Markup.button.callback('👈 Cancel and Back', 'back')]];
 
     let message: string = `*✏️ Edit Phone*\n\n`;
 
-    message += `Type your phone number below, e\\.g\\. 08123456789\\.`;
+    message += `Type your phone number directly below\\.\n`;
+
+    if (await this.getPhone(ctx)) {
+      message += `You can also copy your existing phone number and paste it on the text field to make editing easier\\.\n\n`;
+
+      message += `\`\`\`\n`;
+      message += `${await this.getPhone(ctx)}\n`;
+      message += `\`\`\``;
+    }
 
     sendMessageWithKeyboard(ctx, message, keyboard);
   }
