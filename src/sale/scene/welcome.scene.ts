@@ -10,12 +10,23 @@ import {
 import { SceneContext } from 'telegraf/scenes';
 import { Markup } from 'telegraf';
 import { ConfigService } from '@nestjs/config';
-import { RESET_DAY, SALE_DAY, TIMEZONE, TODAY } from '../sale.constant';
+import {
+  RESET_DAY,
+  SALE_DAY,
+  TIMEZONE,
+  TODAY,
+  TODAY_ISO,
+} from '../sale.constant';
 import { leaveScene, sendMessageWithKeyboard } from '../sale.common';
+import { users } from '@prisma/client';
+import { SaleService } from '../sale.service';
 
 @Scene('WELCOME_SCENE')
 export class WelcomeScene {
-  constructor(private configService: ConfigService) {}
+  constructor(
+    private configService: ConfigService,
+    private saleService: SaleService,
+  ) {}
 
   @Start()
   @SceneEnter()
@@ -64,6 +75,17 @@ export class WelcomeScene {
     message += `├ Name : \`${group_title.title}\`\n`;
     message += `├ Joined : \`${user_joined ? 'Yes' : 'No'}\`\n`;
     message += `└ Link : [Click Here](${this.configService.get<string>('TELEGRAM_GROUP_LINK')})`;
+
+    const user: users = {
+      id: ctx.from!.id.toString(),
+      username: ctx.from?.username ?? null,
+      first_name: ctx.from!.first_name,
+      last_name: ctx.from?.last_name ?? null,
+      phone: null,
+      created_at: TODAY_ISO,
+      updated_at: TODAY_ISO,
+    };
+    this.saleService.createOrUpdateUser(user);
 
     sendMessageWithKeyboard(ctx, message, keyboard);
   }

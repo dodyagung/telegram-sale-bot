@@ -14,6 +14,7 @@ const CONF_TZ_OPTION = {
 };
 
 export const TODAY = format(CONF_TIME, CONF_DATE_FORMAT_LONG, CONF_TZ_OPTION);
+export const TODAY_ISO = CONF_TIME;
 export const SALE_DAY = format(
   nextFriday(CONF_TIME),
   CONF_DATE_FORMAT_SHORT,

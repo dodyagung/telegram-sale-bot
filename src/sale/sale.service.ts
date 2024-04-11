@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { users } from '@prisma/client';
 // import { Cron } from '@nestjs/schedule';
 import { PrismaService } from 'src/prisma/prisma.service';
 
@@ -11,6 +12,26 @@ export class SaleService {
   //   const ping = await this.prismaService.$queryRaw`select 1`;
   //   this.logger.log(`Database ping: ${JSON.stringify(ping)}`);
   // }
+
+  async createOrUpdateUser(user: users): Promise<void> {
+    await this.prismaService.users.upsert({
+      where: { id: user.id },
+      update: {
+        username: user.username,
+        first_name: user.first_name,
+        last_name: user.last_name,
+        updated_at: user.updated_at,
+      },
+      create: {
+        id: user.id,
+        username: user.username,
+        first_name: user.first_name,
+        last_name: user.last_name,
+        created_at: user.created_at,
+        updated_at: user.updated_at,
+      },
+    });
+  }
 
   async getPhone(id: string): Promise<{ phone: string | null } | null> {
     return await this.prismaService.users.findFirst({
