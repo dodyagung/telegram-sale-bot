@@ -76,7 +76,7 @@ export class WelcomeScene {
     message += `├ Joined : \`${user_joined ? 'Yes' : 'No'}\`\n`;
     message += `└ Link : [Click Here](${this.configService.get<string>('TELEGRAM_GROUP_LINK')})`;
 
-    const user: Prisma.usersWhereInput = {
+    const user: Prisma.usersCreateInput = {
       id: ctx.from!.id.toString(),
       username: ctx.from?.username ?? null,
       first_name: ctx.from!.first_name,
