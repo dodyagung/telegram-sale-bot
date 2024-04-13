@@ -12,11 +12,11 @@ export class SaleScene {
   async onSceneEnter(@Ctx() ctx: SceneContext): Promise<void> {
     const keyboard = [
       [
-        Markup.button.callback('👈 Back', 'back'),
         Markup.button.callback('➕ Add', 'add'),
         Markup.button.callback('✏️ Edit', 'edit'),
         Markup.button.callback('❌ Delete', 'delete'),
       ],
+      [Markup.button.callback('👈 Back', 'back')],
     ];
 
     let message = `💰 Manage Sale\n\n`;

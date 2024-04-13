@@ -31,11 +31,9 @@ export class PhoneEditScene {
     message += `Type your phone number directly below\\.\n`;
 
     if (await this.getPhone(ctx)) {
-      message += `You can also copy your existing phone number and paste it on the text field to make editing easier\\.\n\n`;
+      message += `You can also click to copy your existing phone number and paste it on the text field to make editing easier\\.\n\n`;
 
-      message += `\`\`\`\n`;
-      message += `${await this.getPhone(ctx)}\n`;
-      message += `\`\`\``;
+      message += `Click to copy 👉 \`${await this.getPhone(ctx)}\``;
     }
 
     sendMessageWithKeyboard(ctx, message, keyboard);

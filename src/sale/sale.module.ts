@@ -11,6 +11,7 @@ import { ProfileScene } from './scene/profile/profile.scene';
 import { PhoneEditScene } from './scene/profile/phone/phone_edit.scene';
 import { PhoneDeleteScene } from './scene/profile/phone/phone_delete.scene';
 import { SaleAddScene } from './scene/sale/sale_add.scene';
+import { SaleDeleteScene } from './scene/sale/sale_delete.scene';
 
 @Module({
   providers: [
@@ -18,6 +19,7 @@ import { SaleAddScene } from './scene/sale/sale_add.scene';
     SaleService,
     SaleScene,
     SaleAddScene,
+    SaleDeleteScene,
     WelcomeScene,
     ProfileScene,
     PhoneEditScene,
