@@ -41,7 +41,7 @@ export class SaleAddScene {
     const post: Prisma.postsUncheckedCreateInput = {
       user_id: ctx.from!.id.toString(),
       is_enabled: true,
-      is_deleted: true,
+      is_deleted: false,
       post: msg.text,
       created_at: TODAY_ISO,
       updated_at: TODAY_ISO,
