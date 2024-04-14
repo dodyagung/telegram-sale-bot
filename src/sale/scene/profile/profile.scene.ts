@@ -8,14 +8,16 @@ import { SaleService } from '../../sale.service';
 export class ProfileScene {
   constructor(private saleService: SaleService) {}
 
-  async getPhone(@Ctx() ctx: SceneContext): Promise<string | null | undefined> {
-    return (await this.saleService.getPhone(ctx.from!.id.toString()))?.phone;
-  }
+  private phone: string | null | undefined;
 
   @SceneEnter()
   async onSceneEnter(@Ctx() ctx: SceneContext): Promise<void> {
+    this.phone = (
+      await this.saleService.getPhone(ctx.from!.id.toString())
+    )?.phone;
+
     let keyboard;
-    if (await this.getPhone(ctx)) {
+    if (this.phone) {
       keyboard = [
         [
           Markup.button.callback('👈 Back', 'back'),
@@ -45,19 +47,24 @@ export class ProfileScene {
     message += `└ Last Name : \`${ctx.from?.last_name ?? '<not set>'}\`\n\n`;
 
     message += `*Additional Info*\n`;
-    message += `└ Phone : \`${(await this.getPhone(ctx)) ?? '<not set>'}\`\n\n`;
+    message += `└ Phone : \`${this.phone ?? '<not set>'}\`\n\n`;
 
-    sendMessageWithKeyboard(ctx, message, keyboard);
+    sendMessageWithKeyboard(
+      ctx,
+      message,
+      keyboard,
+      (ctx.scene.state as any).edit_message,
+    );
   }
 
   @Action('phone_edit')
   onPhoneEdit(@Ctx() ctx: SceneContext): void {
-    ctx.scene.enter('PHONE_EDIT_SCENE');
+    ctx.scene.enter('PHONE_EDIT_SCENE', { phone: this.phone });
   }
 
   @Action('phone_delete')
   onPhoneDelete(@Ctx() ctx: SceneContext): void {
-    ctx.scene.enter('PHONE_DELETE_SCENE');
+    ctx.scene.enter('PHONE_DELETE_SCENE', { phone: this.phone });
   }
 
   @Action('back')

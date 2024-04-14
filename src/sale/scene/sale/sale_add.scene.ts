@@ -37,7 +37,10 @@ export class SaleAddScene {
   }
 
   @Hears(/.+/)
-  onFallback(@Ctx() ctx: SceneContext, @Message() msg: { text: string }): void {
+  async onFallback(
+    @Ctx() ctx: SceneContext,
+    @Message() msg: { text: string },
+  ): Promise<void> {
     const post: Prisma.postsUncheckedCreateInput = {
       user_id: ctx.from!.id.toString(),
       is_enabled: true,
@@ -46,12 +49,12 @@ export class SaleAddScene {
       created_at: TODAY_ISO,
       updated_at: TODAY_ISO,
     };
-    this.saleService.addPost(post);
+    await this.saleService.addPost(post);
 
     let message = `✅ Success\n\n`;
     message += `Your sale post has been successfully added and enabled by default\\.`;
     sendMessageWithoutKeyboard(ctx, message);
 
-    ctx.scene.enter('SALE_SCENE');
+    ctx.scene.enter('SALE_SCENE', { edit_message: false });
   }
 }

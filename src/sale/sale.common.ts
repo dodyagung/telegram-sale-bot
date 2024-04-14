@@ -33,15 +33,16 @@ export const sendMessageWithKeyboard = async (
   ctx: SceneContext,
   message: string,
   keyboard: HideableIKBtn[][],
+  edit_message: boolean = true,
 ): Promise<void> => {
-  await (ctx.callbackQuery
+  await (ctx.callbackQuery && edit_message
     ? ctx.editMessageText(message, extraWithKeyboard(keyboard))
     : ctx.reply(message, extraWithKeyboard(keyboard)));
 };
 
-export const sendMessageWithoutKeyboard = (
+export const sendMessageWithoutKeyboard = async (
   ctx: SceneContext,
   message: string,
-): void => {
-  ctx.reply(message, extraWithoutKeyboard());
+): Promise<void> => {
+  await ctx.reply(message, extraWithoutKeyboard());
 };
