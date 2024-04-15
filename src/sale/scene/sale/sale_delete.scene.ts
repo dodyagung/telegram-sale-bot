@@ -10,26 +10,39 @@ export class SaleDeleteScene {
 
   @SceneEnter()
   async onSceneEnter(@Ctx() ctx: SceneContext): Promise<void> {
-    const keyboard = [
-      [Markup.button.callback('❌ Delete', 'sale_delete_confirm')],
-      [Markup.button.callback('👈 Cancel', 'back')],
-    ];
+    const all_sales = await this.saleService.getSales(ctx.from!.id.toString());
+
+    if (all_sales.length === 0) {
+      ctx.scene.enter('SALE_SCENE', { edit_message: false });
+      return;
+    }
+
+    const keyboard = [];
+    all_sales.forEach((sale) => {
+      keyboard.push([
+        Markup.button.callback(`${sale.post}`, `delete-sale-${sale.id}`),
+      ]);
+    });
+    keyboard.push([Markup.button.callback('👈 Back', 'back')]);
 
     let message: string = `*❌ Delete Sale*\n\n`;
 
-    message += `Are you sure you want to delete?`;
+    message += `Please click a sale that you want to delete\\.\n\n`;
+    message += `_This can\'t be undone, but you can always add it again from Add Sale menu\\._`;
 
-    // message += `Are you sure you want to delete *${(await this.saleService.getPhone(ctx.from!.id.toString()))?.phone}*?\n\n`;
-
-    // message += `_You can always enable it again from Edit Phone menu\\._`;
-
-    sendMessageWithKeyboard(ctx, message, keyboard);
+    sendMessageWithKeyboard(
+      ctx,
+      message,
+      keyboard,
+      (ctx.scene.state as any).edit_message,
+    );
   }
 
-  @Action('sale_delete_confirm')
-  onSaleDeleteConfirm(@Ctx() ctx: SceneContext): void {
-    // this.saleService.editPhone(ctx.from!.id.toString(), null);
-    ctx.scene.enter('SALE_SCENE');
+  @Action(/delete-sale-(\d+)/)
+  async onSaleDelete(@Ctx() ctx: SceneContext): Promise<void> {
+    const id: number = +(ctx as any).match[1];
+
+    ctx.scene.enter('SALE_DELETE_CONFIRM_SCENE', { id });
   }
 
   @Action('back')

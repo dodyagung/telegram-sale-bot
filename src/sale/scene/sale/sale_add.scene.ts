@@ -26,7 +26,7 @@ export class SaleAddScene {
 
     let message: string = `*➕ Add*\n\n`;
 
-    message += `Type your sale post directly below\\.`;
+    message += `Type your sale directly below\\.`;
 
     sendMessageWithKeyboard(ctx, message, keyboard);
   }
@@ -41,7 +41,7 @@ export class SaleAddScene {
     @Ctx() ctx: SceneContext,
     @Message() msg: { text: string },
   ): Promise<void> {
-    const post: Prisma.postsUncheckedCreateInput = {
+    const sale: Prisma.postsUncheckedCreateInput = {
       user_id: ctx.from!.id.toString(),
       is_enabled: true,
       is_deleted: false,
@@ -49,11 +49,11 @@ export class SaleAddScene {
       created_at: TODAY_ISO,
       updated_at: TODAY_ISO,
     };
-    await this.saleService.addPost(post);
+    await this.saleService.addSale(sale);
 
     let message = `✅ Success\n\n`;
-    message += `Your sale post has been successfully added and enabled by default :\n\n`;
-    message += `\`${msg.text}\``;
+    message += `Your sale has been successfully added and enabled by default :\n\n`;
+    message += `_${msg.text}_`;
 
     sendMessageWithoutKeyboard(ctx, message);
 

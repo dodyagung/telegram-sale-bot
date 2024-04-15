@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 // import { Cron } from '@nestjs/schedule';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { TODAY_ISO } from './sale.constant';
 
 @Injectable()
 export class SaleService {
@@ -13,29 +14,43 @@ export class SaleService {
   //   this.logger.log(`Database ping: ${JSON.stringify(ping)}`);
   // }
 
-  async addPost(post: Prisma.postsUncheckedCreateInput): Promise<void> {
+  async addSale(post: Prisma.postsUncheckedCreateInput): Promise<void> {
     await this.prismaService.posts.create({
       data: post,
     });
   }
 
-  async getPosts(
+  async getSales(
     user_id: string,
   ): Promise<{ id: number; is_enabled: boolean; post: string }[]> {
     return await this.prismaService.posts.findMany({
-      select: { id: true, post: true, is_enabled: true },
+      select: { id: true, is_enabled: true, post: true },
       where: { user_id, is_deleted: false },
       orderBy: { updated_at: 'asc' },
     });
   }
 
-  async togglePost(
+  async getSale(id: number): Promise<{ post: string } | null> {
+    return await this.prismaService.posts.findFirst({
+      select: { post: true },
+      where: { id },
+    });
+  }
+
+  async toggleSale(
     id: number,
-    is_enabled: boolean,
     user_id: string,
+    is_enabled: boolean,
   ): Promise<void> {
     await this.prismaService.posts.update({
-      data: { is_enabled },
+      data: { is_enabled, updated_at: TODAY_ISO },
+      where: { id, user_id },
+    });
+  }
+
+  async deleteSale(id: number, user_id: string): Promise<void> {
+    await this.prismaService.posts.update({
+      data: { is_deleted: true, updated_at: TODAY_ISO },
       where: { id, user_id },
     });
   }
@@ -53,22 +68,22 @@ export class SaleService {
   //   };
   // }
 
-  async createOrUpdateUser(user: Prisma.usersCreateInput): Promise<void> {
+  async createOrUpdateUser(
+    id: string,
+    username: string,
+    first_name: string,
+    last_name: string,
+  ): Promise<void> {
     await this.prismaService.users.upsert({
-      where: { id: user.id },
-      update: {
-        username: user.username,
-        first_name: user.first_name,
-        last_name: user.last_name,
-        updated_at: user.updated_at,
-      },
+      where: { id },
+      update: { username, first_name, last_name, updated_at: TODAY_ISO },
       create: {
-        id: user.id,
-        username: user.username,
-        first_name: user.first_name,
-        last_name: user.last_name,
-        created_at: user.created_at,
-        updated_at: user.updated_at,
+        id,
+        username,
+        first_name,
+        last_name,
+        created_at: TODAY_ISO,
+        updated_at: TODAY_ISO,
       },
     });
   }
@@ -82,7 +97,7 @@ export class SaleService {
 
   async editPhone(id: string, phone: string | null): Promise<void> {
     await this.prismaService.users.update({
-      data: { phone },
+      data: { phone, updated_at: TODAY_ISO },
       where: { id },
     });
   }

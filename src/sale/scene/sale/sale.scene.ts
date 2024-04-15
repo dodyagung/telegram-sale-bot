@@ -10,14 +10,14 @@ export class SaleScene {
 
   @SceneEnter()
   async onSceneEnter(@Ctx() ctx: SceneContext): Promise<void> {
-    const all_posts = await this.saleService.getPosts(ctx.from!.id.toString());
-    const enabled_posts = all_posts.filter((post) => post.is_enabled === true);
-    const disabled_posts = all_posts.filter(
-      (post) => post.is_enabled === false,
+    const all_sales = await this.saleService.getSales(ctx.from!.id.toString());
+    const enabled_sales = all_sales.filter((sale) => sale.is_enabled === true);
+    const disabled_sales = all_sales.filter(
+      (sale) => sale.is_enabled === false,
     );
 
     const keyboard = [[Markup.button.callback('➕ Add', 'add')]];
-    if (all_posts.length !== 0) {
+    if (all_sales.length !== 0) {
       keyboard.push(
         [
           Markup.button.callback('✏️ Edit', 'edit'),
@@ -30,29 +30,34 @@ export class SaleScene {
 
     let message = `💰 Manage Sale\n\n`;
 
-    message += `Here you can manage your Sale Post\\.\n\n`;
+    message += `Here you can manage your Sale\\.\n\n`;
 
-    message += `*Sale Post*\n`;
-    message += `├ Enabled : \`${enabled_posts.length}\`\n`;
-    message += `├ Disabled : \`${disabled_posts.length}\`\n`;
-    message += `└ Total : \`${all_posts.length}\`\n\n`;
+    message += `*Sale*\n`;
+    message += `├ Enabled : \`${enabled_sales.length}\`\n`;
+    message += `├ Disabled : \`${disabled_sales.length}\`\n`;
+    message += `└ Total : \`${all_sales.length}\`\n\n`;
 
     message += `Below is the actual view that will be sent to the group\\.\n\n`;
 
     message += `💰 Dody\n`;
-    if (enabled_posts.length > 0) {
-      enabled_posts.forEach((post, index) => {
-        if (index + 1 !== enabled_posts.length) {
-          message += `├ ${post.post}\n`;
+    if (enabled_sales.length > 0) {
+      enabled_sales.forEach((sale, index) => {
+        if (index + 1 !== enabled_sales.length) {
+          message += `├ ${sale.post}\n`;
         } else {
-          message += `└ ${post.post}\n`;
+          message += `└ ${sale.post}\n`;
         }
       });
     } else {
-      message += `└ _\\(No data or no enabled post\\)_`;
+      message += `└ _\\(No data or no enabled sale\\)_`;
     }
 
-    sendMessageWithKeyboard(ctx, message, keyboard);
+    sendMessageWithKeyboard(
+      ctx,
+      message,
+      keyboard,
+      (ctx.scene.state as any).edit_message,
+    );
   }
 
   @Action('back')
