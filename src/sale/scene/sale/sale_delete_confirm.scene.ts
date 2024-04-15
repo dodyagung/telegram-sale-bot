@@ -30,7 +30,7 @@ export class SaleDeleteConfirmScene {
 
     message += `Are you sure you want to delete this sale?\n\n`;
     message += `\`${sale!.post}\`\n\n`;
-    message += `_This can\'t be undone, but you can always enable it again from Edit Phone menu\\._`;
+    message += `_This can\'t be undone, but you can always add it again from Add Sale menu\\._`;
 
     sendMessageWithKeyboard(ctx, message, keyboard);
   }
@@ -44,7 +44,7 @@ export class SaleDeleteConfirmScene {
     message += `Your sale has been successfully deleted\\.`;
     sendMessageWithoutKeyboard(ctx, message);
 
-    ctx.scene.enter('SALE_DELETE_SCENE', { edit_message: false });
+    ctx.scene.enter('SALE_SCENE', { edit_message: false });
   }
 
   @Action('back')

@@ -12,11 +12,6 @@ export class SaleDeleteScene {
   async onSceneEnter(@Ctx() ctx: SceneContext): Promise<void> {
     const all_sales = await this.saleService.getSales(ctx.from!.id.toString());
 
-    if (all_sales.length === 0) {
-      ctx.scene.enter('SALE_SCENE', { edit_message: false });
-      return;
-    }
-
     const keyboard = [];
     all_sales.forEach((sale) => {
       keyboard.push([
