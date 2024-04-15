@@ -15,10 +15,8 @@ export class PhoneDeleteScene {
   @SceneEnter()
   onSceneEnter(@Ctx() ctx: SceneContext): void {
     const keyboard = [
-      [
-        Markup.button.callback('👈 Cancel', 'back'),
-        Markup.button.callback('❌ Delete', 'phone_delete_confirm'),
-      ],
+      [Markup.button.callback('❌ Delete', 'phone_delete_confirm')],
+      [Markup.button.callback('👈 Cancel', 'back')],
     ];
 
     let message: string = `*❌ Delete Phone*\n\n`;
@@ -31,7 +29,7 @@ export class PhoneDeleteScene {
   }
 
   @Action('phone_delete_confirm')
-  async onPhoneDeleteConfirm(@Ctx() ctx: SceneContext): void {
+  async onPhoneDeleteConfirm(@Ctx() ctx: SceneContext): Promise<void> {
     await this.saleService.editPhone(ctx.from!.id.toString(), null);
 
     let message = `✅ Success\n\n`;

@@ -16,23 +16,16 @@ export class ProfileScene {
       await this.saleService.getPhone(ctx.from!.id.toString())
     )?.phone;
 
-    let keyboard;
+    const keyboard = [];
     if (this.phone) {
-      keyboard = [
-        [
-          Markup.button.callback('👈 Back', 'back'),
-          Markup.button.callback('✏️ Edit', 'phone_edit'),
-          Markup.button.callback('❌ Delete', 'phone_delete'),
-        ],
-      ];
+      keyboard.push([
+        Markup.button.callback('✏️ Edit', 'phone_edit'),
+        Markup.button.callback('❌ Delete', 'phone_delete'),
+      ]);
     } else {
-      keyboard = [
-        [
-          Markup.button.callback('👈 Back', 'back'),
-          Markup.button.callback('✏️ Edit', 'phone_edit'),
-        ],
-      ];
+      keyboard.push([Markup.button.callback('✏️ Edit', 'phone_edit')]);
     }
+    keyboard.push([Markup.button.callback('👈 Back', 'back')]);
 
     let message: string = `*👤 My Profile*\n\n`;
 

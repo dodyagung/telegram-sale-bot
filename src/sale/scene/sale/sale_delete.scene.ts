@@ -11,8 +11,8 @@ export class SaleDeleteScene {
   @SceneEnter()
   async onSceneEnter(@Ctx() ctx: SceneContext): Promise<void> {
     const keyboard = [
-      [Markup.button.callback('❌ Delete Now', 'sale_delete_confirm')],
-      [Markup.button.callback('👈 Cancel and Back', 'back')],
+      [Markup.button.callback('❌ Delete', 'sale_delete_confirm')],
+      [Markup.button.callback('👈 Cancel', 'back')],
     ];
 
     let message: string = `*❌ Delete Sale*\n\n`;

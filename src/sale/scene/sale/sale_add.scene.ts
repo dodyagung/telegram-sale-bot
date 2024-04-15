@@ -22,7 +22,7 @@ export class SaleAddScene {
 
   @SceneEnter()
   async onSceneEnter(@Ctx() ctx: SceneContext): Promise<void> {
-    const keyboard = [[Markup.button.callback('👈 Cancel and Back', 'back')]];
+    const keyboard = [[Markup.button.callback('👈 Cancel', 'back')]];
 
     let message: string = `*➕ Add*\n\n`;
 
@@ -52,7 +52,9 @@ export class SaleAddScene {
     await this.saleService.addPost(post);
 
     let message = `✅ Success\n\n`;
-    message += `Your sale post has been successfully added and enabled by default\\.`;
+    message += `Your sale post has been successfully added and enabled by default :\n\n`;
+    message += `\`${msg.text}\``;
+
     sendMessageWithoutKeyboard(ctx, message);
 
     ctx.scene.enter('SALE_SCENE', { edit_message: false });

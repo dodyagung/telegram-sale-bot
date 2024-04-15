@@ -10,24 +10,27 @@ export class SaleScene {
 
   @SceneEnter()
   async onSceneEnter(@Ctx() ctx: SceneContext): Promise<void> {
-    const keyboard = [
-      [
-        Markup.button.callback('➕ Add', 'add'),
-        Markup.button.callback('✏️ Edit', 'edit'),
-        Markup.button.callback('❌ Delete', 'delete'),
-      ],
-      [Markup.button.callback('👈 Back', 'back')],
-    ];
-
-    let message = `💰 Manage Sale\n\n`;
-
-    message += `Here you can manage your Sale Post\\.\n\n`;
-
     const all_posts = await this.saleService.getPosts(ctx.from!.id.toString());
     const enabled_posts = all_posts.filter((post) => post.is_enabled === true);
     const disabled_posts = all_posts.filter(
       (post) => post.is_enabled === false,
     );
+
+    const keyboard = [[Markup.button.callback('➕ Add', 'add')]];
+    if (all_posts.length !== 0) {
+      keyboard.push(
+        [
+          Markup.button.callback('✏️ Edit', 'edit'),
+          Markup.button.callback('🔄 Enable/Disable', 'toggle'),
+        ],
+        [Markup.button.callback('❌ Delete', 'delete')],
+      );
+    }
+    keyboard.push([Markup.button.callback('👈 Back', 'back')]);
+
+    let message = `💰 Manage Sale\n\n`;
+
+    message += `Here you can manage your Sale Post\\.\n\n`;
 
     message += `*Sale Post*\n`;
     message += `├ Enabled : \`${enabled_posts.length}\`\n`;
@@ -65,6 +68,11 @@ export class SaleScene {
   @Action('edit')
   onEdit(@Ctx() ctx: SceneContext): void {
     ctx.scene.enter('SALE_EDIT_SCENE');
+  }
+
+  @Action('toggle')
+  onTOggle(@Ctx() ctx: SceneContext): void {
+    ctx.scene.enter('SALE_TOGGLE_SCENE');
   }
 
   @Action('delete')

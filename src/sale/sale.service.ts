@@ -21,26 +21,37 @@ export class SaleService {
 
   async getPosts(
     user_id: string,
-  ): Promise<{ is_enabled: boolean; post: string }[]> {
+  ): Promise<{ id: number; is_enabled: boolean; post: string }[]> {
     return await this.prismaService.posts.findMany({
-      select: { post: true, is_enabled: true },
+      select: { id: true, post: true, is_enabled: true },
       where: { user_id, is_deleted: false },
       orderBy: { updated_at: 'asc' },
     });
   }
 
-  async countPosts(
+  async togglePost(
+    id: number,
+    is_enabled: boolean,
     user_id: string,
-  ): Promise<{ enabled: number; disabled: number }> {
-    return {
-      enabled: await this.prismaService.posts.count({
-        where: { user_id, is_enabled: true, is_deleted: false },
-      }),
-      disabled: await this.prismaService.posts.count({
-        where: { user_id, is_enabled: false, is_deleted: false },
-      }),
-    };
+  ): Promise<void> {
+    await this.prismaService.posts.update({
+      data: { is_enabled },
+      where: { id, user_id },
+    });
   }
+
+  // async countPosts(
+  //   user_id: string,
+  // ): Promise<{ enabled: number; disabled: number }> {
+  //   return {
+  //     enabled: await this.prismaService.posts.count({
+  //       where: { user_id, is_enabled: true, is_deleted: false },
+  //     }),
+  //     disabled: await this.prismaService.posts.count({
+  //       where: { user_id, is_enabled: false, is_deleted: false },
+  //     }),
+  //   };
+  // }
 
   async createOrUpdateUser(user: Prisma.usersCreateInput): Promise<void> {
     await this.prismaService.users.upsert({
