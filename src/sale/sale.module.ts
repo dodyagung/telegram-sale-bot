@@ -14,6 +14,8 @@ import { SaleAddScene } from './scene/sale/sale_add.scene';
 import { SaleDeleteScene } from './scene/sale/sale_delete.scene';
 import { SaleToggleScene } from './scene/sale/sale_toggle.scene';
 import { SaleDeleteConfirmScene } from './scene/sale/sale_delete_confirm.scene';
+import { SaleEditScene } from './scene/sale/sale_edit.scene';
+import { SaleEditConfirmScene } from './scene/sale/sale_edit_confirm.scene';
 
 @Module({
   providers: [
@@ -21,6 +23,8 @@ import { SaleDeleteConfirmScene } from './scene/sale/sale_delete_confirm.scene';
     SaleService,
     SaleScene,
     SaleAddScene,
+    SaleEditScene,
+    SaleEditConfirmScene,
     SaleToggleScene,
     SaleDeleteScene,
     SaleDeleteConfirmScene,

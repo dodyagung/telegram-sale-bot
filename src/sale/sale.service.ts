@@ -37,6 +37,13 @@ export class SaleService {
     });
   }
 
+  async editSale(id: number, user_id: string, post: string): Promise<void> {
+    await this.prismaService.posts.update({
+      data: { post, updated_at: TODAY_ISO },
+      where: { id, user_id },
+    });
+  }
+
   async toggleSale(
     id: number,
     user_id: string,
