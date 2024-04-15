@@ -5,6 +5,7 @@ import {
   Action,
   Hears,
   Message,
+  Start,
 } from 'nestjs-telegraf';
 import { SceneContext } from 'telegraf/scenes';
 import { Markup } from 'telegraf';
@@ -39,6 +40,11 @@ export class PhoneEditScene {
   @Action('back')
   onBack(@Ctx() ctx: SceneContext): void {
     ctx.scene.enter('PROFILE_SCENE');
+  }
+
+  @Start()
+  onStart(@Ctx() ctx: SceneContext): void {
+    ctx.scene.enter('WELCOME_SCENE');
   }
 
   @Hears(/.+/)

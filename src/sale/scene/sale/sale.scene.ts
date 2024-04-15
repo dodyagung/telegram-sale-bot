@@ -1,4 +1,4 @@
-import { Scene, SceneEnter, Ctx, Action, Hears } from 'nestjs-telegraf';
+import { Scene, SceneEnter, Ctx, Action, Hears, Start } from 'nestjs-telegraf';
 import { SceneContext } from 'telegraf/scenes';
 import { Markup } from 'telegraf';
 import { leaveScene, sendMessageWithKeyboard } from '../../sale.common';
@@ -84,6 +84,12 @@ export class SaleScene {
   onDelete(@Ctx() ctx: SceneContext): void {
     ctx.scene.enter('SALE_DELETE_SCENE');
   }
+
+  @Start()
+  onStart(@Ctx() ctx: SceneContext): void {
+    ctx.scene.enter('WELCOME_SCENE');
+  }
+
   @Hears(/.+/)
   onFallback(@Ctx() ctx: SceneContext): void {
     leaveScene(ctx);

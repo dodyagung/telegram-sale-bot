@@ -5,6 +5,7 @@ import {
   Action,
   Hears,
   Message,
+  Start,
 } from 'nestjs-telegraf';
 import { SceneContext } from 'telegraf/scenes';
 import { Markup } from 'telegraf';
@@ -34,6 +35,11 @@ export class SaleAddScene {
   @Action('back')
   onBack(@Ctx() ctx: SceneContext): void {
     ctx.scene.enter('SALE_SCENE');
+  }
+
+  @Start()
+  onStart(@Ctx() ctx: SceneContext): void {
+    ctx.scene.enter('WELCOME_SCENE');
   }
 
   @Hears(/.+/)
