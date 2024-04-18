@@ -10,7 +10,6 @@ import {
 import { SceneContext } from 'telegraf/scenes';
 import { Markup } from 'telegraf';
 import {
-  leaveScene,
   sendMessageWithKeyboard,
   sendMessageWithoutKeyboard,
 } from 'src/sale/sale.common';

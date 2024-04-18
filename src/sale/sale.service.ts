@@ -30,6 +30,24 @@ export class SaleService {
     });
   }
 
+  async getScheduledSales(): Promise<{ user_id: string; post: string }[]> {
+    return await this.prismaService.users.findMany({
+      where: {
+        posts: {
+          is_enabled: true,
+        },
+      },
+      include: {
+        posts: true,
+      },
+    });
+    // return await this.prismaService.posts.findMany({
+    //   select: { user_id: true, post: true },
+    //   where: { is_enabled: true, is_deleted: false },
+    //   orderBy: { updated_at: 'asc' },
+    // });
+  }
+
   async getSale(id: number): Promise<{ post: string } | null> {
     return await this.prismaService.posts.findFirst({
       select: { post: true },

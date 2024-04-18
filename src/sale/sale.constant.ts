@@ -1,4 +1,10 @@
-import { nextFriday, nextSaturday } from 'date-fns';
+import {
+  nextFriday,
+  nextMonday,
+  nextSaturday,
+  nextTuesday,
+  subDays,
+} from 'date-fns';
 import { format, utcToZonedTime } from 'date-fns-tz';
 import { id } from 'date-fns/locale';
 
@@ -14,14 +20,19 @@ const CONF_TZ_OPTION = {
 };
 
 export const TODAY = format(CONF_TIME, CONF_DATE_FORMAT_LONG, CONF_TZ_OPTION);
+export const TODAY_SHORT = format(
+  CONF_TIME,
+  CONF_DATE_FORMAT_SHORT,
+  CONF_TZ_OPTION,
+);
 export const TODAY_ISO = CONF_TIME;
 export const SALE_DAY = format(
-  nextFriday(CONF_TIME),
+  subDays(nextTuesday(CONF_TIME), 1),
   CONF_DATE_FORMAT_SHORT,
   CONF_TZ_OPTION,
 );
 export const RESET_DAY = format(
-  nextSaturday(CONF_TIME),
+  nextTuesday(CONF_TIME),
   CONF_DATE_FORMAT_SHORT,
   CONF_TZ_OPTION,
 );
