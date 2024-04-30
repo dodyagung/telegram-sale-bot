@@ -22,7 +22,7 @@ export class SaleUpdate {
     if (TODAY_SHORT === SALE_DAY) {
       const sales = await this.saleService.getScheduledSales();
 
-      console.log(sales);
+      console.log(JSON.stringify(sales, null, 2));
     }
 
     // reset all post to disabled
