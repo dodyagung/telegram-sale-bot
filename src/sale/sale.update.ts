@@ -16,18 +16,18 @@ export class SaleUpdate {
     ctx.scene.enter('WELCOME_SCENE');
   }
 
-  @Interval(5000)
-  async handleCron() {
-    // autopost to group
-    if (TODAY_SHORT === SALE_DAY) {
-      const sales = await this.saleService.getScheduledSales();
+  // @Interval(5000)
+  // async handleCron() {
+  //   // autopost to group
+  //   if (TODAY_SHORT === SALE_DAY) {
+  //     const sales = await this.saleService.getScheduledSales();
 
-      console.log(JSON.stringify(sales, null, 2));
-    }
+  //     console.log(JSON.stringify(sales, null, 2));
+  //   }
 
-    // reset all post to disabled
-    if (TODAY_SHORT === RESET_DAY) {
-      this.logger.debug('reset');
-    }
-  }
+  //   // reset all post to disabled
+  //   if (TODAY_SHORT === RESET_DAY) {
+  //     this.logger.debug('reset');
+  //   }
+  // }
 }
