@@ -22,7 +22,6 @@ RUN pnpm prune --prod --no-optional
 # Production image, copy all the files and run nest
 FROM base AS runner
 ENV NODE_ENV production
-ENV DEBUG telegraf:*
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nestjs
 COPY --from=builder --chown=nestjs:nodejs /app/node_modules ./node_modules
