@@ -29,6 +29,13 @@ export class SaleService {
     });
   }
 
+  async disableAllEnabledPosts(): Promise<void> {
+    await this.prismaService.posts.updateMany({
+      data: { is_enabled: false, updated_at: new Date() },
+      where: { is_enabled: true },
+    });
+  }
+
   async getUsersWithScheduledSales() {
     return await this.prismaService.users.findMany({
       select: {
