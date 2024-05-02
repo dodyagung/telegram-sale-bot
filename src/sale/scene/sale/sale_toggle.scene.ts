@@ -10,24 +10,26 @@ export class SaleToggleScene {
 
   @SceneEnter()
   async onSceneEnter(@Ctx() ctx: SceneContext): Promise<void> {
-    const all_sales = await this.saleService.getSales(ctx.from!.id.toString());
+    const all_sales = await this.saleService.getSalesSortedByText(
+      ctx.from!.id.toString(),
+    );
 
     const keyboard = [];
     all_sales.forEach((sale) => {
       keyboard.push([
         Markup.button.callback(
-          `${sale.is_enabled ? '🟢' : '🔴'} ${sale.post}`,
+          `${sale.is_enabled ? '🟢' : '🔴'} ${sale.post.replace(/\n/g, ' ')}`,
           `toggle-sale-${sale.id}-${sale.is_enabled}`,
         ),
       ]);
     });
     keyboard.push([Markup.button.callback('👈 Back', 'back')]);
 
-    let message: string = `*🔄 Enable/Disable Sale*\n\n`;
+    let message: string = `**🔄 Enable/Disable Sale**\n\n`;
 
-    message += `Please click a sale that you want to toggle enable or disable\\.\n\n`;
-    message += `_🟢 \\= sale is enabled_\n`;
-    message += `_🔴 \\= sale is disabled_`;
+    message += `Please click a sale that you want to toggle enable or disable.\n\n`;
+    message += `_🟢 = sale is enabled_\n`;
+    message += `_🔴 = sale is disabled_`;
 
     sendMessageWithKeyboard(ctx, message, keyboard);
   }

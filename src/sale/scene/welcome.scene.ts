@@ -57,15 +57,15 @@ export class WelcomeScene {
       this.configService.get<string>('TELEGRAM_GROUP_ID')!,
     );
 
-    let message: string = `*🏠 Welcome*\n\n`;
-    message += `Hello *${firstName}${lastName ? ' ' + lastName : ''}*, I'm [telegram\\-sale\\-bot](https://github.com/dodyagung/telegram-sale-bot)\\. Now is *${TODAY}*, what can I help you today?\n\n`;
+    let message: string = `**🏠 Welcome**\n\n`;
+    message += `Hello **${firstName}${lastName ? ' ' + lastName : ''}**, I'm [telegram-sale-bot](https://github.com/dodyagung/telegram-sale-bot). Now is **${TODAY}**, what can I help you today?\n\n`;
 
-    message += `*Sale Time*\n`;
+    message += `**Sale Time**\n`;
     message += `├ Sale Day : \`${SALE_DAY}\`\n`;
     message += `├ Reset Day : \`${RESET_DAY}\`\n`;
     message += `└ Timezone : \`${TIMEZONE}\`\n\n`;
 
-    message += `*Sale Group*\n`;
+    message += `**Sale Group**\n`;
     message += `├ Name : \`${group_title.title}\`\n`;
     message += `├ Joined : \`${user_joined ? 'Yes' : 'No'}\`\n`;
     message += `└ Link : [Click Here](${this.configService.get<string>('TELEGRAM_GROUP_LINK')})`;

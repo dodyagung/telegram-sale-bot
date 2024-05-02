@@ -24,9 +24,9 @@ export class SaleAddScene {
   async onSceneEnter(@Ctx() ctx: SceneContext): Promise<void> {
     const keyboard = [[Markup.button.callback('👈 Cancel', 'back')]];
 
-    let message: string = `*➕ Add*\n\n`;
+    let message: string = `**➕ Add**\n\n`;
 
-    message += `Type your sale directly below\\.`;
+    message += `Type your sale directly below.`;
 
     sendMessageWithKeyboard(ctx, message, keyboard);
   }
@@ -56,7 +56,7 @@ export class SaleAddScene {
     };
     await this.saleService.addSale(sale);
 
-    let message = `✅ Success\n\n`;
+    let message = `✅ **Success**\n\n`;
     message += `Your sale has been successfully added and enabled by default :\n\n`;
     message += `_${msg.text}_`;
 

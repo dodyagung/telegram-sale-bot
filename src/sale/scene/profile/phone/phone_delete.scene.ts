@@ -19,11 +19,11 @@ export class PhoneDeleteScene {
       [Markup.button.callback('👈 Cancel', 'back')],
     ];
 
-    let message: string = `*❌ Delete Phone*\n\n`;
+    let message: string = `**❌ Delete Phone**\n\n`;
 
-    message += `Are you sure you want to delete *${(ctx.scene.state as any).phone}*?\n\n`;
+    message += `Are you sure you want to delete **${(ctx.scene.state as any).phone}**?\n\n`;
 
-    message += `_This can\'t be undone, but you can always enable it again from Edit Phone menu\\._`;
+    message += `_This can't be undone, but you can always enable it again from Edit Phone menu._`;
 
     sendMessageWithKeyboard(ctx, message, keyboard);
   }
@@ -32,8 +32,8 @@ export class PhoneDeleteScene {
   async onPhoneDeleteConfirm(@Ctx() ctx: SceneContext): Promise<void> {
     await this.saleService.editPhone(ctx.from!.id.toString(), null);
 
-    let message = `✅ Success\n\n`;
-    message += `Your phone number has been successfully deleted\\.`;
+    let message = `✅ **Success**\n\n`;
+    message += `Your phone number has been successfully deleted.`;
     sendMessageWithoutKeyboard(ctx, message);
 
     ctx.scene.enter('PROFILE_SCENE', { edit_message: false });

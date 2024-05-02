@@ -26,11 +26,11 @@ export class SaleDeleteConfirmScene {
 
     const sale = await this.saleService.getSale((ctx.scene.state as any).id);
 
-    let message: string = `*❌ Delete Sale*\n\n`;
+    let message: string = `**❌ Delete Sale**\n\n`;
 
     message += `Are you sure you want to delete this sale?\n\n`;
     message += `\`${sale!.post}\`\n\n`;
-    message += `_This can\'t be undone, but you can always add it again from Add Sale menu\\._`;
+    message += `_This can't be undone, but you can always add it again from Add Sale menu._`;
 
     sendMessageWithKeyboard(ctx, message, keyboard);
   }
@@ -40,8 +40,8 @@ export class SaleDeleteConfirmScene {
     const id: number = +(ctx as any).match[1];
     await this.saleService.deleteSale(id, ctx.from!.id.toString());
 
-    let message = `✅ Success\n\n`;
-    message += `Your sale has been successfully deleted\\.`;
+    let message = `✅ **Success**\n\n`;
+    message += `Your sale has been successfully deleted.`;
     sendMessageWithoutKeyboard(ctx, message);
 
     ctx.scene.enter('SALE_SCENE', { edit_message: false });

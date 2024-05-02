@@ -14,7 +14,7 @@ import { id } from 'date-fns/locale';
 const CONF_LOCALE = { locale: id };
 const CONF_TZ = 'Asia/Jakarta';
 const CONF_DATE_FORMAT_SHORT = 'EEEE, dd MMMM yyyy';
-const CONF_DATE_FORMAT_LONG = 'EEEE, dd MMMM yyyy \\- HH:mm z';
+const CONF_DATE_FORMAT_LONG = 'EEEE, dd MMMM yyyy - HH:mm z';
 const CONF_TZ_FORMAT = 'zzzz (OOO)';
 
 let CONF_SALE_DAY: Date;
@@ -90,4 +90,4 @@ export const TIMEZONE = formatInTimeZone(
 );
 
 export const FALLBACK_MESSAGE =
-  'Wrong input, invalid command or something error\\.\n\nPlease restart by clicking /start\\.';
+  'Wrong input, invalid command or something error.\n\nPlease restart by clicking /start.';

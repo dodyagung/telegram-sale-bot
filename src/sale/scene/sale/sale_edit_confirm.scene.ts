@@ -25,10 +25,10 @@ export class SaleEditConfirmScene {
 
     const sale = await this.saleService.getSale((ctx.scene.state as any).id);
 
-    let message: string = `*✏️ Edit Sale*\n\n`;
+    let message: string = `**✏️ Edit Sale**\n\n`;
 
-    message += `Type your sale directly below\\.\n`;
-    message += `You can also *click to copy* your existing sale and paste it on the text field to make editing easier\\.\n\n`;
+    message += `Type your sale directly below.\n`;
+    message += `You can also **click to copy** your existing sale and paste it on the text field to make editing easier.\n\n`;
 
     message += `_Click to copy :_\n`;
     message += `👉 \`${sale?.post}\` 👈`;
@@ -57,7 +57,7 @@ export class SaleEditConfirmScene {
       msg.text,
     );
 
-    let message = `✅ Success\n\n`;
+    let message = `✅ **Success**\n\n`;
     message += `Your sale has been successfully edited to :\n\n`;
     message += `_${msg.text}_`;
     sendMessageWithoutKeyboard(ctx, message);

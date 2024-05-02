@@ -27,19 +27,19 @@ export class ProfileScene {
     }
     keyboard.push([Markup.button.callback('👈 Back', 'back')]);
 
-    let message: string = `*👤 My Profile*\n\n`;
+    let message: string = `**👤 My Profile**\n\n`;
 
-    message += `This is your account information\\.\n`;
-    message += `You can edit your *Telegram Info* via Telegram application settings\\.\n`;
-    message += `For *Additional Info*, you can click Edit or Delete button bellow\\.\n\n`;
+    message += `This is your account information.\n`;
+    message += `You can edit your **Telegram Info** via Telegram application settings.\n`;
+    message += `For **Additional Info**, you can click Edit or Delete button bellow.\n\n`;
 
-    message += `*Telegram Info*\n`;
+    message += `**Telegram Info**\n`;
     message += `├ ID : \`${ctx.from!.id}\`\n`;
     message += `├ Username : \`${ctx.from?.username ?? '<not set>'}\`\n`;
     message += `├ First Name : \`${ctx.from!.first_name}\`\n`;
     message += `└ Last Name : \`${ctx.from?.last_name ?? '<not set>'}\`\n\n`;
 
-    message += `*Additional Info*\n`;
+    message += `**Additional Info**\n`;
     message += `└ Phone : \`${this.phone ?? '<not set>'}\`\n\n`;
 
     sendMessageWithKeyboard(

@@ -19,17 +19,17 @@ export class SaleService {
     });
   }
 
-  async getSales(
+  async getSalesSortedByText(
     user_id: string,
   ): Promise<{ id: number; is_enabled: boolean; post: string }[]> {
     return await this.prismaService.posts.findMany({
       select: { id: true, is_enabled: true, post: true },
       where: { user_id, is_deleted: false },
-      orderBy: { updated_at: 'asc' },
+      orderBy: { post: 'asc' },
     });
   }
 
-  async getScheduledSales() {
+  async getUsersWithScheduledSales() {
     return await this.prismaService.users.findMany({
       select: {
         id: true,

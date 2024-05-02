@@ -4,7 +4,7 @@ import { getBotToken } from 'nestjs-telegraf';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const bot = app.get(getBotToken('sale'));
+  const bot = app.get(getBotToken());
   app.use(bot.webhookCallback('/'));
   await app.listen(3000);
 }

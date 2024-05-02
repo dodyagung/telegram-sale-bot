@@ -10,19 +10,24 @@ export class SaleEditScene {
 
   @SceneEnter()
   async onSceneEnter(@Ctx() ctx: SceneContext): Promise<void> {
-    const all_sales = await this.saleService.getSales(ctx.from!.id.toString());
+    const all_sales = await this.saleService.getSalesSortedByText(
+      ctx.from!.id.toString(),
+    );
 
     const keyboard = [];
     all_sales.forEach((sale) => {
       keyboard.push([
-        Markup.button.callback(`${sale.post}`, `edit-sale-${sale.id}`),
+        Markup.button.callback(
+          `${sale.post.replace(/\n/g, ' ')}`,
+          `edit-sale-${sale.id}`,
+        ),
       ]);
     });
     keyboard.push([Markup.button.callback('👈 Back', 'back')]);
 
-    let message: string = `*✏️ Edit Sale*\n\n`;
+    let message: string = `**✏️ Edit Sale**\n\n`;
 
-    message += `Please click a sale that you want to edit\\.`;
+    message += `Please click a sale that you want to edit.`;
 
     sendMessageWithKeyboard(ctx, message, keyboard);
   }

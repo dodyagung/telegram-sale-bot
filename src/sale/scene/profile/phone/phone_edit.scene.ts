@@ -23,12 +23,12 @@ export class PhoneEditScene {
   onSceneEnter(@Ctx() ctx: SceneContext): void {
     const keyboard = [[Markup.button.callback('👈 Cancel', 'back')]];
 
-    let message: string = `*✏️ Edit Phone*\n\n`;
+    let message: string = `**✏️ Edit Phone**\n\n`;
 
-    message += `Type your phone number directly below\\.\n`;
+    message += `Type your phone number directly below.\n`;
 
     if ((ctx.scene.state as any).phone) {
-      message += `You can also *click to copy* your existing phone number and paste it on the text field to make editing easier\\.\n\n`;
+      message += `You can also **click to copy** your existing phone number and paste it on the text field to make editing easier.\n\n`;
 
       message += `_Click to copy :_\n`;
       message += `👉 \`${(ctx.scene.state as any).phone}\` 👈`;
@@ -54,8 +54,8 @@ export class PhoneEditScene {
   ): Promise<void> {
     await this.saleService.editPhone(ctx.from!.id.toString(), msg.text);
 
-    let message = `✅ Success\n\n`;
-    message += `Your phone number has been successfully edited to \`${msg.text}\`\\.`;
+    let message = `✅ **Success**\n\n`;
+    message += `Your phone number has been successfully edited to \`${msg.text}\`.`;
     sendMessageWithoutKeyboard(ctx, message);
 
     ctx.scene.enter('PROFILE_SCENE', { edit_message: false });

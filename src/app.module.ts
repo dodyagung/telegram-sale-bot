@@ -11,7 +11,6 @@ import { Pool } from 'pg';
 @Module({
   imports: [
     TelegrafModule.forRootAsync({
-      botName: 'sale',
       imports: [ConfigModule],
       useFactory: async (
         configService: ConfigService,

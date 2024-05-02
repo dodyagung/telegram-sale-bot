@@ -10,20 +10,25 @@ export class SaleDeleteScene {
 
   @SceneEnter()
   async onSceneEnter(@Ctx() ctx: SceneContext): Promise<void> {
-    const all_sales = await this.saleService.getSales(ctx.from!.id.toString());
+    const all_sales = await this.saleService.getSalesSortedByText(
+      ctx.from!.id.toString(),
+    );
 
     const keyboard = [];
     all_sales.forEach((sale) => {
       keyboard.push([
-        Markup.button.callback(`${sale.post}`, `delete-sale-${sale.id}`),
+        Markup.button.callback(
+          `${sale.post.replace(/\n/g, ' ')}`,
+          `delete-sale-${sale.id}`,
+        ),
       ]);
     });
     keyboard.push([Markup.button.callback('👈 Back', 'back')]);
 
-    let message: string = `*❌ Delete Sale*\n\n`;
+    let message: string = `**❌ Delete Sale**\n\n`;
 
-    message += `Please click a sale that you want to delete\\.\n\n`;
-    message += `_This can\'t be undone, but you can always add it again from Add Sale menu\\._`;
+    message += `Please click a sale that you want to delete.\n\n`;
+    message += `_This can't be undone, but you can always add it again from Add Sale menu._`;
 
     sendMessageWithKeyboard(
       ctx,
