@@ -56,6 +56,9 @@ export class SaleService {
               },
             },
           },
+          orderBy: {
+            post: 'asc',
+          },
         },
       },
       where: {
@@ -67,6 +70,9 @@ export class SaleService {
             },
           },
         },
+      },
+      orderBy: {
+        first_name: 'asc',
       },
     });
     // return await this.prismaService.posts.findMany({
