@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 // import { Cron } from '@nestjs/schedule';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { NOW } from './sale.constant';
 
 @Injectable()
 export class SaleService {
@@ -31,7 +32,7 @@ export class SaleService {
 
   async disableAllEnabledPosts(): Promise<void> {
     await this.prismaService.posts.updateMany({
-      data: { is_enabled: false, updated_at: new Date() },
+      data: { is_enabled: false, updated_at: NOW() },
       where: { is_enabled: true },
     });
   }
@@ -91,7 +92,7 @@ export class SaleService {
 
   async editSale(id: number, user_id: string, post: string): Promise<void> {
     await this.prismaService.posts.update({
-      data: { post, updated_at: new Date() },
+      data: { post, updated_at: NOW() },
       where: { id, user_id },
     });
   }
@@ -102,14 +103,14 @@ export class SaleService {
     is_enabled: boolean,
   ): Promise<void> {
     await this.prismaService.posts.update({
-      data: { is_enabled, updated_at: new Date() },
+      data: { is_enabled, updated_at: NOW() },
       where: { id, user_id },
     });
   }
 
   async deleteSale(id: number, user_id: string): Promise<void> {
     await this.prismaService.posts.update({
-      data: { is_deleted: true, updated_at: new Date() },
+      data: { is_deleted: true, updated_at: NOW() },
       where: { id, user_id },
     });
   }
@@ -135,14 +136,14 @@ export class SaleService {
   ): Promise<void> {
     await this.prismaService.users.upsert({
       where: { id },
-      update: { username, first_name, last_name, updated_at: new Date() },
+      update: { username, first_name, last_name, updated_at: NOW() },
       create: {
         id,
         username,
         first_name,
         last_name,
-        created_at: new Date(),
-        updated_at: new Date(),
+        created_at: NOW(),
+        updated_at: NOW(),
       },
     });
   }
@@ -156,7 +157,7 @@ export class SaleService {
 
   async editPhone(id: string, phone: string | null): Promise<void> {
     await this.prismaService.users.update({
-      data: { phone, updated_at: new Date() },
+      data: { phone, updated_at: NOW() },
       where: { id },
     });
   }

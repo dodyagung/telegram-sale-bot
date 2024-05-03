@@ -7,7 +7,7 @@ import {
   RESET_DAY,
   RESET_DAY_MINUS_1_WEEK,
   SALE_DAY,
-  TODAY,
+  TODAY_LONG,
   TODAY_SHORT,
 } from './sale.constant';
 import { Context, Telegraf } from 'telegraf';
@@ -32,12 +32,12 @@ export class SaleUpdate {
 
   @Cron(CronExpression.EVERY_HOUR)
   async saleDayScheduler() {
-    if (TODAY_SHORT === SALE_DAY) {
+    if (TODAY_SHORT() === SALE_DAY()) {
       this.logger.log('Running sale day scheduler');
       const users = await this.saleService.getUsersWithScheduledSales();
 
       let message = `🔥 **Today Hot Sale**\n\n`;
-      message += `It's **${TODAY}**. Want to join the sale? [Chat me!](tg://user?id=${this.configService.get<string>('TELEGRAM_SALE_BOT_TOKEN')!.split(':')[0]})\n\n`;
+      message += `It's **${TODAY_LONG()}**. Want to join the sale? [Chat me!](tg://user?id=${this.configService.get<string>('TELEGRAM_SALE_BOT_TOKEN')!.split(':')[0]})\n\n`;
 
       users.forEach((user) => {
         message += `💰 [${user.first_name}](tg://user?id=${user.id}) ${user.phone ? `(\`${user.phone}\`)` : ``}\n`;
@@ -63,7 +63,7 @@ export class SaleUpdate {
 
   @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
   async resetDayScheduler() {
-    if (TODAY_SHORT === RESET_DAY_MINUS_1_WEEK) {
+    if (TODAY_SHORT() === RESET_DAY_MINUS_1_WEEK()) {
       this.logger.log('Running reset day scheduler');
       // await this.saleService.disableAllEnabledPosts();
     }

@@ -10,7 +10,7 @@ import {
 import { SceneContext } from 'telegraf/scenes';
 import { Markup } from 'telegraf';
 import { ConfigService } from '@nestjs/config';
-import { RESET_DAY, SALE_DAY, TIMEZONE, TODAY } from '../sale.constant';
+import { RESET_DAY, SALE_DAY, TIMEZONE, TODAY_LONG } from '../sale.constant';
 import { leaveScene, sendMessageWithKeyboard } from '../sale.common';
 import { SaleService } from '../sale.service';
 
@@ -58,12 +58,12 @@ export class WelcomeScene {
     );
 
     let message: string = `**🏠 Welcome**\n\n`;
-    message += `Hello **${firstName}${lastName ? ' ' + lastName : ''}**, I'm [telegram-sale-bot](https://github.com/dodyagung/telegram-sale-bot). Now is **${TODAY}**, what can I help you today?\n\n`;
+    message += `Hello **${firstName}${lastName ? ' ' + lastName : ''}**, I'm [telegram-sale-bot](https://github.com/dodyagung/telegram-sale-bot). Now is **${TODAY_LONG()}**, what can I help you today?\n\n`;
 
     message += `**Sale Time**\n`;
-    message += `├ Sale Day : \`${SALE_DAY}\`\n`;
-    message += `├ Reset Day : \`${RESET_DAY}\`\n`;
-    message += `└ Timezone : \`${TIMEZONE}\`\n\n`;
+    message += `├ Sale Day : \`${SALE_DAY()}\`\n`;
+    message += `├ Reset Day : \`${RESET_DAY()}\`\n`;
+    message += `└ Timezone : \`${TIMEZONE()}\`\n\n`;
 
     message += `**Sale Group**\n`;
     message += `├ Name : \`${group_title.title}\`\n`;

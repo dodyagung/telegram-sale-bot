@@ -15,6 +15,7 @@ import {
 } from 'src/sale/sale.common';
 import { SaleService } from 'src/sale/sale.service';
 import { Prisma } from '@prisma/client';
+import { NOW } from 'src/sale/sale.constant';
 
 @Scene('SALE_ADD_SCENE')
 export class SaleAddScene {
@@ -51,8 +52,8 @@ export class SaleAddScene {
       is_enabled: true,
       is_deleted: false,
       post: msg.text,
-      created_at: new Date(),
-      updated_at: new Date(),
+      created_at: NOW(),
+      updated_at: NOW(),
     };
     await this.saleService.addSale(sale);
 
