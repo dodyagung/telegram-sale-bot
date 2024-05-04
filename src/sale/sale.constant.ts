@@ -14,8 +14,9 @@ import { id } from 'date-fns/locale';
 
 const CONF_LOCALE = { locale: id };
 const CONF_TZ = 'Asia/Jakarta';
+const CONF_TIME_FORMAT = 'HH:mm z';
 const CONF_DATE_FORMAT_SHORT = 'EEEE, dd MMMM yyyy';
-const CONF_DATE_FORMAT_LONG = 'EEEE, dd MMMM yyyy - HH:mm z';
+const CONF_DATE_FORMAT_LONG = `${CONF_DATE_FORMAT_SHORT} - ${CONF_TIME_FORMAT}`;
 const CONF_TZ_FORMAT = 'zzzz (OOO)';
 const CONF_NOW = () => new Date();
 
@@ -49,6 +50,9 @@ switch (process.env.TELEGRAM_SALE_DAY) {
 
 const CONF_RESET_DAY_MINUS_1_WEEK = () => subWeeks(CONF_RESET_DAY(), 1);
 const CONF_SALE_DAY = () => subDays(CONF_RESET_DAY(), 1);
+
+export const TODAY_TIME = () =>
+  formatInTimeZone(CONF_NOW(), CONF_TZ, CONF_TIME_FORMAT, CONF_LOCALE);
 
 export const TODAY_LONG = () =>
   formatInTimeZone(CONF_NOW(), CONF_TZ, CONF_DATE_FORMAT_LONG, CONF_LOCALE);
