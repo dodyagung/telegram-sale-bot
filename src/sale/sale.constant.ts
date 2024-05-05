@@ -64,7 +64,7 @@ export const SALE_DAY = () =>
   formatInTimeZone(
     CONF_SALE_DAY(),
     CONF_TZ,
-    CONF_DATE_FORMAT_SHORT,
+    CONF_DATE_FORMAT_LONG,
     CONF_LOCALE,
   );
 
@@ -72,7 +72,7 @@ export const RESET_DAY = () =>
   formatInTimeZone(
     CONF_RESET_DAY(),
     CONF_TZ,
-    CONF_DATE_FORMAT_SHORT,
+    CONF_DATE_FORMAT_LONG,
     CONF_LOCALE,
   );
 
