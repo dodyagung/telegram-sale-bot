@@ -2,7 +2,7 @@ import { Start, Update, Ctx, InjectBot, Hears } from 'nestjs-telegraf';
 import { SceneContext } from 'telegraf/scenes';
 import { SaleService } from './sale.service';
 import { Logger } from '@nestjs/common';
-import { Cron, CronExpression, Interval } from '@nestjs/schedule';
+import { Cron, CronExpression } from '@nestjs/schedule';
 import {
   RESET_DAY_MINUS_1_WEEK,
   SALE_DAY,
@@ -13,9 +13,9 @@ import {
 import { Context, Telegraf } from 'telegraf';
 import { ConfigService } from '@nestjs/config';
 import {
+  isAllowedToStart,
   leaveScene,
   sendMessageToGroup,
-  sendMessageWithoutKeyboard,
 } from './sale.common';
 
 @Update()
@@ -30,7 +30,11 @@ export class SaleUpdate {
 
   @Start()
   onStart(@Ctx() ctx: SceneContext): void {
-    ctx.scene.enter('WELCOME_SCENE');
+    if (isAllowedToStart(ctx)) {
+      ctx.scene.enter('WELCOME_SCENE');
+    } else {
+      leaveScene(ctx);
+    }
   }
 
   @Hears(/.+/)
