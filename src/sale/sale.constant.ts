@@ -92,4 +92,4 @@ export const NOW = CONF_NOW;
 export const FALLBACK_MESSAGE =
   '**Wrong input, invalid command or something error.**\n\nPlease restart by clicking /start.';
 
-export const NO_GROUP_MESSAGE = `**You can't send me a "start" command in a group.**\n\nPlease send it via [my private chat](tg://user?id=${process.env.TELEGRAM_SALE_BOT_TOKEN!.split(':')[0]}).`;
+export const NO_GROUP_MESSAGE = `**You can't send me a "start" command from inside a group.**\n\nPlease send it via [my private chat](tg://user?id=${process.env.TELEGRAM_SALE_BOT_TOKEN!.split(':')[0]}).`;
