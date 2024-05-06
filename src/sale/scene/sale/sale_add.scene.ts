@@ -27,7 +27,12 @@ export class SaleAddScene {
 
     let message: string = `**➕ Add**\n\n`;
 
-    message += `Type your sale directly below.`;
+    message += `Type your sale directly below.\n\n`;
+
+    message += `**Important!**\n`;
+    message += `_- One sale post = one line only_\n`;
+    message += `_- No multi line / new line / line break / 'enter' character_\n`;
+    message += `_- Otherwise, it will be replaced by a **space character**_\n`;
 
     sendMessageWithKeyboard(ctx, message, keyboard);
   }

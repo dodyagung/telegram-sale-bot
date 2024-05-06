@@ -31,7 +31,12 @@ export class SaleEditConfirmScene {
     message += `You can also **click to copy** your existing sale and paste it on the text field to make editing easier.\n\n`;
 
     message += `_Click to copy :_\n`;
-    message += `👉 \`${sale?.post}\` 👈`;
+    message += `👉 \`${sale?.post}\` 👈\n\n`;
+
+    message += `**Important!**\n`;
+    message += `_- One sale post = one line only_\n`;
+    message += `_- No multi line / new line / line break / 'enter' character_\n`;
+    message += `_- Otherwise, it will be replaced by a **space character**_\n`;
 
     sendMessageWithKeyboard(ctx, message, keyboard);
   }
