@@ -62,5 +62,6 @@ jobs:
               -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
               -e TELEGRAM_GROUP_ID=${{ vars.TELEGRAM_GROUP_ID }} \
               -e TELEGRAM_GROUP_LINK=${{ vars.TELEGRAM_GROUP_LINK }} \
+              -e TELEGRAM_SALE_DAY=${{ vars.TELEGRAM_SALE_DAY }} \
               --restart unless-stopped \
               -d ${{ github.repository }}
