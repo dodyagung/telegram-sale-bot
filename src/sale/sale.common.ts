@@ -1,8 +1,8 @@
-import { Markup, Telegram } from 'telegraf';
+import { Context, Markup, Telegram } from 'telegraf';
 import { InlineKeyboardButton } from 'telegraf/typings/core/types/typegram';
 import { ExtraEditMessageText } from 'telegraf/typings/telegram-types';
 import { SceneContext } from 'telegraf/scenes';
-import { FALLBACK_MESSAGE } from './sale.constant';
+import { FALLBACK_MESSAGE, NO_GROUP_MESSAGE } from './sale.constant';
 import { marked } from 'marked';
 
 type Hideable<B> = B & { hide?: boolean };
@@ -29,8 +29,15 @@ const parse = async (message: string): Promise<string> => {
   return await marked.parseInline(message);
 };
 
+export const isAllowedToStart = (ctx: SceneContext) =>
+  ctx.message?.chat.type === 'private';
+
 export const leaveScene = (ctx: SceneContext): void => {
-  sendMessageWithoutKeyboard(ctx, FALLBACK_MESSAGE);
+  sendMessageWithoutKeyboard(
+    ctx,
+    isAllowedToStart(ctx) ? FALLBACK_MESSAGE : NO_GROUP_MESSAGE,
+  );
+
   ctx.scene.leave();
 };
 

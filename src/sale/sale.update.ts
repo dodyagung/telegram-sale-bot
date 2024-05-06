@@ -1,4 +1,4 @@
-import { Start, Update, Ctx, InjectBot } from 'nestjs-telegraf';
+import { Start, Update, Ctx, InjectBot, Hears } from 'nestjs-telegraf';
 import { SceneContext } from 'telegraf/scenes';
 import { SaleService } from './sale.service';
 import { Logger } from '@nestjs/common';
@@ -12,7 +12,11 @@ import {
 } from './sale.constant';
 import { Context, Telegraf } from 'telegraf';
 import { ConfigService } from '@nestjs/config';
-import { sendMessageToGroup } from './sale.common';
+import {
+  leaveScene,
+  sendMessageToGroup,
+  sendMessageWithoutKeyboard,
+} from './sale.common';
 
 @Update()
 export class SaleUpdate {
@@ -27,6 +31,11 @@ export class SaleUpdate {
   @Start()
   onStart(@Ctx() ctx: SceneContext): void {
     ctx.scene.enter('WELCOME_SCENE');
+  }
+
+  @Hears(/.+/)
+  onFallback(@Ctx() ctx: SceneContext): void {
+    leaveScene(ctx);
   }
 
   @Cron(CronExpression.EVERY_HOUR)

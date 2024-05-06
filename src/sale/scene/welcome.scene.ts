@@ -11,7 +11,11 @@ import { SceneContext } from 'telegraf/scenes';
 import { Markup } from 'telegraf';
 import { ConfigService } from '@nestjs/config';
 import { RESET_DAY, SALE_DAY, TIMEZONE, TODAY_LONG } from '../sale.constant';
-import { leaveScene, sendMessageWithKeyboard } from '../sale.common';
+import {
+  isAllowedToStart,
+  leaveScene,
+  sendMessageWithKeyboard,
+} from '../sale.common';
 import { SaleService } from '../sale.service';
 
 @Scene('WELCOME_SCENE')
@@ -29,6 +33,11 @@ export class WelcomeScene {
     @Sender('first_name') firstName: string,
     @Sender('last_name') lastName: string,
   ): Promise<void> {
+    if (!isAllowedToStart(ctx)) {
+      leaveScene(ctx);
+      return;
+    }
+
     const keyboard = [
       [
         Markup.button.callback('💰 My Sale', 'sale'),
