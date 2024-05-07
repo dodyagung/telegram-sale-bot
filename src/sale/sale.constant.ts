@@ -13,7 +13,7 @@ import { formatInTimeZone } from 'date-fns-tz';
 import { id } from 'date-fns/locale';
 
 const CONF_LOCALE = { locale: id };
-const CONF_TZ = 'Asia/Jakarta';
+const CONF_TZ = process.env.TIMEZONE;
 const CONF_TIME_FORMAT = 'HH:mm z';
 const CONF_DATE_FORMAT_SHORT = 'EEEE, dd MMMM yyyy';
 const CONF_DATE_FORMAT_LONG = `${CONF_DATE_FORMAT_SHORT} - ${CONF_TIME_FORMAT}`;
