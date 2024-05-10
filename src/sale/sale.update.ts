@@ -56,7 +56,7 @@ export class SaleUpdate {
         `It's **${TODAY_LONG()}**. Want to join the sale? [Chat me!](tg://user?id=${this.configService.get<string>('TELEGRAM_SALE_BOT_TOKEN')!.split(':')[0]})\n\n`;
 
       users.forEach((user) => {
-        let new_message = `💰 [${user.first_name} ${user.last_name}](tg://user?id=${user.id}) ${user.phone ? `(\`${user.phone}\`)` : ``}\n`;
+        let new_message = `💰 [${user.first_name} ${user.last_name ?? ''}](tg://user?id=${user.id}) ${user.phone ? `(\`${user.phone}\`)` : ``}\n`;
 
         user.posts.forEach((post, index) => {
           if (index + 1 !== user.posts.length) {
