@@ -1,7 +1,7 @@
 # Base image
 FROM node:lts-alpine AS base
 # https://github.com/nodejs/docker-node?tab=readme-ov-file#nodealpine
-RUN apk add --no-cache gcompat
+RUN apk add --no-cache gcompat openssl
 WORKDIR /app
 
 # Install dependencies only when needed
