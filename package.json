@@ -89,5 +89,8 @@
       "@swc/core",
       "prisma"
     ]
+  },
+  "prisma": {
+    "schema": "prisma/schema.prisma"
   }
 }
