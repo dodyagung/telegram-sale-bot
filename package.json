@@ -90,7 +90,5 @@
       "prisma"
     ]
   },
-  "prisma": {
-    "schema": "./prisma/schema.prisma"
-  }
+  "packageManager": "pnpm@10.4.1"
 }
