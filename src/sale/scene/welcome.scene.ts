@@ -9,17 +9,13 @@ import {
 } from 'nestjs-telegraf';
 import { SceneContext } from 'telegraf/scenes';
 import { Markup } from 'telegraf';
-import { ConfigService } from '@nestjs/config';
 import { RESET_DAY, SALE_DAY, TIMEZONE, TODAY_LONG } from '../sale.constant';
 import { leaveScene, sendMessageWithKeyboard } from '../sale.common';
 import { SaleService } from '../sale.service';
 
 @Scene('WELCOME_SCENE')
 export class WelcomeScene {
-  constructor(
-    private configService: ConfigService,
-    private saleService: SaleService,
-  ) {}
+  constructor(private saleService: SaleService) {}
 
   @Start()
   @SceneEnter()
@@ -47,14 +43,14 @@ export class WelcomeScene {
     ].includes(
       (
         await ctx.telegram.getChatMember(
-          this.configService.get<string>('TELEGRAM_GROUP_ID')!,
+          process.env.TELEGRAM_GROUP_ID!,
           ctx.from!.id,
         )
       ).status,
     );
 
     const group_title: any = await ctx.telegram.getChat(
-      this.configService.get<string>('TELEGRAM_GROUP_ID')!,
+      process.env.TELEGRAM_GROUP_ID!,
     );
 
     let message: string = `**🏠 Welcome**\n\n`;
@@ -68,7 +64,7 @@ export class WelcomeScene {
     message += `**Sale Group**\n`;
     message += `├ Name : \`${group_title.title}\`\n`;
     message += `├ Joined : \`${user_joined ? 'Yes' : 'No'}\`\n`;
-    message += `└ Link : [Click Here](${this.configService.get<string>('TELEGRAM_GROUP_LINK')})`;
+    message += `└ Link : [Click Here](${process.env.TELEGRAM_GROUP_LINK})`;
 
     this.saleService.createOrUpdateUser(
       ctx.from!.id.toString(),

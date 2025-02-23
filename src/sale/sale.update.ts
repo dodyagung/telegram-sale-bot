@@ -11,7 +11,6 @@ import {
   TODAY_TIME,
 } from './sale.constant';
 import { Context, Telegraf } from 'telegraf';
-import { ConfigService } from '@nestjs/config';
 import {
   isAllowedToStart,
   leaveScene,
@@ -22,7 +21,6 @@ import {
 export class SaleUpdate {
   constructor(
     private saleService: SaleService,
-    private configService: ConfigService,
     @InjectBot() private bot: Telegraf<Context>,
   ) {}
 
@@ -53,10 +51,10 @@ export class SaleUpdate {
       let index: number = 0;
       messages[index] = `🔥 **Today Hot Sale**\n\n`;
       messages[index] +=
-        `It's **${TODAY_LONG()}**. Want to join the sale? [Chat me!](tg://user?id=${this.configService.get<string>('TELEGRAM_SALE_BOT_TOKEN')!.split(':')[0]})\n\n`;
+        `It's **${TODAY_LONG()}**. Want to join the sale? [Chat me!](tg://user?id=${process.env.TELEGRAM_SALE_BOT_TOKEN!.split(':')[0]})\n\n`;
 
       users.forEach((user) => {
-        let new_message = `💰 [${user.first_name} ${user.last_name ?? ''}](tg://user?id=${user.id}) ${user.phone ? `(\`${user.phone}\`)` : ``}\n`;
+        let new_message = `💰 [${user.first_name}${user.last_name ? ' ' + user.last_name : ''}](tg://user?id=${user.id}) ${user.phone ? `(\`${user.phone}\`)` : ``}\n`;
 
         user.posts.forEach((post, index) => {
           if (index + 1 !== user.posts.length) {
@@ -82,7 +80,7 @@ export class SaleUpdate {
       messages.forEach((message) => {
         sendMessageToGroup(
           this.bot.telegram,
-          this.configService.get<string>('TELEGRAM_GROUP_ID')!,
+          process.env.TELEGRAM_GROUP_ID!,
           message,
         );
       });

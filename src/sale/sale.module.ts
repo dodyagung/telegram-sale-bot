@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { SaleUpdate } from './sale.update';
 import { PrismaModule } from 'src/prisma/prisma.module';
-import { ConfigModule } from '@nestjs/config';
 import { SaleService } from './sale.service';
 import { SaleScene } from './scene/sale/sale.scene';
 import { WelcomeScene } from './scene/welcome.scene';
@@ -35,6 +34,6 @@ import { SaleEditConfirmScene } from './scene/sale/sale_edit_confirm.scene';
     AboutScene,
     TutorialScene,
   ],
-  imports: [ConfigModule, PrismaModule],
+  imports: [PrismaModule],
 })
 export class SaleModule {}

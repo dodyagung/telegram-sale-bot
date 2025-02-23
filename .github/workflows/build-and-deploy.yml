@@ -58,7 +58,6 @@ jobs:
             docker run --name ${{ github.event.repository.name }} \
               -p ${{ vars.PORT }}:3000 \
               -e TELEGRAM_SALE_BOT_TOKEN=${{ secrets.TELEGRAM_SALE_BOT_TOKEN }} \
-              -e TELEGRAM_SALE_BOT_WEBHOOK=${{ vars.TELEGRAM_SALE_BOT_WEBHOOK }} \
               -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
               -e TELEGRAM_GROUP_ID=${{ vars.TELEGRAM_GROUP_ID }} \
               -e TELEGRAM_GROUP_LINK=${{ vars.TELEGRAM_GROUP_LINK }} \

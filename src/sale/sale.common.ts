@@ -1,4 +1,4 @@
-import { Context, Markup, Telegram } from 'telegraf';
+import { Markup, Telegram } from 'telegraf';
 import { InlineKeyboardButton } from 'telegraf/typings/core/types/typegram';
 import { ExtraEditMessageText } from 'telegraf/typings/telegram-types';
 import { SceneContext } from 'telegraf/scenes';
