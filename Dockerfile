@@ -1,5 +1,5 @@
 # Base image
-FROM node:18-alpine AS base
+FROM node:lts-alpine AS base
 # https://github.com/nodejs/docker-node?tab=readme-ov-file#nodealpine
 RUN apk add --no-cache gcompat openssl
 RUN npm install --global corepack@latest && corepack enable pnpm
