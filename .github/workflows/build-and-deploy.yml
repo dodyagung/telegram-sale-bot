@@ -35,7 +35,7 @@ jobs:
             latest=true
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: .
           push: true
@@ -44,10 +44,10 @@ jobs:
 
   deploy_vm:
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Remote SSH and update container with latest docker image
-        uses: appleboy/ssh-action@v1.0.3
+        uses: appleboy/ssh-action@v1.2.1
         with:
           host: ${{ vars.SSH_VM_HOST }}
           username: ${{ vars.SSH_VM_USER }}
