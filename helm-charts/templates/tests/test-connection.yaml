@@ -1,0 +1,23 @@
+{{- if .Values.test }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{ include "helm-charts.fullname" . }}-test-connection"
+  labels:
+    {{- include "helm-charts.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-delete-policy": before-hook-creation
+spec:
+  template:
+    metadata:
+      labels:
+        {{- include "helm-charts.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: wget
+          image: busybox
+          command: ['wget']
+          args: ['{{ include "helm-charts.fullname" . }}:{{ .Values.service.port }}']
+      restartPolicy: Never
+{{- end }}
