@@ -109,4 +109,5 @@ jobs:
             --set "env[3].name=TELEGRAM_GROUP_LINK" --set "env[3].value=$TELEGRAM_GROUP_LINK" \
             --set "env[4].name=TELEGRAM_SALE_DAY" --set "env[4].value=$TELEGRAM_SALE_DAY" \
             --atomic \
+            --history-max 2 \
             --debug
