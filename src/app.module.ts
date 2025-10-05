@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { SentryModule } from '@sentry/nestjs/setup';
 import { TelegrafModule } from 'nestjs-telegraf';
 import { SaleModule } from './sale/sale.module';
 import { PrismaModule } from './prisma/prisma.module';
@@ -9,6 +10,7 @@ import { Pool } from 'pg';
 
 @Module({
   imports: [
+    SentryModule.forRoot(),
     PrismaModule,
     SaleModule,
     ScheduleModule.forRoot(),
