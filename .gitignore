@@ -37,3 +37,5 @@ lerna-debug.log*
 # Custom
 .env
 data/*
+# Sentry Config File
+.sentryclirc
