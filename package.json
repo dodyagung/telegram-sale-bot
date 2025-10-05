@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "build": "nest build && pnpm sentry:sourcemaps",
+    "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
@@ -17,8 +17,7 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json",
-    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org dody --project telegram-sale-bot ./dist && sentry-cli sourcemaps upload --org dody --project telegram-sale-bot ./dist"
+    "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
     "@nestjs/common": "^11.1.6",
@@ -26,7 +25,6 @@
     "@nestjs/platform-express": "^11.1.6",
     "@nestjs/schedule": "^6.0.1",
     "@prisma/client": "^6.16.3",
-    "@sentry/cli": "^2.56.0",
     "@sentry/nestjs": "^10.17.0",
     "@sentry/profiling-node": "^10.17.0",
     "@telegraf/session": "2.0.0-beta.7",

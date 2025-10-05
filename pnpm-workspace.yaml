@@ -3,7 +3,6 @@ onlyBuiltDependencies:
   - '@prisma/client'
   - '@prisma/engines'
   - '@sentry-internal/node-cpu-profiler'
-  - '@sentry/cli'
   - '@swc/core'
   - esbuild
   - prisma
