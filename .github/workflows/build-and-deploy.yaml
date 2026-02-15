@@ -49,10 +49,15 @@ jobs:
               --debug \
               --history-max 2 \
               --install \
-              --set image.tag="latest" \
-              --set "env[0].name=TELEGRAM_SALE_BOT_TOKEN" --set "env[0].value=${{ secrets.TELEGRAM_SALE_BOT_TOKEN }}" \
-              --set "env[1].name=DATABASE_URL" --set "env[1].value=${{ secrets.DATABASE_URL }}" \
-              --set "env[2].name=TELEGRAM_GROUP_ID" --set "env[2].value=${{ vars.TELEGRAM_GROUP_ID }}" \
-              --set "env[3].name=TELEGRAM_GROUP_LINK" --set "env[3].value=${{ vars.TELEGRAM_GROUP_LINK }}" \
-              --set "env[4].name=TELEGRAM_SALE_DAY" --set "env[4].value=${{ vars.TELEGRAM_SALE_DAY }}" \
+              --set-string image.tag="latest" \
+              --set-string "env[0].name=TELEGRAM_SALE_BOT_TOKEN" --set-string "env[0].value=${{ secrets.TELEGRAM_SALE_BOT_TOKEN }}" \
+              --set-string "env[1].name=DATABASE_URL" --set-string "env[1].value=${{ secrets.DATABASE_URL }}" \
+              --set-string "env[2].name=TELEGRAM_GROUP_ID" --set-string "env[2].value=${{ vars.TELEGRAM_GROUP_ID }}" \
+              --set-string "env[3].name=TELEGRAM_GROUP_LINK" --set-string "env[3].value=${{ vars.TELEGRAM_GROUP_LINK }}" \
+              --set-string "env[4].name=TELEGRAM_SALE_DAY" --set-string "env[4].value=${{ vars.TELEGRAM_SALE_DAY }}" \
+              --set-string podAnnotations.deployedAt="$(TZ='Asia/Jakarta' date +'%Y-%m-%dT%H:%M:%S%z')" \
+              --set-string podAnnotations.deployedBy="${{ github.actor }}" \
+              --set-string podAnnotations.projectBranch="${{ github.ref_name }}" \
+              --set-string podAnnotations.projectCommit="$(echo $GITHUB_SHA | cut -c1-7)" \
+              --set-string podAnnotations.projectPath="${{ github.repository }}" \
               --wait
