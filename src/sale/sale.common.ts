@@ -1,9 +1,9 @@
 import { Markup, Telegram } from 'telegraf';
-import { InlineKeyboardButton } from 'telegraf/typings/core/types/typegram';
-import { ExtraEditMessageText } from 'telegraf/typings/telegram-types';
 import { SceneContext } from 'telegraf/scenes';
 import { FALLBACK_MESSAGE, NO_GROUP_MESSAGE } from './sale.constant';
 import { marked } from 'marked';
+import { InlineKeyboardButton } from 'telegraf/types';
+import { ExtraEditMessageText } from 'node_modules/telegraf/typings/telegram-types';
 
 type Hideable<B> = B & { hide?: boolean };
 type HideableIKBtn = Hideable<InlineKeyboardButton>;
