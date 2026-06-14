@@ -1,12 +1,17 @@
 import { Markup, Telegram } from 'telegraf';
 import { SceneContext } from 'telegraf/scenes';
 import { FALLBACK_MESSAGE, NO_GROUP_MESSAGE } from './sale.constant';
-import { marked } from 'marked';
 import { InlineKeyboardButton } from 'telegraf/types';
 import { ExtraEditMessageText } from 'node_modules/telegraf/typings/telegram-types';
 
 type Hideable<B> = B & { hide?: boolean };
 type HideableIKBtn = Hideable<InlineKeyboardButton>;
+type MarkedModule = typeof import('marked');
+
+// Keep the native dynamic import when SWC compiles the app to CommonJS.
+const importEsm = new Function('specifier', 'return import(specifier)') as (
+  specifier: string,
+) => Promise<MarkedModule>;
 
 const extraWithoutKeyboard = (): ExtraEditMessageText => {
   return {
@@ -26,6 +31,7 @@ const extraWithKeyboard = (
 };
 
 const parse = async (message: string): Promise<string> => {
+  const { marked } = await importEsm('marked');
   return await marked.parseInline(message);
 };
 

@@ -46,7 +46,7 @@ export class SaleUpdate {
       this.logger.log(`Running sale day scheduler at ${TODAY_TIME()}`);
       const users = await this.saleService.getUsersWithScheduledSales();
 
-      let messages: string[] = [];
+      const messages: string[] = [];
 
       let index: number = 0;
       messages[index] = `🔥 **Today Hot Sale**\n\n`;

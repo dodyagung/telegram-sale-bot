@@ -1,12 +1,10 @@
 // Import with `const Sentry = require("@sentry/nestjs");` if you are using CJS
-import * as Sentry from "@sentry/nestjs"
-import { nodeProfilingIntegration } from "@sentry/profiling-node";
+import * as Sentry from '@sentry/nestjs';
+import { nodeProfilingIntegration } from '@sentry/profiling-node';
 
 Sentry.init({
-  dsn: "https://37ab642c0b5ffffe0440dc7d760e8e53@o48991.ingest.us.sentry.io/4510134124544000",
-  integrations: [
-    nodeProfilingIntegration(),
-  ],
+  dsn: 'https://37ab642c0b5ffffe0440dc7d760e8e53@o48991.ingest.us.sentry.io/4510134124544000',
+  integrations: [nodeProfilingIntegration()],
 
   // Send structured logs to Sentry
   enableLogs: true,
@@ -23,8 +21,11 @@ Sentry.init({
 
 // Profiling happens automatically after setting it up with `Sentry.init()`.
 // All spans (unless those discarded by sampling) will have profiling data attached to them.
-Sentry.startSpan({
-  name: "My Span",
-}, () => {
-  // The code executed here will be profiled
-});
+Sentry.startSpan(
+  {
+    name: 'My Span',
+  },
+  () => {
+    // The code executed here will be profiled
+  },
+);
