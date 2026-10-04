@@ -8,6 +8,9 @@ import { session } from 'telegraf';
 import { Postgres } from '@telegraf/session/pg';
 import { Pool } from 'pg';
 
+const databaseUrl = new URL(process.env.DATABASE_URL!);
+databaseUrl.searchParams.delete('sslmode');
+
 @Module({
   imports: [
     SentryModule.forRoot(),
@@ -19,7 +22,13 @@ import { Pool } from 'pg';
         session({
           store: Postgres({
             pool: new Pool({
-              connectionString: process.env.DATABASE_URL,
+              connectionString: databaseUrl.toString(),
+              ssl: process.env.DATABASE_CA_CERTIFICATE
+                ? {
+                    ca: Buffer.from(process.env.DATABASE_CA_CERTIFICATE, 'base64').toString(),
+                    rejectUnauthorized: true,
+                  }
+                : undefined,
             }),
             table: 'sessions',
           }),

@@ -43,6 +43,8 @@ jobs:
 
       - name: Deploy to k8s with helm
         uses: WyriHaximus/github-action-helm3@v4
+        env:
+          DATABASE_CA_CERTIFICATE: ${{ secrets.DATABASE_CA_CERTIFICATE }}
         with:
           kubeconfig: ${{ secrets.KUBECONFIG }}
           overrule_existing_kubeconfig: true
@@ -55,6 +57,7 @@ jobs:
               --set-string image.tag="latest" \
               --set-string "env[0].name=TELEGRAM_SALE_BOT_TOKEN" --set-string "env[0].value=${{ secrets.TELEGRAM_SALE_BOT_TOKEN }}" \
               --set-string "env[1].name=DATABASE_URL" --set-string "env[1].value=${{ secrets.DATABASE_URL }}" \
+              --set-string "env[5].name=DATABASE_CA_CERTIFICATE" --set-string "env[5].value=$(printf '%s' "$DATABASE_CA_CERTIFICATE" | base64 -w0)" \
               --set-string "env[2].name=TELEGRAM_GROUP_ID" --set-string "env[2].value=${{ vars.TELEGRAM_GROUP_ID }}" \
               --set-string "env[3].name=TELEGRAM_GROUP_LINK" --set-string "env[3].value=${{ vars.TELEGRAM_GROUP_LINK }}" \
               --set-string "env[4].name=TELEGRAM_SALE_DAY" --set-string "env[4].value=${{ vars.TELEGRAM_SALE_DAY }}" \
