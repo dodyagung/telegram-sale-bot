@@ -1,5 +1,7 @@
 overrides:
   deepmerge-ts: ^8.0.0
+  mysql2: ^3.23.1
+  http-cache-semantics: ^4.3.0
 
 allowBuilds:
   '@nestjs/core': true
@@ -12,3 +14,6 @@ allowBuilds:
   esbuild: true
   prisma: true
   unrs-resolver: true
+
+minimumReleaseAgeExclude:
+  - http-cache-semantics@4.3.0
