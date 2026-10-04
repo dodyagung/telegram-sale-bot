@@ -1,7 +1,7 @@
-const tseslint = require('@typescript-eslint/eslint-plugin');
-const prettierRecommended = require('eslint-plugin-prettier/recommended');
+import tseslint from '@typescript-eslint/eslint-plugin';
+import prettierRecommended from 'eslint-plugin-prettier/recommended';
 
-module.exports = [
+export default [
   {
     ignores: ['dist/**'],
   },
@@ -10,8 +10,8 @@ module.exports = [
     files: ['**/*.ts'],
     languageOptions: {
       parserOptions: {
-        project: 'tsconfig.json',
-        tsconfigRootDir: __dirname,
+        project: 'tsconfig.eslint.json',
+        tsconfigRootDir: import.meta.dirname,
         sourceType: 'module',
       },
     },

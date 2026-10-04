@@ -14,7 +14,7 @@ import {
   sendMessageWithoutKeyboard,
 } from 'src/sale/sale.common';
 import { SaleService } from 'src/sale/sale.service';
-import { Prisma } from '@prisma/client';
+import { Prisma } from '../../../prisma/generated/client';
 import { NOW } from 'src/sale/sale.constant';
 
 @Scene('SALE_ADD_SCENE')
