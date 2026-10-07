@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '../prisma/generated/client';
-// import { Cron } from '@nestjs/schedule';
+import { Cron } from '@nestjs/schedule';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { NOW } from './sale.constant';
 
@@ -8,11 +8,10 @@ import { NOW } from './sale.constant';
 export class SaleService {
   constructor(private prismaService: PrismaService) {}
 
-  // @Cron('0 */4 * * * *') // every 4 minutes
-  // async ping() {
-  //   const ping = await this.prismaService.$queryRaw`select 1`;
-  //   this.logger.log(`Database ping: ${JSON.stringify(ping)}`);
-  // }
+  @Cron('0 */4 * * * *') // every 4 minutes
+  async ping() {
+    await this.prismaService.$queryRaw`select 1`;
+  }
 
   async addSale(post: Prisma.postsUncheckedCreateInput): Promise<void> {
     await this.prismaService.posts.create({
