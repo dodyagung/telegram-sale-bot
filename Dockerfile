@@ -6,22 +6,20 @@ ENV NODE_ENV=production \
 RUN apk add --no-cache gcompat
 RUN apk add --no-cache tzdata && \
     ln -s /usr/share/zoneinfo/$TZ /etc/localtime
-RUN npm install --global corepack@latest && \
-    corepack enable pnpm
 WORKDIR /app
 
 # Install dependencies only when needed
 FROM base AS deps
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-RUN pnpm i --frozen-lockfile  
+COPY package.json package-lock.json ./
+RUN npm ci --include=dev --legacy-peer-deps
 
 # Rebuild the source code only when needed
 FROM base AS builder
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN ./node_modules/.bin/prisma generate
-RUN pnpm build && \
-    pnpm prune --prod
+RUN npm run build && \
+    npm prune --omit=dev
 
 # Production image, copy all the files and run nest
 FROM base AS runner
