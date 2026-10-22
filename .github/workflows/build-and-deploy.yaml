@@ -25,6 +25,8 @@ jobs:
           push: true
           tags: ghcr.io/${{ github.repository }}:latest
           provenance: false
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
       - name: Delete untagged, keep latest
         uses: actions/delete-package-versions@v5
