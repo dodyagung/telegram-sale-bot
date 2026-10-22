@@ -19,7 +19,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN ./node_modules/.bin/prisma generate
 RUN npm run build && \
-    npm prune --omit=dev
+    npm prune --omit=dev --legacy-peer-deps
 
 # Production image, copy all the files and run nest
 FROM base AS runner
